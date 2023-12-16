@@ -4,12 +4,17 @@ import App from './App.tsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import NotFoundPage from '@/views/ErrorPage/NotFoundPage.tsx'
+import { SuggestionPage } from '@/views/SuggestionPage/SuggestionPage.tsx'
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <App />,
         errorElement: <NotFoundPage />,
+    },
+    {
+        path: 'suggest',
+        element: <SuggestionPage />,
     },
 ])
 
