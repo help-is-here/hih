@@ -7,7 +7,7 @@ type TagSectionProps = {
     resourceId: number
 }
 export default function TagSection({resourceId}:TagSectionProps){
-    const tagsQuery = client.from("tag_resource").select("tags(name)").eq("id", resourceId);
+    const tagsQuery = client.from("tag_resource").select("tags(name)").eq("resource_id", resourceId);
     type TagsType = QueryData<typeof tagsQuery>;
     const [tags, setTags] = useState<TagsType>([]);
 
