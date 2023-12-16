@@ -16,7 +16,6 @@ export default function TagSection({resourceId}:TagSectionProps){
             const { data, error } = await tagsQuery;
             if (error) throw error;
             const tags: TagsType = data;
-            console.log(tags)
             setTags(tags)
         }
         fetchData();
