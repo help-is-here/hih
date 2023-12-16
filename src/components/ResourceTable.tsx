@@ -16,7 +16,7 @@ export default function ResourceTable(){
             setData(resources)
         }
         fetchData();
-    }, [])
+    }, [resourcesQuery])
     return (
         <table className='w-full bg-white rounded-lg'>
           <thead className='border border-solid border-0 border-b-8 border-orange-50 '>
@@ -35,13 +35,8 @@ export default function ResourceTable(){
                   <td className='p-4 w-96'>{d.description}</td>
                   <td className='flex w-96 flex-wrap p-4 gap-1'>
                     <TagSection resourceId={d.id}/>
-                    {/* {d.tags.map(t=>{
-                    return (
-                      <MiniTag>{t.name}</MiniTag>
-                    )
-                  })} */}
                   </td>
-                  <td className='text-xs p-4'>This resource helped <span className='text-lg bg-orange-200 rounded-full px-2 py-1'>200</span>people</td>
+                  <td className='text-xs p-4'>This resource helped <span className='text-lg bg-orange-200 rounded-full px-2 py-1'>{d.num_helped}</span>people</td>
                 </tr>
               )
             })}

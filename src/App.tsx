@@ -1,9 +1,8 @@
 import './App.css'
 import { FaInfoCircle } from 'react-icons/fa'
 import Tag from './Tag'
-import data from './data'
-import MiniTag from './MiniTag'
-import { Navigation } from './components/Navigation/Navigation'
+import { Navigation } from '@/components/Navigation/Navigation'
+import ResourceTable from '@/components/ResourceTable'
 
 function App() {
     return (
