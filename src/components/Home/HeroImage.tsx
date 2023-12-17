@@ -2,7 +2,7 @@ import mainImage from '../../assets/hero - before dawn.svg'
 
 export const HeroImage = () => {
     return (
-        <div className="bg-white px-8 md:py-0 py-16 w-full md:h-fit bg-no-repeat bg-cover flex justify-center items-center flex-col md:flex-row">
+        <section className="bg-white px-8 md:py-0 py-16 w-full md:h-fit bg-no-repeat bg-cover flex justify-center items-center flex-col md:flex-row">
             <div>
                 <h1 className="md:text-8xl text-center mb-4 text-gray-800 text-6xl">
                     Help is here.
@@ -15,6 +15,6 @@ export const HeroImage = () => {
                 </button>
             </div>
             <img src={mainImage} alt="Main Image" className="w-1/2" />
-        </div>
+        </section>
     )
 }
