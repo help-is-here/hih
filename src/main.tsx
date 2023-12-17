@@ -7,6 +7,7 @@ import NotFoundPage from '@/views/ErrorPage/NotFoundPage.tsx'
 import { SuggestionPage } from '@/views/SuggestionPage/SuggestionPage.tsx'
 import LoginPage from '@/views/AuthPages/LoginPage.tsx'
 import ChangePasswordPage from '@/views/AuthPages/ChangePasswordPage.tsx'
+import { ResourcesPage } from '@/views/ResourcesPage/ResourcesPage.tsx'
 
 const router = createBrowserRouter([
     {
@@ -25,8 +26,12 @@ const router = createBrowserRouter([
         errorElement: <NotFoundPage />,
     },
     {
-        path: 'suggest',
+        path: '/suggest',
         element: <SuggestionPage />,
+    },
+    {
+        path: '/resources',
+        element: <ResourcesPage />,
     },
 ])
 

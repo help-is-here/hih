@@ -1,7 +1,31 @@
+import { useEffect, useState } from 'react'
+
 export const NavLink = (props: { title: string; link: string }) => {
+    const { title, link } = props
+    const nav = (link: string) => {
+        window.location.href = link
+    }
+    const [highlight, setHighlight] = useState(false)
+    const currentPage = window.location.pathname
+
+    const isHighlighted = () => {
+        if (link.toLowerCase() == currentPage.toLowerCase()) {
+            setHighlight(true)
+        } else {
+            setHighlight(false)
+        }
+    }
+    useEffect(() => {
+        isHighlighted()
+    }, [])
     return (
-        <button className="px-3 py-0 m-1 border-b-4 border-white hover:border-b-4 hover:border-orange-400">
-            {props.title}
+        <button
+            className={`px-3 py-0 m-1 border-b-4 border-white hover:border-b-4 hover:border-orange-400 ${
+                highlight ? 'font-semibold' : ''
+            }`}
+            onClick={() => nav(link)}
+        >
+            {title}
         </button>
     )
 }

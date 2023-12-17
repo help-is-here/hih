@@ -13,9 +13,10 @@ export const Navigation = () => {
             </div>
             <div className="hidden grow md:flex justify-center">
                 <NavLink title="Home" link="/" />
-                <NavLink title="Panic Page" link="/" />
-                <NavLink title="Submit a Resource" link="/" />
-                <NavLink title="Admin" link="/" />
+                <NavLink title="Resources" link="/resources" />
+                <NavLink title="Panic Page" link="/panic" />
+                <NavLink title="Suggest a Resource" link="/suggest" />
+                <NavLink title="Admin" link="/admin" />
             </div>
             <div className="hidden md:block">
                 <SessionWrapper

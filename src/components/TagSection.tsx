@@ -28,7 +28,7 @@ export default function TagSection({ resourceId }: TagSectionProps) {
         <>
             {tags.map((tag) => {
                 // @ts-expect-error: Problem with typing in supabase. Hopefully will be fixed soon
-                return <MiniTag>{tag.tags.name}</MiniTag>
+                return <MiniTag key={tag.tags.name}>{tag.tags.name}</MiniTag>
             })}
         </>
     )
