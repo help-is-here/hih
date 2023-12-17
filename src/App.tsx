@@ -34,11 +34,11 @@ function App() {
                 <Tag>Personality Disorders</Tag>
             </div>
 
-      <div className='px-24 py-12'>
-        <ResourceTable />
-      </div>
-    </div>
-  )
+            <div className="px-24 py-12">
+                <ResourceTable />
+            </div>
+        </div>
+    )
 }
 
 export default App

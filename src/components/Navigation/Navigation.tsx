@@ -15,7 +15,7 @@ export const Navigation = () => {
                 <NavLink title="Admin" link="/" />
             </div>
             <div className="hidden md:block py-3 px-8 m-1 rounded-full bg-orange-500 text-white font-bold hover:bg-orange-600">
-                Login
+                <a href="/login">Login</a>
             </div>
             <div className="md:hidden justify-self-end flex items-center">
                 <FaBars size="2.5em" color="rgb(249 115 22)" />
