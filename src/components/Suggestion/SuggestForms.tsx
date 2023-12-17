@@ -1,11 +1,45 @@
 import TagsInput from 'react-tagsinput'
 import 'react-tagsinput/react-tagsinput.css'
 import { useState } from 'react'
+import client from '@/database/client.tsx'
 export const ResourceForm = () => {
-    const [tags, setTags] = useState([])
     const handleChange = (input: any) => {
         setTags(input)
     }
+
+    const [title, setTitle] = useState('')
+    const [url, setUrl] = useState('')
+    const [description, setDescription] = useState('')
+    const [tags, setTags] = useState([])
+
+    const resourcesQuery = client
+        .from('resources')
+        .upsert({
+            name: title,
+            link: url,
+            description: description,
+        })
+        .select('id')
+
+    const submit = async (e: any) => {
+        e.preventDefault()
+        const record = await resourcesQuery
+        for (const tag in tags) {
+            const tagQuery = client
+                .from('tags')
+                .upsert({
+                    name: tags[tag],
+                })
+                .select('id')
+            const tagRecord = await tagQuery
+            const tagLinkQuery = client.from('tag_resource').insert({
+                tag_id: tagRecord.data[0].id,
+                resource_id: record.data[0].id,
+            })
+            await tagLinkQuery
+        }
+    }
+
     return (
         <div className="w-6/12">
             <form>
@@ -19,6 +53,7 @@ export const ResourceForm = () => {
                     id="title"
                     name="title"
                     className="w-full mb-6 p-2 rounded"
+                    onChange={(e) => setTitle(e.target.value)}
                 />
 
                 <br />
@@ -31,6 +66,7 @@ export const ResourceForm = () => {
                     id="url"
                     name="url"
                     className="w-full mb-6 p-2 rounded"
+                    onChange={(e) => setUrl(e.target.value)}
                 />
 
                 <br />
@@ -42,6 +78,7 @@ export const ResourceForm = () => {
                     id="description"
                     name="description"
                     className="w-full mb-6 p-2 rounded"
+                    onChange={(e) => setDescription(e.target.value)}
                 />
 
                 <br />
@@ -50,7 +87,7 @@ export const ResourceForm = () => {
                 </label>
                 <br />
                 <TagsInput value={tags} onChange={handleChange} />
-                <input type="submit" value="Submit" />
+                <input type="submit" value="Submit" onClick={submit} />
             </form>
         </div>
     )
