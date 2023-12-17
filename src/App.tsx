@@ -3,11 +3,13 @@ import { FaInfoCircle } from 'react-icons/fa'
 import Tag from './Tag'
 import { Navigation } from '@/components/Navigation/Navigation'
 import ResourceTable from '@/components/ResourceTable'
+import { HomePage } from '@/views/HomePage/HomePage.tsx'
 
 function App() {
     return (
         <div className="relative w-screen min-h-screen bg-orange-50">
             <Navigation />
+            <HomePage />
             <div className="sticky top-0 w-full flex justify-between p-2 items-center">
                 <FaInfoCircle size="3rem" color="black" />
                 <div>
