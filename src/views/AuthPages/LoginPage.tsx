@@ -1,52 +1,37 @@
 import { Auth } from '@supabase/auth-ui-react'
 import client from '@/database/client'
-import { Navigation } from '@/components/Navigation/Navigation'
-import { useState, useEffect } from 'react'
-import { Session } from '@supabase/supabase-js'
-import { customTheme } from './AuthTheme'
+import { customTheme } from '../../components/Auth/AuthTheme'
+import SessionWrapper from '@/components/Auth/SessionWrapper'
+import AuthPageLayout from '@/components/Auth/AuthPageLayout'
 
 const LoginPage = () => {
-    const [session, setSession] = useState<Session | null>(null)
-
-    useEffect(() => {
-        client.auth.getSession().then(({ data: { session } }) => {
-            setSession(session)
-        })
-
-        const {
-            data: { subscription },
-        } = client.auth.onAuthStateChange((_event, session) => {
-            setSession(session)
-        })
-
-        return () => subscription.unsubscribe()
-    }, [])
-    return (
-        <>
-            <Navigation />
-            <div className="w-screen h-screen flex justify-center items-center bg-orange-950">
-                {session ? (
-                    <div className="text-xl text-white">
-                        Welcome to our site! You are already logged in.
-                        <div className="flex justify-center my-12">
-                            <button className="bg-white text-orange-950 rounded-full px-4 py-2">
-                                Change Password
-                            </button>
-                        </div>
-                    </div>
-                ) : (
-                    <div className="w-96 bg-orange-50 rounded-lg p-8">
-                        <Auth
-                            supabaseClient={client}
-                            theme="default"
-                            appearance={{ theme: customTheme }}
-                            providers={['google']}
-                            redirectTo="/"
-                        />
-                    </div>
-                )}
+    const ifSession = (
+        <div className="text-xl text-white">
+            Welcome to our site! You are already logged in.
+            <div className="flex justify-center my-12">
+                <a href="/change-password">
+                    <button className="bg-white text-orange-950 rounded-full px-4 py-2">
+                        Change Password
+                    </button>
+                </a>
             </div>
-        </>
+        </div>
+    )
+    const notSession = (
+        <div className="w-96 bg-orange-50 rounded-lg p-8">
+            <Auth
+                supabaseClient={client}
+                theme="default"
+                appearance={{ theme: customTheme }}
+                providers={['google']}
+                redirectTo="/"
+            />
+        </div>
+    )
+    return (
+        <AuthPageLayout>
+            <SessionWrapper ifSession={ifSession} notSession={notSession} />
+        </AuthPageLayout>
     )
 }
 

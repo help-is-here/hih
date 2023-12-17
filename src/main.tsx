@@ -6,6 +6,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import NotFoundPage from '@/views/ErrorPage/NotFoundPage.tsx'
 import { SuggestionPage } from '@/views/SuggestionPage/SuggestionPage.tsx'
 import LoginPage from '@/views/AuthPages/LoginPage.tsx'
+import ChangePasswordPage from '@/views/AuthPages/ChangePasswordPage.tsx'
+import ResetPasswordPage from '@/views/AuthPages/ResetPasswordPage.tsx'
 
 const router = createBrowserRouter([
     {
@@ -16,6 +18,16 @@ const router = createBrowserRouter([
     {
         path: '/login',
         element: <LoginPage />,
+        errorElement: <NotFoundPage />,
+    },
+    {
+        path: '/change-password',
+        element: <ChangePasswordPage />,
+        errorElement: <NotFoundPage />,
+    },
+    {
+        path: '/reset-password',
+        element: <ResetPasswordPage />,
         errorElement: <NotFoundPage />,
     },
     {

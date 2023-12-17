@@ -1,6 +1,9 @@
 import { NavLink } from './NavLink.tsx'
 import { FaBars } from 'react-icons/fa'
 import logo from '../../assets/logo.png'
+import LoginButton from '../Auth/LoginButton.tsx'
+import SessionWrapper from '../Auth/SessionWrapper.tsx'
+import LogoutButton from '../Auth/LogoutButton.tsx'
 
 export const Navigation = () => {
     return (
@@ -14,8 +17,11 @@ export const Navigation = () => {
                 <NavLink title="Submit a Resource" link="/" />
                 <NavLink title="Admin" link="/" />
             </div>
-            <div className="hidden md:block py-3 px-8 m-1 rounded-full bg-orange-500 text-white font-bold hover:bg-orange-600">
-                <a href="/login">Login</a>
+            <div className="hidden md:block">
+                <SessionWrapper
+                    ifSession={<LogoutButton />}
+                    notSession={<LoginButton />}
+                />
             </div>
             <div className="md:hidden justify-self-end flex items-center">
                 <FaBars size="2.5em" color="rgb(249 115 22)" />
