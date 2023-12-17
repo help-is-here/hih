@@ -1,6 +1,6 @@
 import './App.css'
 import { FaInfoCircle } from 'react-icons/fa'
-import Tag from './Tag'
+import Tag from './components/Tag'
 import { Navigation } from '@/components/Navigation/Navigation'
 import ResourceTable from '@/components/ResourceTable'
 import { HomePage } from '@/views/HomePage/HomePage.tsx'
