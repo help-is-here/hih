@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { QueryData } from '@supabase/supabase-js'
-import client from '@/database/client'
-import TagSection from '@/components/TagSection'
+import client from '@/database/client.tsx'
+import TagSection from '@/components/TagSection.tsx'
+import { FaHeart } from 'react-icons/fa'
+import { Tooltip } from 'flowbite-react'
 
 export default function ResourceTable() {
     const resourcesQuery = client.from('resources').select()
@@ -19,7 +21,7 @@ export default function ResourceTable() {
     }, [])
     return (
         <table className="w-full bg-white rounded-lg">
-            <thead className="border border-solid border-0 border-b-8 border-orange-50 ">
+            <thead className="border-solid border-0 border-b-8 border-orange-50 ">
                 <tr>
                     <th className="text-left p-4">Resource</th>
                     <th className="text-left p-4">Description</th>
@@ -30,25 +32,37 @@ export default function ResourceTable() {
             <tbody>
                 {data.map((d) => {
                     return (
-                        <tr className="border-orange-50">
-                            <td className="p-4">
+                        <tr
+                            className="border-orange-50 hover:bg-gray-100"
+                            key={d.name}
+                        >
+                            <td className="p-4 w-96">
                                 <a
-                                    className="text-orange-900 underline"
+                                    className="text-orange-900 hover:underline"
                                     href={d.link}
                                 >
                                     {d.name}
                                 </a>
                             </td>
-                            <td className="p-4 w-96">{d.description}</td>
-                            <td className="flex w-96 flex-wrap p-4 gap-1">
+                            <td className="p-4">{d.description}</td>
+                            <td className="flex flex-wrap p-4 gap-1 w-48">
                                 <TagSection resourceId={d.id} />
                             </td>
                             <td className="text-xs p-4">
-                                This resource helped{' '}
-                                <span className="text-lg bg-orange-200 rounded-full px-2 py-1">
-                                    {d.num_helped}
-                                </span>
-                                people
+                                <Tooltip
+                                    content={`This resource has helped ${d.num_helped} people`}
+                                    animation="duration-1000"
+                                    className="bg-gray-900 text-white dark:bg-gray-700"
+                                    arrow={false}
+                                >
+                                    <span
+                                        data-tooltip-target="tooltip-default"
+                                        className="text-xs font-bold flex justify-end text-right"
+                                    >
+                                        {d.num_helped}
+                                        <FaHeart className="ml-1 text-orange-500 " />
+                                    </span>
+                                </Tooltip>
                             </td>
                         </tr>
                     )

@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import NotFoundPage from '@/views/ErrorPage/NotFoundPage.tsx'
 import { SuggestionPage } from '@/views/SuggestionPage/SuggestionPage.tsx'
 import LoginPage from './views/LoginPage.tsx'
+import { ResourcesPage } from '@/views/ResourcesPage/ResourcesPage.tsx'
 
 const router = createBrowserRouter([
     {
@@ -19,8 +20,12 @@ const router = createBrowserRouter([
         errorElement: <NotFoundPage />,
     },
     {
-        path: 'suggest',
+        path: '/suggest',
         element: <SuggestionPage />,
+    },
+    {
+        path: '/resources',
+        element: <ResourcesPage />,
     },
 ])
 
