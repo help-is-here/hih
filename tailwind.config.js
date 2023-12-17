@@ -2,7 +2,11 @@
 export default {
     content: ['./index.html', './src/**/*.{html,js,ts,tsx}'],
     theme: {
-        extend: {},
+        extend: {
+            backgroundImage: {
+                'main-hero': "url('/src/assets/hero - before dawn.svg')",
+            },
+        },
     },
     plugins: [],
 }
