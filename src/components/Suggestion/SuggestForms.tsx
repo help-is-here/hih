@@ -1,16 +1,16 @@
 import TagsInput from 'react-tagsinput'
 import 'react-tagsinput/react-tagsinput.css'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import client from '@/database/client.tsx'
 export const ResourceForm = () => {
-    const handleChange = (input: any) => {
+    const handleChange = (input: string[]) => {
         setTags(input)
     }
 
     const [title, setTitle] = useState('')
     const [url, setUrl] = useState('')
     const [description, setDescription] = useState('')
-    const [tags, setTags] = useState([])
+    const [tags, setTags] = useState<string[]>([])
 
     const resourcesQuery = client
         .from('resources')
@@ -21,9 +21,12 @@ export const ResourceForm = () => {
         })
         .select('id')
 
-    const submit = async (e: any) => {
+    const submit = async (e: FormEvent<HTMLInputElement>) => {
         e.preventDefault()
         const record = await resourcesQuery
+        if (record.data === null) {
+            return
+        }
         for (const tag in tags) {
             const tagQuery = client
                 .from('tags')
@@ -32,6 +35,9 @@ export const ResourceForm = () => {
                 })
                 .select('id')
             const tagRecord = await tagQuery
+            if (tagRecord.data === null) {
+                continue
+            }
             const tagLinkQuery = client.from('tag_resource').insert({
                 tag_id: tagRecord.data[0].id,
                 resource_id: record.data[0].id,
