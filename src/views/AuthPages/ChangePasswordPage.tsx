@@ -1,6 +1,4 @@
-import { Auth } from '@supabase/auth-ui-react'
-import client from '@/database/client'
-import { customTheme } from '../../components/Auth/AuthTheme'
+import Auth from '@/components/Auth/Auth'
 import SessionWrapper from '@/components/Auth/SessionWrapper'
 import LoginButton from '@/components/Auth/LoginButton'
 import AuthPageLayout from '@/components/Auth/AuthPageLayout'
@@ -8,14 +6,7 @@ import AuthPageLayout from '@/components/Auth/AuthPageLayout'
 const LoginPage = () => {
     const ifSession = (
         <div className="w-96 bg-orange-50 rounded-lg p-8">
-            <Auth
-                supabaseClient={client}
-                theme="default"
-                appearance={{ theme: customTheme }}
-                providers={['google']}
-                redirectTo="/"
-                view="update_password"
-            />
+            <Auth redirectTo="/" view="forgottenPassword" />
         </div>
     )
     const notSession = (
