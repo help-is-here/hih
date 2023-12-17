@@ -7,14 +7,14 @@ export const HeroImage = () => {
                 <h1 className="md:text-8xl text-center mb-4 text-gray-800 text-6xl">
                     Help is here.
                 </h1>
-                <button className="rounded-full px-8 py-2 bg-orange-500 text-white mr-4 hover:bg-orange-600">
+                <button className="rounded-full md:px-8 px-6 py-2 bg-orange-500 text-white mr-4 hover:bg-orange-600">
                     Get Started
                 </button>
-                <button className="rounded-full px-8 py-2 bg-gray-200 text-gray-900 hover:bg-gray-300">
+                <button className="rounded-full md:px-8 px-6 py-2 bg-gray-200 text-gray-900 hover:bg-gray-300">
                     I'm Panicking!
                 </button>
             </div>
-            <img src={mainImage} alt="Main Image" className="w-1/2" />
+            <img src={mainImage} alt="Main Image" className="md:w-1/2" />
         </section>
     )
 }
