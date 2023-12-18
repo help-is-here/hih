@@ -66,6 +66,8 @@ export default function ResourceTable() {
                                 <a
                                     className="text-orange-900 hover:underline"
                                     href={d.link}
+                                    rel="noreferrer noopener"
+                                    target="_blank"
                                 >
                                     {d.name}
                                 </a>
