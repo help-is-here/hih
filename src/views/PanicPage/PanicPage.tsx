@@ -9,51 +9,30 @@ import { useLocation } from 'react-router-dom'
 
 export const PanicPage = (props: { level: string }) => {
     const { level } = props
-    const [isMain, setIsMain] = useState(false)
-    const [isPrevent, setIsPrevent] = useState(false)
-    const [isPrepare, setIsPrepare] = useState(false)
-    const [isPredicament, setIsPredicament] = useState(false)
+    const [activePage, setActivePage] = useState(<PanicMain />)
     const location = useLocation()
     useEffect(() => {
         switch (level) {
             case 'main':
-                setIsMain(true)
-                setIsPrevent(false)
-                setIsPrepare(false)
-                setIsPredicament(false)
+                setActivePage(<PanicMain />)
                 break
             case 'prevent':
-                setIsMain(false)
-                setIsPrevent(true)
-                setIsPrepare(false)
-                setIsPredicament(false)
+                setActivePage(<PanicPrevent />)
                 break
             case 'prepare':
-                setIsMain(false)
-                setIsPrevent(false)
-                setIsPrepare(true)
-                setIsPredicament(false)
+                setActivePage(<PanicPrepare />)
                 break
             case 'predicament':
-                setIsMain(false)
-                setIsPrevent(false)
-                setIsPrepare(false)
-                setIsPredicament(true)
+                setActivePage(<PanicPredicament />)
                 break
             default:
-                setIsMain(true)
-                setIsPrevent(false)
-                setIsPrepare(false)
-                setIsPredicament(false)
+                setActivePage(<PanicMain />)
         }
     }, [location])
     return (
         <div className="relative w-screen min-h-screen bg-orange-50">
             <Navigation />
-            {isMain && <PanicMain />}
-            {isPrevent && <PanicPrevent />}
-            {isPrepare && <PanicPrepare />}
-            {isPredicament && <PanicPredicament />}
+            {activePage}
             <Footer />
         </div>
     )
