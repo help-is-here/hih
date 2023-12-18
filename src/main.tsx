@@ -7,6 +7,7 @@ import NotFoundPage from '@/views/ErrorPage/NotFoundPage.tsx'
 import { SuggestionPage } from '@/views/SuggestionPage/SuggestionPage.tsx'
 import LoginPage from './views/LoginPage.tsx'
 import { ResourcesPage } from '@/views/ResourcesPage/ResourcesPage.tsx'
+import { PanicPage } from '@/views/PanicPage/PanicPage.tsx'
 
 const router = createBrowserRouter([
     {
@@ -26,6 +27,22 @@ const router = createBrowserRouter([
     {
         path: '/resources',
         element: <ResourcesPage />,
+    },
+    {
+        path: '/panic',
+        element: <PanicPage level="main" />,
+    },
+    {
+        path: '/panic/prevent',
+        element: <PanicPage level="prevent" />,
+    },
+    {
+        path: '/panic/prepare',
+        element: <PanicPage level="prepare" />,
+    },
+    {
+        path: '/panic/predicament',
+        element: <PanicPage level="predicament" />,
     },
 ])
 
