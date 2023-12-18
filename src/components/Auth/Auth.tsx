@@ -27,6 +27,8 @@ export default function Auth({ view }: AuthProps) {
                 emailRedirectTo: 'http://localhost:5173/',
             },
         })
+        if (!error) navigate('/')
+        else alert('Oops, an error occured')
     }
     const signInWithEmail = async () => {
         const { data, error } = await client.auth.signInWithPassword({
@@ -34,16 +36,23 @@ export default function Auth({ view }: AuthProps) {
             password: password,
         })
         if (!error) navigate('/')
+        else alert("We're so sorry, an error occured.")
     }
 
     const signInWithGoogle = async () => {
-        await client.auth.signInWithOAuth({
+        const { data, error } = await client.auth.signInWithOAuth({
             provider: 'google',
         })
+        if (!error) navigate('/')
+        else alert("We're so sorry, an error occured.")
     }
 
     const updatePassword = async () => {
-        await client.auth.updateUser({ password: password })
+        const { data, error } = await client.auth.updateUser({
+            password: password,
+        })
+        if (!error) navigate('/')
+        else alert("We're so sorry, an error occured.")
     }
 
     const sendResetEmail = async () => {
@@ -54,6 +63,10 @@ export default function Auth({ view }: AuthProps) {
 
     const validateEmail = (val: string) => {
         return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val)
+    }
+    const validatePassword = (val: string) => {
+        if (val.length < 8) return false
+        return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/.test(val)
     }
     const forgottenPassword = (
         <>
@@ -139,10 +152,43 @@ export default function Auth({ view }: AuthProps) {
     )
     const signUp = (
         <>
-            <div>Sign up with Google</div>
-            <input></input>
-            <input></input>
-            <button>Sign Up</button>
+            <div className="my-4">
+                <ValidatedInput
+                    type="text"
+                    validator={validateEmail}
+                    onValid={(val) => {
+                        setEmail(val)
+                        setValid(true)
+                    }}
+                    onInvalid={() => setValid(false)}
+                    placeholder="email@example.com"
+                />
+            </div>
+            <ValidatedInput
+                type="password"
+                validator={validatePassword}
+                onValid={(val) => {
+                    setPassword(val)
+                    setValid(true)
+                }}
+                onInvalid={() => setValid(false)}
+                placeholder="my-special-password"
+            />
+            <div className="text-sm">
+                Password must be 8 characters long and have at least one of each
+                of these: <br />
+                - lowercase letters <br />
+                - uppercase letters <br />
+                - numbers <br />- symbols
+            </div>
+            <button
+                title={!formValid ? 'All fields must be valid' : ''}
+                className="block my-4 disabled:bg-orange-200 disabled:text-gray-600 rounded-full bg-orange-400 w-full py-2"
+                disabled={!formValid}
+                onClick={signUpNewUser}
+            >
+                Sign up
+            </button>
             <button onClick={() => setState('signIn')}>
                 Already have an account? Sign in!
             </button>
@@ -150,12 +196,30 @@ export default function Auth({ view }: AuthProps) {
     )
     const changePassword = (
         <>
-            <div>Sign up with Google</div>
-            <input></input>
-            <input></input>
-            <button>Sign Up</button>
-            <button onClick={() => setState('signIn')}>
-                Already have an account? Sign in!
+            <ValidatedInput
+                type="password"
+                validator={validatePassword}
+                onValid={(val) => {
+                    setPassword(val)
+                    setValid(true)
+                }}
+                onInvalid={() => setValid(false)}
+                placeholder="my-special-password"
+            />
+            <div className="text-sm">
+                Password must be 8 characters long and have at least one of each
+                of these: <br />
+                - lowercase letters <br />
+                - uppercase letters <br />
+                - numbers <br />- symbols
+            </div>
+            <button
+                title={!formValid ? 'All fields must be valid' : ''}
+                className="block my-4 disabled:bg-orange-200 disabled:text-gray-600 rounded-full bg-orange-400 w-full py-2"
+                disabled={!formValid}
+                onClick={updatePassword}
+            >
+                Change Password
             </button>
         </>
     )
