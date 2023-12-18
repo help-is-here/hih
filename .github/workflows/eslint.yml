@@ -33,7 +33,7 @@ jobs:
           npm install eslint@8.55.0
 
       - name: Run ESLint
-        run: npm run lint
+        run: npm run lint --
           --output-file eslint-results.sarif
         continue-on-error: true
 
