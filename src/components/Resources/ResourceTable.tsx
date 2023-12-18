@@ -18,7 +18,7 @@ export default function ResourceTable() {
             setData(resources)
         }
         fetchData()
-    }, [])
+    }, [resourcesQuery])
     return (
         <table className="w-full rounded-lg bg-white">
             <thead className="border-0 border-b-8 border-solid border-orange-50 ">

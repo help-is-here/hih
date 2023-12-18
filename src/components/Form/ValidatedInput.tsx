@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 type ValidatedInputProps = {
     validator: (val: string) => boolean
@@ -15,23 +15,21 @@ export default function ValidatedInput({
     placeholder,
     type = 'text',
 }: ValidatedInputProps) {
-    useEffect(() => {
-        setError(validate(''))
-    }, [])
+    const [error, setError] = useState<string>('')
 
     const validate = (val: string) => {
-        if (!val.trim()) {
-            onInvalid(val)
-            return 'Required'
-        } else if (!validator(val)) {
-            onInvalid(val)
-            return 'Invalid'
-        } else {
+        const isValid = validator(val)
+        if (isValid) {
             onValid(val)
             return 'Looks good!'
+        } else if (!val.trim()) {
+            onInvalid(val)
+            return 'Required'
+        } else {
+            onInvalid(val)
+            return 'Invalid'
         }
     }
-    const [error, setError] = useState<string>('Looks good!')
     return (
         <>
             <input
