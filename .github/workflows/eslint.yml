@@ -44,7 +44,7 @@ jobs:
       - name: Run Prettier
         run: npx prettier src/
           --check
-          --config .prettierrc.cjs
+          --config .prettierrc.js
         continue-on-error: true
 
       - name: Upload analysis results to GitHub
