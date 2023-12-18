@@ -1,24 +1,59 @@
 import { useEffect, useState } from 'react'
 import { QueryData } from '@supabase/supabase-js'
 import client from '@/database/client.tsx'
-import TagSection from '@/components/TagSection.tsx'
 import { FaHeart } from 'react-icons/fa'
 import { Tooltip } from 'flowbite-react'
+import MiniTag from '@/components/Resources/MiniTag.tsx'
 
-export default function ResourceTable() {
-    const resourcesQuery = client.from('resources').select()
+export default function ResourceTable({
+    search,
+    filterTags,
+}: {
+    search: string
+    filterTags: string[]
+}) {
+    const resourcesQuery = client
+        .from('resources')
+        .select(
+            `id, name, link, description, num_helped, tag_resource(id, tags(id,name))`
+        )
     type ResourcesType = QueryData<typeof resourcesQuery>
 
     const [data, setData] = useState<ResourcesType>([])
+    const [filteredData, setFilteredData] = useState<ResourcesType>([])
+
     useEffect(() => {
         const fetchData = async () => {
             const { data, error } = await resourcesQuery
             if (error) throw error
             const resources: ResourcesType = data
             setData(resources)
+            setFilteredData(resources)
         }
         fetchData()
     }, [])
+
+    useEffect(() => {
+        setFilteredData(
+            data.filter(
+                (item) =>
+                    (search.length > 0 &&
+                        item?.name
+                            ?.toLowerCase()
+                            .includes(search.toLowerCase())) ||
+                    (search.length > 0 &&
+                        item?.description
+                            ?.toLowerCase()
+                            .includes(search.toLowerCase())) ||
+                    item?.tag_resource?.some((i) => {
+                        return (
+                            filterTags.length == 0 ||
+                            filterTags.includes(i?.tags?.name || '')
+                        )
+                    })
+            )
+        )
+    }, [search, filterTags])
     return (
         <table className="w-full bg-white rounded-lg">
             <thead className="border-solid border-0 border-b-8 border-orange-50 ">
@@ -30,7 +65,7 @@ export default function ResourceTable() {
                 </tr>
             </thead>
             <tbody>
-                {data.map((d) => {
+                {filteredData.map((d) => {
                     return (
                         <tr
                             className="border-orange-50 hover:bg-gray-100"
@@ -39,14 +74,20 @@ export default function ResourceTable() {
                             <td className="p-4 w-96">
                                 <a
                                     className="text-orange-900 hover:underline"
-                                    href={d.link}
+                                    href={d.link || ''}
                                 >
                                     {d.name}
                                 </a>
                             </td>
                             <td className="p-4">{d.description}</td>
                             <td className="flex flex-wrap p-4 gap-1 w-48">
-                                <TagSection resourceId={d.id} />
+                                {d.tag_resource.map((item) => {
+                                    return (
+                                        <MiniTag key={item?.tags?.name}>
+                                            {item?.tags?.name}
+                                        </MiniTag>
+                                    )
+                                })}
                             </td>
                             <td className="text-xs p-4">
                                 <Tooltip

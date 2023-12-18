@@ -1,10 +1,14 @@
 import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 import '../../index.css'
 import client from '@/database/client.tsx'
-import { useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { QueryData } from '@supabase/supabase-js'
 
-export const SearchBar = () => {
+export const SearchBar = ({
+    setSearch,
+}: {
+    setSearch: Dispatch<SetStateAction<string>>
+}) => {
     const resourcesQuery = client.from('resources').select()
     type ResourcesType = QueryData<typeof resourcesQuery>
     const [items, setItems] = useState<any>()
@@ -17,5 +21,12 @@ export const SearchBar = () => {
         }
         fetchData()
     }, [])
-    return <ReactSearchAutocomplete items={items} />
+    return (
+        <ReactSearchAutocomplete
+            items={items}
+            onSearch={(keyword) => {
+                setSearch(keyword)
+            }}
+        />
+    )
 }
