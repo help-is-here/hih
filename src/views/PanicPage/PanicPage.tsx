@@ -28,7 +28,7 @@ export const PanicPage = (props: { level: string }) => {
             default:
                 setActivePage(<PanicMain />)
         }
-    }, [location])
+    }, [location, level])
     return (
         <div className="relative w-screen min-h-screen bg-orange-50">
             <Navigation />
