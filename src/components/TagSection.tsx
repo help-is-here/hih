@@ -1,4 +1,4 @@
-import MiniTag from '@/MiniTag'
+import MiniTag from '@/components/MiniTag'
 import { useState, useEffect } from 'react'
 import client from '@/database/client'
 import { QueryData } from '@supabase/supabase-js'
