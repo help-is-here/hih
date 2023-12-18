@@ -24,7 +24,7 @@ export default function Auth({ view }: AuthProps) {
             email: email,
             password: password,
             options: {
-                emailRedirectTo: 'http://localhost:5173/',
+                emailRedirectTo: import.meta.env.BASE_URL,
             },
         })
         if (!error) navigate('/')
@@ -57,7 +57,7 @@ export default function Auth({ view }: AuthProps) {
 
     const sendResetEmail = async () => {
         await client.auth.resetPasswordForEmail(email, {
-            redirectTo: 'http://localhost:5173/change-password',
+            redirectTo: '/change-password',
         })
     }
 
