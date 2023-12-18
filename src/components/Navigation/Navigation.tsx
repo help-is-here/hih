@@ -7,11 +7,11 @@ import LogoutButton from '../Auth/LogoutButton.tsx'
 
 export const Navigation = () => {
     return (
-        <div className="w-full bg-white p-8 flex md:justify-center justify-between">
+        <div className="flex w-full justify-between bg-white p-8 md:justify-center">
             <div className="justify-self-start">
                 <img src={logo} alt="logo" className="h-12" />
             </div>
-            <div className="hidden grow md:flex justify-center">
+            <div className="hidden grow justify-center md:flex">
                 <NavLink title="Home" link="/" />
                 <NavLink title="Resources" link="/resources" />
                 <NavLink title="Panic Page" link="/panic" />
@@ -24,7 +24,7 @@ export const Navigation = () => {
                     notSession={<LoginButton />}
                 />
             </div>
-            <div className="md:hidden justify-self-end flex items-center">
+            <div className="flex items-center justify-self-end md:hidden">
                 <FaBars size="2.5em" color="rgb(249 115 22)" />
             </div>
         </div>

@@ -8,7 +8,7 @@ export default function AuthPageLayout({ children }: AuthPageLayoutProps) {
     return (
         <>
             <Navigation />
-            <div className="w-screen h-screen flex justify-center items-center bg-orange-950">
+            <div className="flex h-screen w-screen items-center justify-center bg-orange-950">
                 {children}
             </div>
         </>

@@ -36,7 +36,7 @@ export default function ValidatedInput({
         <>
             <input
                 type={type}
-                className={`px-4 py-2 rounded-full block w-full border border-solid ${
+                className={`block w-full rounded-full border border-solid px-4 py-2 ${
                     error == 'Looks good!'
                         ? 'border-green-500'
                         : 'border-red-500'
@@ -46,7 +46,7 @@ export default function ValidatedInput({
                 onChange={(e) => setError(validate(e.target.value))}
             ></input>
             <span
-                className={`text-xs ms-4 ${
+                className={`ms-4 text-xs ${
                     error == 'Looks good!' ? 'text-green-500' : 'text-red-500'
                 }`}
             >
