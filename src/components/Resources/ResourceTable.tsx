@@ -31,32 +31,18 @@ export default function ResourceTable() {
         fetchData()
 
         // Listen for updates
-        client
-            .channel('schema-db-changes')
-            .on(
-                'postgres_changes',
-                { event: 'UPDATE', schema: 'public', table: 'resources' },
-                (payload) => updateRow(payload.new)
-            )
-            .subscribe()
     }, [])
 
-    const updateRow = (newResource) => {
-        const temp = JSON.parse(JSON.stringify(data))
-        temp.splice(
-            data.map((o) => o.id).indexOf(newResource.id),
-            1,
-            newResource
-        )
-        temp.sort((a, b) => a.num_helped - b.num_helped)
-        setData(temp)
-    }
-
-    const favorite = async (id: number, count: number) => {
+    const favorite = async (row: SingleResource) => {
+        const new_helped = row.num_helped + 1
+        const idx = data.map((o) => o.id).indexOf(row.id)
+        const temp = [...data]
+        temp[idx].num_helped = new_helped
+        setData([...temp])
         await client
             .from('resources')
-            .update({ num_helped: count + 1 })
-            .eq('id', id)
+            .update({ num_helped: new_helped })
+            .eq('id', row.id)
     }
 
     return (
@@ -118,11 +104,8 @@ export default function ResourceTable() {
                                         <SessionWrapper
                                             ifSession={
                                                 <button
-                                                    onClick={() =>
-                                                        favorite(
-                                                            d.id,
-                                                            d.num_helped
-                                                        )
+                                                    onClick={async () =>
+                                                        await favorite(d)
                                                     }
                                                 >
                                                     <FaHeart className="ml-1 text-orange-500 " />
