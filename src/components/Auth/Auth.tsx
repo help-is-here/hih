@@ -20,7 +20,7 @@ export default function Auth({ view }: AuthProps) {
     }, [view])
 
     const signUpNewUser = async () => {
-        const { data, error } = await client.auth.signUp({
+        const { error } = await client.auth.signUp({
             email: email,
             password: password,
             options: {
@@ -31,7 +31,7 @@ export default function Auth({ view }: AuthProps) {
         else alert('Oops, an error occured')
     }
     const signInWithEmail = async () => {
-        const { data, error } = await client.auth.signInWithPassword({
+        const { error } = await client.auth.signInWithPassword({
             email: email,
             password: password,
         })
@@ -40,7 +40,7 @@ export default function Auth({ view }: AuthProps) {
     }
 
     const signInWithGoogle = async () => {
-        const { data, error } = await client.auth.signInWithOAuth({
+        const { error } = await client.auth.signInWithOAuth({
             provider: 'google',
         })
         if (!error) navigate('/')
@@ -48,7 +48,7 @@ export default function Auth({ view }: AuthProps) {
     }
 
     const updatePassword = async () => {
-        const { data, error } = await client.auth.updateUser({
+        const { error } = await client.auth.updateUser({
             password: password,
         })
         if (!error) navigate('/')
