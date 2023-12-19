@@ -1,11 +1,11 @@
 import aboutImage from '../../assets/about.svg'
 export const About = () => {
     return (
-        <section className="flex justify-center flex-col py-12 bg-white px-8">
-            <h4 className="md:text-6xl text-4xl flex justify-center">About</h4>
-            <div className="flex md:flex-row flex-col justify-center">
+        <section className="flex flex-col justify-center bg-white px-8 py-12">
+            <h4 className="flex justify-center text-4xl md:text-6xl">About</h4>
+            <div className="flex flex-col justify-center md:flex-row">
                 <img src={aboutImage} alt="About" className="md:w-1/3" />
-                <span className="p-12 md:w-1/3 flex justify-center flex-col leading-8">
+                <span className="flex flex-col justify-center p-12 leading-8 md:w-1/3">
                     Help is Here is more than just a website; it's a
                     community-curated sanctuary dedicated to supporting mental
                     well-being.

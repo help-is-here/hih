@@ -5,14 +5,14 @@ import AuthPageLayout from '@/components/Auth/AuthPageLayout'
 
 const LoginPage = () => {
     const ifSession = (
-        <div className="w-96 bg-orange-50 rounded-lg p-8">
+        <div className="w-96 rounded-lg bg-orange-50 p-8">
             <Auth redirectTo="/" view="changePassword" />
         </div>
     )
     const notSession = (
         <div className="text-xl text-white">
             You do not have access
-            <div className="flex justify-center my-12">
+            <div className="my-12 flex justify-center">
                 <LoginButton />
             </div>
         </div>

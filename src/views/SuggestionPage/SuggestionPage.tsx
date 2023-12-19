@@ -5,7 +5,7 @@ export const SuggestionPage = () => {
     return (
         <>
             <Navigation />
-            <div className="container mx-auto px-4 py-8 bg-orange-200 flex justify-center">
+            <div className="container mx-auto flex justify-center bg-orange-200 px-4 py-8">
                 <ResourceForm />
             </div>
         </>

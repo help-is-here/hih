@@ -29,50 +29,14 @@ export default function ResourceTable() {
             setData(resources)
         }
         fetchData()
-
-        // Listen for updates
-        client
-            .channel('schema-db-changes')
-            .on(
-                'postgres_changes',
-                { event: 'UPDATE', schema: 'public', table: 'resources' },
-                (payload) => updateRow(payload.new)
-            )
-            .subscribe()
-    }, [])
-
-    const updateRow = (newResource) => {
-        {
-            const temp = data.slice(
-                0,
-                data.map((o) => o.id).indexOf(newResource.id) - 1
-            )
-            temp.push(newResource)
-            temp.push(
-                ...data.slice(
-                    data.map((o) => o.id).indexOf(newResource.id) + 1,
-                    data.length
-                )
-            )
-            temp.sort((a, b) => a.num_helped - b.num_helped)
-            setData(temp)
-        }
-    }
-
-    const favorite = async (id: number, count: number) => {
-        await client
-            .from('resources')
-            .update({ num_helped: count + 1 })
-            .eq('id', id)
-    }
-
+    }, [resourcesQuery])
     return (
-        <table className="w-full bg-white rounded-lg">
-            <thead className="border-solid border-0 border-b-8 border-orange-50 ">
+        <table className="w-full rounded-lg bg-white">
+            <thead className="border-0 border-b-8 border-solid border-orange-50 ">
                 <tr>
-                    <th className="text-left p-4">Resource</th>
-                    <th className="text-left p-4">Description</th>
-                    <th className="text-left p-4">Tags</th>
+                    <th className="p-4 text-left">Resource</th>
+                    <th className="p-4 text-left">Description</th>
+                    <th className="p-4 text-left">Tags</th>
                     <th></th>
                 </tr>
             </thead>
@@ -83,7 +47,7 @@ export default function ResourceTable() {
                             className="border-orange-50 hover:bg-gray-100"
                             key={d.name}
                         >
-                            <td className="p-4 w-96">
+                            <td className="w-96 p-4">
                                 <a
                                     className="text-orange-900 hover:underline"
                                     href={d.link}
@@ -94,10 +58,10 @@ export default function ResourceTable() {
                                 </a>
                             </td>
                             <td className="p-4">{d.description}</td>
-                            <td className="flex flex-wrap p-4 gap-1 w-48">
+                            <td className="flex w-48 flex-wrap gap-1 p-4">
                                 <TagSection resourceId={d.id} />
                             </td>
-                            <td className="text-xs p-4 w-32">
+                            <td className="p-4 text-xs w-32">
                                 <Tooltip
                                     content={
                                         d.num_helped
@@ -110,7 +74,7 @@ export default function ResourceTable() {
                                 >
                                     <span
                                         data-tooltip-target="tooltip-default"
-                                        className="text-xs font-bold flex justify-end text-right"
+                                        className="flex justify-end text-right text-xs font-bold"
                                     >
                                         <span>
                                             {d.num_helped ? (
@@ -125,11 +89,8 @@ export default function ResourceTable() {
                                         <SessionWrapper
                                             ifSession={
                                                 <button
-                                                    onClick={() =>
-                                                        favorite(
-                                                            d.id,
-                                                            d.num_helped
-                                                        )
+                                                    onClick={async () =>
+                                                        await favorite(d)
                                                     }
                                                 >
                                                     <FaHeart className="ml-1 text-orange-500 " />

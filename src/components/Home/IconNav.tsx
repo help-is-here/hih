@@ -27,12 +27,12 @@ export const IconNav = () => {
         },
     ]
     return (
-        <section className="flex justify-center flex-col py-12">
-            <h4 className="md:text-6xl text-4xl flex justify-center text-center">
+        <section className="flex flex-col justify-center py-12">
+            <h4 className="flex justify-center text-center text-4xl md:text-6xl">
                 I need help with ...
             </h4>
             <br />
-            <div className="h-100px flex justify-center md:flex-row flex-col items-center">
+            <div className="h-100px flex flex-col items-center justify-center md:flex-row">
                 {details.map((item) => {
                     return (
                         <IconNavElement

@@ -20,7 +20,7 @@ export default function Auth({ view }: AuthProps) {
     }, [view])
 
     const signUpNewUser = async () => {
-        const { data, error } = await client.auth.signUp({
+        const { error } = await client.auth.signUp({
             email: email,
             password: password,
             options: {
@@ -31,7 +31,7 @@ export default function Auth({ view }: AuthProps) {
         else alert('Oops, an error occured')
     }
     const signInWithEmail = async () => {
-        const { data, error } = await client.auth.signInWithPassword({
+        const { error } = await client.auth.signInWithPassword({
             email: email,
             password: password,
         })
@@ -40,7 +40,7 @@ export default function Auth({ view }: AuthProps) {
     }
 
     const signInWithGoogle = async () => {
-        const { data, error } = await client.auth.signInWithOAuth({
+        const { error } = await client.auth.signInWithOAuth({
             provider: 'google',
         })
         if (!error) navigate('/')
@@ -48,7 +48,7 @@ export default function Auth({ view }: AuthProps) {
     }
 
     const updatePassword = async () => {
-        const { data, error } = await client.auth.updateUser({
+        const { error } = await client.auth.updateUser({
             password: password,
         })
         if (!error) navigate('/')
@@ -82,7 +82,7 @@ export default function Auth({ view }: AuthProps) {
             />
             <button
                 title={!formValid ? 'Email required' : ''}
-                className="block my-4 disabled:bg-orange-200 disabled:text-gray-600 rounded-full bg-orange-400 w-full py-2"
+                className="my-4 block w-full rounded-full bg-orange-400 py-2 disabled:bg-orange-200 disabled:text-gray-600"
                 disabled={!formValid}
                 onClick={sendResetEmail}
             >
@@ -100,7 +100,7 @@ export default function Auth({ view }: AuthProps) {
         <>
             <button
                 onClick={signInWithGoogle}
-                className="w-full mb-4 flex bg-white rounded-full gap-2 items-center px-4 py-2 justify-center"
+                className="mb-4 flex w-full items-center justify-center gap-2 rounded-full bg-white px-4 py-2"
             >
                 <FcGoogle size="1rem" />
                 <div>Sign in with Google</div>
@@ -130,20 +130,20 @@ export default function Auth({ view }: AuthProps) {
             />
             <button
                 title={!formValid ? 'All fields must be valid' : ''}
-                className="block my-4 disabled:bg-orange-200 disabled:text-gray-600 rounded-full bg-orange-400 w-full py-2"
+                className="my-4 block w-full rounded-full bg-orange-400 py-2 disabled:bg-orange-200 disabled:text-gray-600"
                 disabled={!formValid}
                 onClick={signInWithEmail}
             >
                 Sign in
             </button>
             <button
-                className="underline text-sm text-center w-full mb-2"
+                className="mb-2 w-full text-center text-sm underline"
                 onClick={() => setState('signUp')}
             >
                 Don't have an account? Sign up!
             </button>
             <button
-                className="underline text-sm text-center w-full"
+                className="w-full text-center text-sm underline"
                 onClick={() => setState('forgottenPassword')}
             >
                 Forgot password?
@@ -183,7 +183,7 @@ export default function Auth({ view }: AuthProps) {
             </div>
             <button
                 title={!formValid ? 'All fields must be valid' : ''}
-                className="block my-4 disabled:bg-orange-200 disabled:text-gray-600 rounded-full bg-orange-400 w-full py-2"
+                className="my-4 block w-full rounded-full bg-orange-400 py-2 disabled:bg-orange-200 disabled:text-gray-600"
                 disabled={!formValid}
                 onClick={signUpNewUser}
             >
@@ -215,7 +215,7 @@ export default function Auth({ view }: AuthProps) {
             </div>
             <button
                 title={!formValid ? 'All fields must be valid' : ''}
-                className="block my-4 disabled:bg-orange-200 disabled:text-gray-600 rounded-full bg-orange-400 w-full py-2"
+                className="my-4 block w-full rounded-full bg-orange-400 py-2 disabled:bg-orange-200 disabled:text-gray-600"
                 disabled={!formValid}
                 onClick={updatePassword}
             >
