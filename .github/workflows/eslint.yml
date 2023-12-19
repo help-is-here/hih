@@ -50,5 +50,5 @@ jobs:
       - name: Run Prettier
         run: npx prettier src/
           --check
-          --config .prettierrc.js
+          --config .prettierrc.cjs
         continue-on-error: false
