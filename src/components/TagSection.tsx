@@ -22,7 +22,7 @@ export default function TagSection({ resourceId }: TagSectionProps) {
             setTags(tags)
         }
         fetchData()
-    }, [])
+    }, [tagsQuery])
 
     return (
         <>

@@ -1,0 +1,3 @@
+# .git-blame-ignore-revs
+# Ignore changes in git blame for specific revisions
+4f8e868bd796996bc91e1b6139a77427ac97a30e # Add prettier plugin for tailwind css sort classes
