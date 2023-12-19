@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 import { useEffect, useMemo, useState } from 'react'
 import {
     MaterialReactTable,
@@ -23,7 +23,7 @@ export const TheTable = () => {
         const fetchData = async () => {
             const { data, error } = await resourcesQuery
             if (error) throw error
-            // @ts-ignore
+            // @ts-ignore: SupaBase client not supported for joins
             setData(data)
         }
         fetchData()
@@ -34,11 +34,12 @@ export const TheTable = () => {
             {
                 accessorFn: (resource) => {
                     return (
-                        <a
+                        <a// @ts-ignore: SupaBase client not supported for joins
                             href={resource.link}
                             className="rounded-full p-2 hover:bg-orange-500 hover:text-white"
                         >
-                            {resource.name}
+                            {// @ts-ignore: SupaBase client not supported for joins
+                                resource.name}
                         </a>
                     )
                 },
@@ -51,7 +52,7 @@ export const TheTable = () => {
             },
             {
                 accessorFn: (resource) => {
-                    // @ts-ignore
+                    // @ts-ignore: SupaBase client not supported for joins
                     return resource.tag_resource.map((tag) => (
                         <MiniTag key={tag.tags.name}>{tag.tags.name}</MiniTag>
                     ))
