@@ -42,21 +42,14 @@ export default function ResourceTable() {
     }, [])
 
     const updateRow = (newResource) => {
-        {
-            const temp = data.slice(
-                0,
-                data.map((o) => o.id).indexOf(newResource.id) - 1
-            )
-            temp.push(newResource)
-            temp.push(
-                ...data.slice(
-                    data.map((o) => o.id).indexOf(newResource.id) + 1,
-                    data.length
-                )
-            )
-            temp.sort((a, b) => a.num_helped - b.num_helped)
-            setData(temp)
-        }
+        const temp = JSON.parse(JSON.stringify(data))
+        temp.splice(
+            data.map((o) => o.id).indexOf(newResource.id),
+            1,
+            newResource
+        )
+        temp.sort((a, b) => a.num_helped - b.num_helped)
+        setData(temp)
     }
 
     const favorite = async (id: number, count: number) => {
