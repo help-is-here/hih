@@ -30,6 +30,19 @@ export default function ResourceTable() {
         }
         fetchData()
     }, [resourcesQuery])
+
+    const favorite = async (row: SingleResource) => {
+        const new_helped = row.num_helped + 1
+        const idx = data.map((o) => o.id).indexOf(row.id)
+        const temp = [...data]
+        temp[idx].num_helped = new_helped
+        setData([...temp])
+        await client
+            .from('resources')
+            .update({ num_helped: new_helped })
+            .eq('id', row.id)
+    }
+    
     return (
         <table className="w-full rounded-lg bg-white">
             <thead className="border-0 border-b-8 border-solid border-orange-50 ">
