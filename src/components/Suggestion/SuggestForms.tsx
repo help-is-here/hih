@@ -64,7 +64,7 @@ export const ResourceForm = () => {
     return (
         <div className="w-6/12">
             <form id="suggest-form" onSubmit={submit}>
-                <h1 className="text-3xl pb-2">Input a Resource</h1>
+                <h1 className="pb-2 text-3xl">Input a Resource</h1>
                 <label htmlFor="title" className="font-bold">
                     Title
                 </label>
@@ -73,7 +73,7 @@ export const ResourceForm = () => {
                     type="text"
                     id="title"
                     name="title"
-                    className="w-full mb-6 p-2 rounded"
+                    className="mb-6 w-full rounded p-2"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     required
@@ -88,7 +88,7 @@ export const ResourceForm = () => {
                     type="text"
                     id="url"
                     name="url"
-                    className="w-full mb-6 p-2 rounded"
+                    className="mb-6 w-full rounded p-2"
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     required
@@ -102,7 +102,7 @@ export const ResourceForm = () => {
                 <textarea
                     id="description"
                     name="description"
-                    className="w-full mb-6 p-2 rounded"
+                    className="mb-6 w-full rounded p-2"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     required
@@ -117,7 +117,7 @@ export const ResourceForm = () => {
                 <button
                     type="submit"
                     disabled={isDisabled}
-                    className="px-8 py-3 bg-orange-500 rounded-full m-2 mt-6 text-white ml-0 enabled:hover:bg-orange-600 font-bold disabled:bg-gray-300"
+                    className="m-2 ml-0 mt-6 rounded-full bg-orange-500 px-8 py-3 font-bold text-white enabled:hover:bg-orange-600 disabled:bg-gray-300"
                 >
                     Submit
                 </button>

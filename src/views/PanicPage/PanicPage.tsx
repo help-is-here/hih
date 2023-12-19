@@ -30,7 +30,7 @@ export const PanicPage = (props: { level: string }) => {
         }
     }, [location, level])
     return (
-        <div className="relative w-screen min-h-screen bg-orange-50">
+        <div className="relative min-h-screen w-screen bg-orange-50">
             <Navigation />
             {activePage}
             <Footer />

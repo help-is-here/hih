@@ -29,29 +29,14 @@ export default function ResourceTable() {
             setData(resources)
         }
         fetchData()
-
-        // Listen for updates
-    }, [])
-
-    const favorite = async (row: SingleResource) => {
-        const new_helped = row.num_helped + 1
-        const idx = data.map((o) => o.id).indexOf(row.id)
-        const temp = [...data]
-        temp[idx].num_helped = new_helped
-        setData([...temp])
-        await client
-            .from('resources')
-            .update({ num_helped: new_helped })
-            .eq('id', row.id)
-    }
-
+    }, [resourcesQuery])
     return (
-        <table className="w-full bg-white rounded-lg">
-            <thead className="border-solid border-0 border-b-8 border-orange-50 ">
+        <table className="w-full rounded-lg bg-white">
+            <thead className="border-0 border-b-8 border-solid border-orange-50 ">
                 <tr>
-                    <th className="text-left p-4">Resource</th>
-                    <th className="text-left p-4">Description</th>
-                    <th className="text-left p-4">Tags</th>
+                    <th className="p-4 text-left">Resource</th>
+                    <th className="p-4 text-left">Description</th>
+                    <th className="p-4 text-left">Tags</th>
                     <th></th>
                 </tr>
             </thead>
@@ -62,7 +47,7 @@ export default function ResourceTable() {
                             className="border-orange-50 hover:bg-gray-100"
                             key={d.name}
                         >
-                            <td className="p-4 w-96">
+                            <td className="w-96 p-4">
                                 <a
                                     className="text-orange-900 hover:underline"
                                     href={d.link}
@@ -73,10 +58,10 @@ export default function ResourceTable() {
                                 </a>
                             </td>
                             <td className="p-4">{d.description}</td>
-                            <td className="flex flex-wrap p-4 gap-1 w-48">
+                            <td className="flex w-48 flex-wrap gap-1 p-4">
                                 <TagSection resourceId={d.id} />
                             </td>
-                            <td className="text-xs p-4 w-32">
+                            <td className="p-4 text-xs">
                                 <Tooltip
                                     content={
                                         d.num_helped
@@ -89,7 +74,7 @@ export default function ResourceTable() {
                                 >
                                     <span
                                         data-tooltip-target="tooltip-default"
-                                        className="text-xs font-bold flex justify-end text-right"
+                                        className="flex justify-end text-right text-xs font-bold"
                                     >
                                         <span>
                                             {d.num_helped ? (

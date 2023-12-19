@@ -6,14 +6,14 @@ const LoginPage = () => {
     const ifSession = (
         <div className="text-xl text-white">
             Welcome to our site! You are logged in.
-            <div className="flex justify-center my-12 gap-4">
+            <div className="my-12 flex justify-center gap-4">
                 <a href="/">
-                    <button className="bg-white text-orange-950 rounded-full px-4 py-2">
+                    <button className="rounded-full bg-white px-4 py-2 text-orange-950">
                         Find out More
                     </button>
                 </a>
                 <a href="/change-password">
-                    <button className="bg-white text-orange-950 rounded-full px-4 py-2">
+                    <button className="rounded-full bg-white px-4 py-2 text-orange-950">
                         Change Password
                     </button>
                 </a>
@@ -21,7 +21,7 @@ const LoginPage = () => {
         </div>
     )
     const notSession = (
-        <div className="w-96 bg-orange-50 rounded-lg p-8">
+        <div className="w-96 rounded-lg bg-orange-50 p-8">
             <Auth view="signIn" redirectTo="/" />
         </div>
     )

@@ -6,7 +6,7 @@ import { Footer } from '@/components/Footer/Footer.tsx'
 
 export const ResourcesPage = () => {
     return (
-        <div className="relative w-screen min-h-screen bg-orange-50">
+        <div className="relative min-h-screen w-screen bg-orange-50">
             <Navigation />
             <section className="p-8">
                 <H1 title="Resources" />
