@@ -61,7 +61,7 @@ export default function ResourceTable() {
                             <td className="flex w-48 flex-wrap gap-1 p-4">
                                 <TagSection resourceId={d.id} />
                             </td>
-                            <td className="p-4 text-xs">
+                            <td className="p-4 text-xs w-32">
                                 <Tooltip
                                     content={
                                         d.num_helped
