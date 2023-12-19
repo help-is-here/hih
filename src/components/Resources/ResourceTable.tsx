@@ -42,7 +42,7 @@ export default function ResourceTable() {
             .update({ num_helped: new_helped })
             .eq('id', row.id)
     }
-    
+
     return (
         <table className="w-full rounded-lg bg-white">
             <thead className="border-0 border-b-8 border-solid border-orange-50 ">
@@ -74,7 +74,7 @@ export default function ResourceTable() {
                             <td className="flex w-48 flex-wrap gap-1 p-4">
                                 <TagSection resourceId={d.id} />
                             </td>
-                            <td className="p-4 text-xs w-32">
+                            <td className="w-32 p-4 text-xs">
                                 <Tooltip
                                     content={
                                         d.num_helped
