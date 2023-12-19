@@ -6,6 +6,15 @@ import { FaHeart, FaSun } from 'react-icons/fa'
 import { Tooltip } from 'flowbite-react'
 import SessionWrapper from '../Auth/SessionWrapper'
 
+type SingleResource = {
+    created_at: Date
+    description: string
+    id: number
+    in_review: boolean
+    link: string
+    name: string
+    num_helped: number
+}
 export default function ResourceTable() {
     const resourcesQuery = client.from('resources').select()
     type ResourcesType = QueryData<typeof resourcesQuery>
@@ -16,6 +25,7 @@ export default function ResourceTable() {
             const { data, error } = await resourcesQuery
             if (error) throw error
             const resources: ResourcesType = data
+            resources.sort((a, b) => a.num_helped - b.num_helped)
             setData(resources)
         }
         fetchData()
@@ -26,17 +36,28 @@ export default function ResourceTable() {
             .on(
                 'postgres_changes',
                 { event: 'UPDATE', schema: 'public', table: 'resources' },
-                (payload) => {
-                    data.splice(
-                        data.map((o) => o.id).indexOf(payload.new.id),
-                        1,
-                        payload.new
-                    )
-                    setData(data.sort((a, b) => a.num_helped - b.num_helped))
-                }
+                (payload) => updateRow(payload.new)
             )
             .subscribe()
     }, [])
+
+    const updateRow = (newResource) => {
+        {
+            const temp = data.slice(
+                0,
+                data.map((o) => o.id).indexOf(newResource.id) - 1
+            )
+            temp.push(newResource)
+            temp.push(
+                ...data.slice(
+                    data.map((o) => o.id).indexOf(newResource.id) + 1,
+                    data.length
+                )
+            )
+            temp.sort((a, b) => a.num_helped - b.num_helped)
+            setData(temp)
+        }
+    }
 
     const favorite = async (id: number, count: number) => {
         await client
