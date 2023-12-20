@@ -18,7 +18,6 @@ export const SearchBar = () => {
             // TODO: Fetch new resources that match searchQuery from user input
             // const { data, error } = await resourcesQuery
             // if (error) throw error
-
             // setItems(data?.resources || [])
         }
         fetchData()
