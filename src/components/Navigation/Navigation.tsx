@@ -3,11 +3,11 @@ import { FaBars } from 'react-icons/fa'
 import logo from '../../assets/logo.png'
 import LoginButton from '../Auth/LoginButton.tsx'
 import SessionWrapper from '../Auth/SessionWrapper.tsx'
-import LogoutButton from '../Auth/LogoutButton.tsx'
+import ProfileMenu from './ProfileMenu.tsx'
 
 export const Navigation = () => {
     return (
-        <div className="flex w-full justify-between bg-white p-8 md:justify-center">
+        <div className="flex w-full items-center justify-between bg-white p-8 md:justify-center">
             <div className="justify-self-start">
                 <img src={logo} alt="logo" className="h-12" />
             </div>
@@ -20,7 +20,7 @@ export const Navigation = () => {
             </div>
             <div className="hidden md:block">
                 <SessionWrapper
-                    ifSession={<LogoutButton />}
+                    ifSession={<ProfileMenu />}
                     notSession={<LoginButton />}
                 />
             </div>
