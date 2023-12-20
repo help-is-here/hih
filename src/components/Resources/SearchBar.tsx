@@ -1,3 +1,5 @@
+// TODO: Implement search bar
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import client from '@/database/client'
 import { useEffect, useState } from 'react'
 import { ReactSearchAutocomplete } from 'react-search-autocomplete'
