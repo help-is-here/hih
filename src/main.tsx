@@ -8,6 +8,7 @@ import { SuggestionPage } from '@/views/SuggestionPage/SuggestionPage.tsx'
 import LoginPage from '@/views/AuthPages/LoginPage.tsx'
 import ChangePasswordPage from '@/views/AuthPages/ChangePasswordPage.tsx'
 import { ResourcesPage } from '@/views/ResourcesPage/ResourcesPage.tsx'
+import { XueResourcesPage } from '@/views/ResourcesPage/XueResourcesPage.tsx'
 import { PanicPage } from '@/views/PanicPage/PanicPage.tsx'
 
 const router = createBrowserRouter([
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
     {
         path: '/panic/predicament',
         element: <PanicPage level="predicament" />,
+    },
+    {
+        path: '/xue/resources',
+        element: <XueResourcesPage />,
     },
 ])
 
