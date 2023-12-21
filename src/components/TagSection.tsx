@@ -1,16 +1,20 @@
 import MiniTag from '@/components/MiniTag'
-import { useState, useEffect } from 'react'
 import client from '@/database/client'
 import { QueryData } from '@supabase/supabase-js'
+import { useEffect, useMemo, useState } from 'react'
 
 type TagSectionProps = {
     resourceId: number
 }
 export default function TagSection({ resourceId }: TagSectionProps) {
-    const tagsQuery = client
-        .from('tag_resource')
-        .select('tags(name)')
-        .eq('resource_id', resourceId)
+    const tagsQuery = useMemo(
+        () =>
+            client
+                .from('tag_resource')
+                .select('tags(name)')
+                .eq('resource_id', resourceId),
+        [resourceId]
+    )
     type TagsType = QueryData<typeof tagsQuery>
     const [tags, setTags] = useState<TagsType>([])
 

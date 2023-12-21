@@ -1,34 +1,27 @@
 import { Footer } from '@/components/Footer/Footer.tsx'
 import { Navigation } from '@/components/Navigation/Navigation.tsx'
 import { PanicMain } from '@/components/Panic/PanicMain.tsx'
-import { useEffect, useState } from 'react'
 import { PanicPredicament } from '@/components/Panic/PanicPredicament.tsx'
 import { PanicPrepare } from '@/components/Panic/PanicPrepare.tsx'
 import { PanicPrevent } from '@/components/Panic/PanicPrevent.tsx'
-import { useLocation } from 'react-router-dom'
+import { useMemo } from 'react'
+import { useParams } from 'react-router-dom'
 
-export const PanicPage = (props: { level: string }) => {
-    const { level } = props
-    const [activePage, setActivePage] = useState(<PanicMain />)
-    const location = useLocation()
-    useEffect(() => {
+export const PanicPage = () => {
+    const { level = 'main' } = useParams<{ level: string }>()
+
+    const activePage = useMemo(() => {
         switch (level) {
-            case 'main':
-                setActivePage(<PanicMain />)
-                break
             case 'prevent':
-                setActivePage(<PanicPrevent />)
-                break
+                return <PanicPrevent />
             case 'prepare':
-                setActivePage(<PanicPrepare />)
-                break
+                return <PanicPrepare />
             case 'predicament':
-                setActivePage(<PanicPredicament />)
-                break
+                return <PanicPredicament />
             default:
-                setActivePage(<PanicMain />)
+                return <PanicMain />
         }
-    }, [location, level])
+    }, [level])
     return (
         <div className="relative min-h-screen w-screen bg-orange-50">
             <Navigation />

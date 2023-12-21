@@ -8,7 +8,9 @@ import { SuggestionPage } from '@/views/SuggestionPage/SuggestionPage.tsx'
 import LoginPage from '@/views/AuthPages/LoginPage.tsx'
 import ChangePasswordPage from '@/views/AuthPages/ChangePasswordPage.tsx'
 import { ResourcesPage } from '@/views/ResourcesPage/ResourcesPage.tsx'
+import { XueResourcesPage } from '@/views/ResourcesPage/XueResourcesPage.tsx'
 import { PanicPage } from '@/views/PanicPage/PanicPage.tsx'
+import client from './database/client.tsx'
 
 const router = createBrowserRouter([
     {
@@ -33,22 +35,30 @@ const router = createBrowserRouter([
     {
         path: '/resources',
         element: <ResourcesPage />,
+        loader: async () => {
+            return await client.from('resources').select()
+        },
     },
     {
         path: '/panic',
-        element: <PanicPage level="main" />,
+        element: <PanicPage />,
+    },
+
+    {
+        // level: prevent | prepare | predicament
+        path: '/panic/:level',
+        element: <PanicPage />,
+        loader: async () => {
+            return await client.from('resources').select()
+        },
     },
     {
-        path: '/panic/prevent',
-        element: <PanicPage level="prevent" />,
+        path: '*',
+        element: <NotFoundPage />,
     },
     {
-        path: '/panic/prepare',
-        element: <PanicPage level="prepare" />,
-    },
-    {
-        path: '/panic/predicament',
-        element: <PanicPage level="predicament" />,
+        path: '/xue/resources',
+        element: <XueResourcesPage />,
     },
 ])
 

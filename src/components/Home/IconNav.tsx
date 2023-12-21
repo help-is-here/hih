@@ -36,6 +36,7 @@ export const IconNav = () => {
                 {details.map((item) => {
                     return (
                         <IconNavElement
+                            key={item.title}
                             title={item.title}
                             image={item.image}
                             link={item.link}
