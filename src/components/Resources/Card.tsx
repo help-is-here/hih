@@ -9,23 +9,19 @@ export const Card = (props: {
     link: string
 }) => {
     const { title, description, tags, numHearted, link } = props
-    const handleClick = () => {
-        window.open(link, '_blank')
-    }
     return (
-        <div
-            className="m-4 rounded border-2 border-solid border-white bg-white p-4 text-slate-900 drop-shadow-xl hover:border-orange-300 md:m-0 md:mb-4 md:break-inside-avoid-column"
-            onClick={handleClick}
-        >
-            <Hearted number={numHearted} />
-            <H2 title={title} />
-            <div className="p-1text-center">{description}</div>
-            <div className="mt-3 flex flex-row gap-1">
-                {tags.map((i) => {
-                    return <Tag title={i} key={i} />
-                })}
+        <a href={link} target="_blank" rel="noreferrer">
+            <div className="m-4 rounded border-2 border-solid border-white bg-white p-4 text-slate-900 drop-shadow-xl hover:border-orange-300 md:m-0 md:mb-4 md:break-inside-avoid-column">
+                <Hearted number={numHearted} />
+                <H2 title={title} />
+                <div className="p-1text-center">{description}</div>
+                <div className="mt-3 flex flex-row gap-1">
+                    {tags.map((i) => {
+                        return <Tag title={i} key={i} />
+                    })}
+                </div>
             </div>
-        </div>
+        </a>
     )
 }
 
