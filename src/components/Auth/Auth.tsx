@@ -24,7 +24,7 @@ export default function Auth({ view }: AuthProps) {
             email: email,
             password: password,
             options: {
-                emailRedirectTo: import.meta.env.BASE_URL,
+                emailRedirectTo: import.meta.env.DEPLOY_URL,
             },
         })
         if (!error) navigate('/')
