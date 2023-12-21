@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom'
 
 type AuthProps = {
     view: string
-    redirectTo: string
 }
 export default function Auth({ view }: AuthProps) {
     const [curState, setState] = useState<string>('signin')
