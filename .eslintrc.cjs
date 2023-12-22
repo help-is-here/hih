@@ -47,8 +47,8 @@ module.exports = {
             },
         ],
         '@typescript-eslint/no-unsafe-assignment': 'warn',
-        curly: 'error',
+        curly: ['error', 'all'],
         'no-console': ['error', { allow: ['error', 'warn'] }],
-        eqeqeq: 2,
+        eqeqeq: ['error', 'always'],
     },
 }
