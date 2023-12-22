@@ -28,7 +28,7 @@
         "custom.d.ts",
         "vite.config.ts",
         "tailwind.config.ts",
-        "postcss.config.ts"
+        "postcss.config.js"
     ],
     "exclude": ["node_modules"],
     "references": [{ "path": "./tsconfig.node.json" }]
