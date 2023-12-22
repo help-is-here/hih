@@ -14,18 +14,20 @@ export const XueResourcesPage = () => {
         .select(
             'id, name, description, num_helped, link, tag_resource(...tags(name))'
         )
-    type ResourcesType = QueryData<typeof resourcesQuery>
+    type TResourcesType = QueryData<typeof resourcesQuery>
 
-    const [data, setData] = useState<ResourcesType>([])
+    const [data, setData] = useState<TResourcesType>([])
     useEffect(() => {
         const fetchData = async () => {
             const { data, error } = await resourcesQuery
-            if (error) throw error
-            const resources: ResourcesType = data
+            if (error) {
+                throw error
+            }
+            const resources: TResourcesType = data
             setData(resources)
         }
         fetchData()
-    }, [])
+    }, [resourcesQuery])
     return (
         <div className="bg-orange-100">
             <Navigation />

@@ -18,9 +18,11 @@ export default function ContactForm() {
             validateEmail(email) &&
             subject.trim().length > 0 &&
             message.trim().length > 0
-        )
+        ) {
             setValid(true)
-        else setValid(false)
+        } else {
+            setValid(false)
+        }
     }, [email, subject, message])
 
     const createIssue = async () => {

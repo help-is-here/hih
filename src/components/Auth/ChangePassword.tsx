@@ -11,16 +11,22 @@ export default function ChangePassword() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (validatePassword(password)) setValid(true)
-        else setValid(false)
+        if (validatePassword(password)) {
+            setValid(true)
+        } else {
+            setValid(false)
+        }
     }, [password])
 
     const updatePassword = async () => {
         const { error } = await client.auth.updateUser({
             password: password,
         })
-        if (!error) navigate('/')
-        else alert("We're so sorry, an error occured.")
+        if (!error) {
+            navigate('/')
+        } else {
+            alert("We're so sorry, an error occured.")
+        }
     }
 
     return (

@@ -12,8 +12,11 @@ export default function ForgotPassword({ setState }: TForgotPasswrodProps) {
     const [formValid, setValid] = useState<boolean>(false)
 
     useEffect(() => {
-        if (validateEmail(email)) setValid(true)
-        else setValid(false)
+        if (validateEmail(email)) {
+            setValid(true)
+        } else {
+            setValid(false)
+        }
     }, [email])
 
     const sendResetEmail = async () => {

@@ -4,11 +4,12 @@ import SignUp from './SignUp'
 import ForgotPassword from './ForgotPassword'
 import ChangePassword from './ChangePassword'
 
-type AuthProps = {
+type TAuthProps = {
     view: string
     redirectTo: string
 }
-export default function Auth({ view }: AuthProps) {
+
+export default function Auth({ view }: TAuthProps) {
     const [curState, setState] = useState<string>('signin')
 
     useEffect(() => {

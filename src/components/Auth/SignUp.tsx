@@ -15,8 +15,11 @@ export default function SignUp({ setState }: TSignUpProps) {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (validateEmail(email) && password.trim().length > 0) setValid(true)
-        else setValid(false)
+        if (validateEmail(email) && password.trim().length > 0) {
+            setValid(true)
+        } else {
+            setValid(false)
+        }
     }, [email, password])
 
     const signUpNewUser = async () => {
@@ -27,8 +30,11 @@ export default function SignUp({ setState }: TSignUpProps) {
                 emailRedirectTo: import.meta.env.BASE_URL,
             },
         })
-        if (!error) navigate('/')
-        else alert('Oops, an error occured')
+        if (!error) {
+            navigate('/')
+        } else {
+            alert('Oops, an error occured')
+        }
     }
 
     return (

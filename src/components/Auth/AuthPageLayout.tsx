@@ -1,11 +1,11 @@
 import { Footer } from '../Footer/Footer'
 import { Navigation } from '../Navigation/Navigation'
 
-type AuthPageLayoutProps = {
+type TAuthPageLayoutProps = {
     children: React.ReactNode
 }
 
-export default function AuthPageLayout({ children }: AuthPageLayoutProps) {
+export default function AuthPageLayout({ children }: TAuthPageLayoutProps) {
     return (
         <>
             <Navigation />

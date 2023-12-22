@@ -16,24 +16,33 @@ export default function SignIn({ setState }: TSignInProps) {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (validateEmail(email) && password.trim().length > 0) setValid(true)
-        else setValid(false)
+        if (validateEmail(email) && password.trim().length > 0) {
+            setValid(true)
+        } else {
+            setValid(false)
+        }
     }, [email, password])
     const signInWithEmail = async () => {
         const { error } = await client.auth.signInWithPassword({
             email: email,
             password: password,
         })
-        if (!error) navigate('/')
-        else alert("We're so sorry, an error occured.")
+        if (!error) {
+            navigate('/')
+        } else {
+            alert("We're so sorry, an error occured.")
+        }
     }
 
     const signInWithGoogle = async () => {
         const { error } = await client.auth.signInWithOAuth({
             provider: 'google',
         })
-        if (!error) navigate('/')
-        else alert("We're so sorry, an error occured.")
+        if (!error) {
+            navigate('/')
+        } else {
+            alert("We're so sorry, an error occured.")
+        }
     }
 
     return (

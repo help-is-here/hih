@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom'
 export default function ProfileMenu() {
     const signOut = async () => {
         const { error } = await client.auth.signOut()
-        if (error) throw error
+        if (error) {
+            throw error
+        }
     }
 
     const TriggerDropdown = (

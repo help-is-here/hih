@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-type ValidatedInputProps = {
+type TValidatedInputProps = {
     validator: ((val: string) => boolean) | null
     onChange: (val: string) => void
     placeholder: string
@@ -12,7 +12,7 @@ export default function ValidatedInput({
     onChange,
     placeholder,
     type = 'text',
-}: ValidatedInputProps) {
+}: TValidatedInputProps) {
     const [error, setError] = useState<string>('')
 
     const validate = (val: string) => {
@@ -30,7 +30,7 @@ export default function ValidatedInput({
             <input
                 type={type}
                 className={`block w-full rounded-full border border-solid px-4 py-2 ${
-                    error == 'Looks good!'
+                    error === 'Looks good!'
                         ? 'border-green-500'
                         : 'border-red-500'
                 }`}
