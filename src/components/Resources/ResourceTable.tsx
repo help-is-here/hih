@@ -15,7 +15,7 @@ export interface IResource {
 
 export default function ResourceTable() {
     const { data = [] } = useLoaderData() as { data: IResource[] }
-    const [tableData, setTableData] = useState<IResource[]>([])
+    const [tableData, setTableData] = useState<IResource[]>([] as IResource[])
 
     // TODO: Pass this responsibility to a context provider so we can reduce calls on panic pages where table is rendered
     useEffect(() => {
@@ -26,7 +26,7 @@ export default function ResourceTable() {
                 if (error) {
                     throw error
                 }
-                const resources: IResource[] = data
+                const resources = data as IResource[]
                 setTableData(resources)
             } catch (error) {
                 console.error('unable to fetch resources', error)
