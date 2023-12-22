@@ -23,7 +23,9 @@ export default function ResourceTable() {
             try {
                 const resourcesQuery = client.from('resources').select()
                 const { data, error } = await resourcesQuery
-                if (error) throw error
+                if (error) {
+                    throw error
+                }
                 const resources: Resource[] = data
                 setTableData(resources)
             } catch (error) {

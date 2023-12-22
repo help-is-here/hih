@@ -21,7 +21,9 @@ export default function TagSection({ resourceId }: TagSectionProps) {
     useEffect(() => {
         const fetchData = async () => {
             const { data, error } = await tagsQuery
-            if (error) throw error
+            if (error) {
+                throw error
+            }
             const tags: TagsType = data
             setTags(tags)
         }

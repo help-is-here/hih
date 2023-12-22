@@ -20,7 +20,9 @@ export const XueResourcesPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             const { data, error } = await resourcesQuery
-            if (error) throw error
+            if (error) {
+                throw error
+            }
             const resources: ResourcesType = data
             setData(resources)
         }
