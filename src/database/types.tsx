@@ -1,12 +1,12 @@
-export type Json =
+export type TJson =
     | string
     | number
     | boolean
     | null
-    | { [key: string]: Json | undefined }
-    | Json[]
+    | { [key: string]: TJson | undefined }
+    | TJson[]
 
-export interface Database {
+export interface IDatabase {
     public: {
         Tables: {
             resources: {
@@ -14,19 +14,19 @@ export interface Database {
                     // the data expected from .select()
                     id: number
                     name: string
-                    data: Json | null
+                    data: TJson | null
                 }
                 Insert: {
                     // the data to be passed to .insert()
                     id?: never // generated columns must not be supplied
                     name: string // `not null` columns with no default must be supplied
-                    data?: Json | null // nullable columns can be omitted
+                    data?: TJson | null // nullable columns can be omitted
                 }
                 Update: {
                     // the data to be passed to .update()
                     id?: never
                     name?: string // `not null` columns are optional on .update()
-                    data?: Json | null
+                    data?: TJson | null
                 }
             }
             tags: {
@@ -34,19 +34,19 @@ export interface Database {
                     // the data expected from .select()
                     id: number
                     name: string
-                    data: Json | null
+                    data: TJson | null
                 }
                 Insert: {
                     // the data to be passed to .insert()
                     id?: never // generated columns must not be supplied
                     name: string // `not null` columns with no default must be supplied
-                    data?: Json | null // nullable columns can be omitted
+                    data?: TJson | null // nullable columns can be omitted
                 }
                 Update: {
                     // the data to be passed to .update()
                     id?: never
                     name?: string // `not null` columns are optional on .update()
-                    data?: Json | null
+                    data?: TJson | null
                 }
             }
             tag_resource: {
@@ -54,19 +54,19 @@ export interface Database {
                     // the data expected from .select()
                     id: number
                     name: string
-                    data: Json | null
+                    data: TJson | null
                 }
                 Insert: {
                     // the data to be passed to .insert()
                     id?: never // generated columns must not be supplied
                     name: string // `not null` columns with no default must be supplied
-                    data?: Json | null // nullable columns can be omitted
+                    data?: TJson | null // nullable columns can be omitted
                 }
                 Update: {
                     // the data to be passed to .update()
                     id?: never
                     name?: string // `not null` columns are optional on .update()
-                    data?: Json | null
+                    data?: TJson | null
                 }
             }
         }

@@ -4,11 +4,12 @@ import ValidatedInput from '../Form/ValidatedInput'
 import { FcGoogle } from 'react-icons/fc'
 import { useNavigate } from 'react-router-dom'
 
-type AuthProps = {
+type TAuthProps = {
     view: string
     redirectTo: string
 }
-export default function Auth({ view }: AuthProps) {
+
+export default function Auth({ view }: TAuthProps) {
     const [curState, setState] = useState<string>('signin')
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
@@ -27,32 +28,44 @@ export default function Auth({ view }: AuthProps) {
                 emailRedirectTo: import.meta.env.BASE_URL,
             },
         })
-        if (!error) navigate('/')
-        else alert('Oops, an error occured')
+        if (!error) {
+            navigate('/')
+        } else {
+            alert('Oops, an error occured')
+        }
     }
     const signInWithEmail = async () => {
         const { error } = await client.auth.signInWithPassword({
             email: email,
             password: password,
         })
-        if (!error) navigate('/')
-        else alert("We're so sorry, an error occured.")
+        if (!error) {
+            navigate('/')
+        } else {
+            alert("We're so sorry, an error occured.")
+        }
     }
 
     const signInWithGoogle = async () => {
         const { error } = await client.auth.signInWithOAuth({
             provider: 'google',
         })
-        if (!error) navigate('/')
-        else alert("We're so sorry, an error occured.")
+        if (!error) {
+            navigate('/')
+        } else {
+            alert("We're so sorry, an error occured.")
+        }
     }
 
     const updatePassword = async () => {
         const { error } = await client.auth.updateUser({
             password: password,
         })
-        if (!error) navigate('/')
-        else alert("We're so sorry, an error occured.")
+        if (!error) {
+            navigate('/')
+        } else {
+            alert("We're so sorry, an error occured.")
+        }
     }
 
     const sendResetEmail = async () => {
@@ -65,7 +78,9 @@ export default function Auth({ view }: AuthProps) {
         return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val)
     }
     const validatePassword = (val: string) => {
-        if (val.length < 8) return false
+        if (val.length < 8) {
+            return false
+        }
         return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/.test(val)
     }
     const forgottenPassword = (

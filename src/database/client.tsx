@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
-import { Database } from './types'
+import { IDatabase } from './types'
 
-const client = createClient<Database>(
+const client = createClient<IDatabase>(
     import.meta.env.VITE_DB_URL,
     import.meta.env.VITE_DB_SECRET
 )
