@@ -25,7 +25,7 @@ export const XueResourcesPage = () => {
             setData(resources)
         }
         fetchData()
-    }, [])
+    }, [resourcesQuery])
     return (
         <div className="bg-orange-100">
             <Navigation />
