@@ -27,7 +27,7 @@ export default function ContactForm() {
 
     const createIssue = async () => {
         const octokit = new Octokit({
-            auth: import.meta.env.VITE_GH_TOKEN,
+            auth: String(import.meta.env.VITE_GH_TOKEN),
         })
 
         await octokit.request('POST /repos/help-is-here/hih/issues', {
