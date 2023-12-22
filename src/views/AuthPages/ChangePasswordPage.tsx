@@ -6,7 +6,7 @@ import AuthPageLayout from '@/components/Auth/AuthPageLayout'
 const LoginPage = () => {
     const ifSession = (
         <div className="w-96 rounded-lg bg-orange-50 p-8">
-            <Auth redirectTo="/" view="changePassword" />
+            <Auth view="changePassword" />
         </div>
     )
     const notSession = (
