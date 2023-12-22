@@ -18,33 +18,58 @@ export default function ContactForm() {
             validateEmail(email) &&
             subject.trim().length > 0 &&
             message.trim().length > 0
-        ) {
+        )
             setValid(true)
-        } else {
-            setValid(false)
-        }
+        else setValid(false)
     }, [email, subject, message])
 
     const createIssue = async () => {
         const octokit = new Octokit({
-            auth: String(import.meta.env.VITE_GH_TOKEN),
+            auth: import.meta.env.VITE_GH_TOKEN,
         })
 
-        await octokit.request('POST /repos/help-is-here/hih/issues', {
-            owner: 'help-is-here',
-            repo: 'hih',
-            title: subject,
-            body: message,
-            labels: ['info request'],
+        const data = await octokit.request(
+            'POST /repos/help-is-here/hih/issues',
+            {
+                owner: 'help-is-here',
+                repo: 'hih',
+                title: subject,
+                body: `from:${email} message: ${message}`,
+                labels: ['info request'],
+                headers: {
+                    'X-GitHub-Api-Version': '2022-11-28',
+                },
+            }
+        )
+        const addQuery = `
+                mutation {
+                    addProjectV2ItemById(
+                        input: {
+                            projectId: "PVT_kwDOCTO1FM4AZ1WC"
+                            contentId: "${data.data.node_id}"
+                        }
+                    ) {
+                        item {
+                            id
+                        }
+                    }
+                }
+            `
+        await fetch('https://api.github.com/graphql', {
+            method: 'POST',
             headers: {
-                'X-GitHub-Api-Version': '2022-11-28',
+                'Content-Type': 'application/json',
+                Authorization: 'bearer ' + import.meta.env.VITE_GH_TOKEN,
             },
+            body: JSON.stringify({ query: addQuery }),
         })
     }
     return (
         <div className="flex h-screen w-screen justify-center bg-orange-950">
             <form
-                onSubmit={(e) => e.preventDefault()}
+                onSubmit={() =>
+                    alert("Thanks for the email! We'll be in touch shortly.")
+                }
                 className="mt-24 flex h-fit w-96 max-w-md flex-col gap-2 rounded-lg bg-orange-50 p-12"
             >
                 <div className="mb-8 text-center text-xl">Contact us!</div>
