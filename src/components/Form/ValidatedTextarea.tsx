@@ -4,14 +4,12 @@ type ValidatedInputProps = {
     validator: ((val: string) => boolean) | null
     onChange: (val: string) => void
     placeholder: string
-    type: string
 }
 
 export default function ValidatedInput({
     validator,
     onChange,
     placeholder,
-    type = 'text',
 }: ValidatedInputProps) {
     const [error, setError] = useState<string>('')
 
@@ -27,9 +25,8 @@ export default function ValidatedInput({
     }
     return (
         <>
-            <input
-                type={type}
-                className={`block w-full rounded-full border border-solid px-4 py-2 ${
+            <textarea
+                className={`block w-full rounded-xl border border-solid px-4 py-2 ${
                     error == 'Looks good!'
                         ? 'border-green-500'
                         : 'border-red-500'
@@ -40,7 +37,7 @@ export default function ValidatedInput({
                     setError(validate(e.target.value))
                     onChange(e.target.value)
                 }}
-            ></input>
+            ></textarea>
             <span
                 className={`ms-4 text-xs ${
                     error == 'Looks good!' ? 'text-green-500' : 'text-red-500'
