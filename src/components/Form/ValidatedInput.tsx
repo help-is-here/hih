@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 type ValidatedInputProps = {
-    validator: (val: string) => boolean
+    validator: ((val: string) => boolean) | null
     onValid: (val: string) => void
     onInvalid: (val: string) => void
     placeholder: string
@@ -18,7 +18,7 @@ export default function ValidatedInput({
     const [error, setError] = useState<string>('')
 
     const validate = (val: string) => {
-        const isValid = validator(val)
+        const isValid = validator ? validator(val) : true
         if (isValid) {
             onValid(val)
             return 'Looks good!'
@@ -43,13 +43,19 @@ export default function ValidatedInput({
                 placeholder={placeholder}
                 onChange={(e) => setError(validate(e.target.value))}
             ></input>
-            <span
-                className={`ms-4 text-xs ${
-                    error == 'Looks good!' ? 'text-green-500' : 'text-red-500'
-                }`}
-            >
-                {error}
-            </span>
+            {validator ? (
+                <span
+                    className={`ms-4 text-xs ${
+                        error == 'Looks good!'
+                            ? 'text-green-500'
+                            : 'text-red-500'
+                    }`}
+                >
+                    {error}
+                </span>
+            ) : (
+                <></>
+            )}
         </>
     )
 }

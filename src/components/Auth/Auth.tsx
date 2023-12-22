@@ -120,7 +120,7 @@ export default function Auth({ view }: AuthProps) {
             </div>
             <ValidatedInput
                 type="password"
-                validator={() => true}
+                validator={null}
                 onValid={(val) => {
                     setPassword(val)
                     setValid(true)
