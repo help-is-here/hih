@@ -4,11 +4,12 @@ import ValidatedInput from '../Form/ValidatedInput'
 import { FcGoogle } from 'react-icons/fc'
 import { useNavigate } from 'react-router-dom'
 
-type AuthProps = {
+type TAuthProps = {
     view: string
     redirectTo: string
 }
-export default function Auth({ view }: AuthProps) {
+
+export default function Auth({ view }: TAuthProps) {
     const [curState, setState] = useState<string>('signin')
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')

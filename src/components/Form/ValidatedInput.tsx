@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-type ValidatedInputProps = {
+type TValidatedInputProps = {
     validator: ((val: string) => boolean) | null
     onValid: (val: string) => void
     onInvalid: (val: string) => void
@@ -14,7 +14,7 @@ export default function ValidatedInput({
     onInvalid,
     placeholder,
     type = 'text',
-}: ValidatedInputProps) {
+}: TValidatedInputProps) {
     const [error, setError] = useState<string>('')
 
     const validate = (val: string) => {
