@@ -8,7 +8,10 @@ module.exports = {
     ],
     ignorePatterns: ['dist', '.eslintrc.cjs'],
     parser: '@typescript-eslint/parser',
-    plugins: ['react-refresh'],
+    parserOptions: {
+        project: './tsconfig.json',
+    },
+    plugins: ['react-refresh', 'prettier', '@typescript-eslint'],
     rules: {
         'prettier/prettier': 'error',
         'react-refresh/only-export-components': [
