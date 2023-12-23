@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { FaHeart } from 'react-icons/fa'
 import { useLoaderData } from 'react-router-dom'
 
-export interface Resource {
+export interface IResource {
     id: number
     name: string
     description: string
@@ -14,8 +14,8 @@ export interface Resource {
 }
 
 export default function ResourceTable() {
-    const { data = [] } = useLoaderData() as { data: Resource[] }
-    const [tableData, setTableData] = useState<Resource[]>([])
+    const { data = [] } = useLoaderData() as { data: IResource[] }
+    const [tableData, setTableData] = useState<IResource[]>([] as IResource[])
 
     // TODO: Pass this responsibility to a context provider so we can reduce calls on panic pages where table is rendered
     useEffect(() => {
@@ -23,8 +23,10 @@ export default function ResourceTable() {
             try {
                 const resourcesQuery = client.from('resources').select()
                 const { data, error } = await resourcesQuery
-                if (error) throw error
-                const resources: Resource[] = data
+                if (error) {
+                    throw error
+                }
+                const resources = data as IResource[]
                 setTableData(resources)
             } catch (error) {
                 console.error('unable to fetch resources', error)

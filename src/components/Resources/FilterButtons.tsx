@@ -12,22 +12,22 @@ export const FilterButtons = () => {
 
 const HeartedButton = () => {
     return (
-        <div className="flex w-1/2 flex-row items-center rounded bg-orange-100 p-2 text-slate-900 hover:bg-orange-200">
+        <button className="flex w-1/2 flex-row items-center rounded bg-orange-100 p-2 text-slate-900 hover:bg-orange-200 md:w-full">
             <div className="px-2">
                 <FaHeart />
             </div>
-            Hearted
-        </div>
+            <span>Hearted Resources</span>
+        </button>
     )
 }
 
 const FilterTagsButton = () => {
     return (
-        <div className="flex w-1/2 flex-row items-center rounded bg-orange-200 p-2 text-slate-900 hover:bg-orange-300">
+        <button className="flex w-1/2 flex-row items-center rounded bg-orange-200 p-2 text-slate-900 hover:bg-orange-300 md:hidden">
             <div className="px-2">
                 <FaTag size="20px" />
             </div>
             Filter Tags
-        </div>
+        </button>
     )
 }

@@ -2,11 +2,11 @@ import client from '@/database/client'
 import { useState, useEffect } from 'react'
 import { Session } from '@supabase/supabase-js'
 
-type SessionWrapperProps = {
+type TSessionWrapperProps = {
     ifSession: React.ReactNode
     notSession: React.ReactNode
 }
-const SessionWrapper = ({ ifSession, notSession }: SessionWrapperProps) => {
+const SessionWrapper = ({ ifSession, notSession }: TSessionWrapperProps) => {
     const [session, setSession] = useState<Session | null>(null)
 
     useEffect(() => {

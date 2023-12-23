@@ -1,32 +1,21 @@
 # Help is Here
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/9d9a9c17-2437-4e77-95c5-420d502f5347/deploy-status)](https://helpishere.netlify.app/)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/9d9a9c17-2437-4e77-95c5-420d502f5347/deploy-status)](https://placeholder-helpishere.netlify.app/)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to Help is Here! (We say hih pronounced "hi") Thanks for being one of our awesome contributors.
 
-Currently, two official plugins are available:
+## OS
+Please consider using a unix based system since our linting tends to perform best there. 
 
--   [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
--   [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
--   Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-    // other rules...
-    parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-        project: ['./tsconfig.json', './tsconfig.node.json'],
-        tsconfigRootDir: __dirname,
-    },
-}
+## Install
+If you've developed with node before, this should be just like riding a bike for you!
+```bash
+npm install
 ```
 
--   Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
--   Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
--   Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Running the app
+Make sure to copy the .env.local.template and update the variables in there so you have connections to the APIs used.
+```bash
+npm run dev
+```
+And just like that, you should be set!

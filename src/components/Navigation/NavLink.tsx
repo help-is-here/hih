@@ -9,7 +9,7 @@ export const NavLink = (props: { title: string; link: string }) => {
     const currentPage = window.location.pathname
 
     useEffect(() => {
-        if (link.toLowerCase() == currentPage.toLowerCase()) {
+        if (link.toLowerCase() === currentPage.toLowerCase()) {
             setHighlight(true)
         } else {
             setHighlight(false)
