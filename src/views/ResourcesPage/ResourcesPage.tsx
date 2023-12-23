@@ -1,25 +1,48 @@
 import { Navigation } from '@/components/Navigation/Navigation.tsx'
+import { SidebarMobile } from '@/components/Resources/SidebarMobile.tsx'
 import { H1 } from '@/components/Text/Headings.tsx'
-import ResourceTable from '@/components/Resources/ResourceTable.tsx'
-import { SearchBar } from '@/components/Resources/SearchBar.tsx'
-import { Footer } from '@/components/Footer/Footer.tsx'
+import client from '@/database/client.tsx'
+import { QueryData } from '@supabase/supabase-js'
+import { useEffect, useState } from 'react'
+import { SidebarDesktop } from '@/components/Resources/SidebarDesktop.tsx'
+import { ResourceCard } from '@/components/Resources/ResourceCard'
 
 export const ResourcesPage = () => {
+    // Getting the data
+    const resourcesQuery = client
+        .from('resources')
+        .select(
+            'id, name, description, num_helped, link, tag_resource(...tags(name))'
+        )
+    type TResourcesType = QueryData<typeof resourcesQuery>
+
+    const [data, setData] = useState<TResourcesType>([])
+    useEffect(() => {
+        const fetchData = async () => {
+            const { data, error } = await resourcesQuery
+            if (error) {
+                throw error
+            }
+            const resources: TResourcesType = data
+            setData(resources)
+        }
+        fetchData()
+    }, [resourcesQuery])
     return (
-        <div className="relative min-h-screen w-screen bg-orange-50">
+        <div className="bg-orange-100">
             <Navigation />
-            <section className="p-8">
-                <H1 title="Resources" />
-            </section>
-            <section className="flex justify-center">
-                <div className="w-1/2">
-                    <SearchBar />
-                </div>
-            </section>
-            <section className="p-8">
-                <ResourceTable />
-            </section>
-            <Footer />
+            <H1 title="Resources" />
+            <div className="flex flex-col md:container md:mx-auto md:flex-row md:px-4">
+                <section>
+                    <SidebarMobile className="block md:hidden" />
+                    <SidebarDesktop className="hidden md:block" />
+                </section>
+                <section className="p-3 md:columns-1 md:overflow-auto lg:columns-2 xl:columns-3">
+                    {data.map((d: any) => {
+                        return <ResourceCard resource={d} key={d.id} />
+                    })}
+                </section>
+            </div>
         </div>
     )
 }

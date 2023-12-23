@@ -4,14 +4,7 @@ import { Tooltip } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import { FaHeart } from 'react-icons/fa'
 import { useLoaderData } from 'react-router-dom'
-
-export interface IResource {
-    id: number
-    name: string
-    description: string
-    link: string
-    num_helped: number
-}
+import { IResource } from '@/types'
 
 export default function ResourceTable() {
     const { data = [] } = useLoaderData() as { data: IResource[] }
