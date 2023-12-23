@@ -6,14 +6,6 @@ import { useLoaderData } from 'react-router-dom'
 import { IResource } from '@/types'
 import SessionWrapper from '../Auth/SessionWrapper'
 
-export interface IResource {
-    id: number
-    name: string
-    description: string
-    link: string
-    num_helped: number
-}
-
 export default function ResourceTable() {
     const { data = [] } = useLoaderData() as { data: IResource[] }
     const [tableData, setTableData] = useState<IResource[]>([] as IResource[])
@@ -39,11 +31,11 @@ export default function ResourceTable() {
         }
     }, [tableData.length, data.length])
 
-    const favorite = async (row: Resource) => {
+    const favorite = async (row: IResource) => {
         const new_helped = row.num_helped + 1
         const idx = data.map((o) => o.id).indexOf(row.id)
         const temp = [...data]
-        temp[idx].num_helped = new_helped
+        temp[idx].num_helped = Number(new_helped)
         setTableData([...temp])
         await client
             .from('resources')
@@ -79,9 +71,7 @@ export default function ResourceTable() {
                                     </a>
                                 </td>
                                 <td className="p-4">{d.description}</td>
-                                <td className="flex w-48 flex-wrap gap-1 p-4">
-                                    <TagSection resourceId={d.id} />
-                                </td>
+                                <td className="flex w-48 flex-wrap gap-1 p-4"></td>
                                 <td className="w-32 p-4 text-xs">
                                     <Tooltip
                                         content={

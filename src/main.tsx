@@ -12,7 +12,6 @@ import client from './database/client.tsx'
 import ContactPage from './views/ContactPage/ContactPage.tsx'
 import AdminPage from './views/AdminPage/AdminPage.tsx'
 import { ResourcesPage } from './views/ResourcesPage/ResourcesPage.tsx'
-import ContactPage from './views/ContactPage/ContactPage.tsx'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
 const router = createBrowserRouter([

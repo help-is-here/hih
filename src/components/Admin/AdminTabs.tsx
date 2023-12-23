@@ -58,7 +58,7 @@ export default function AdminTabs() {
                     >
                         {data.data
                             // @ts-expect-error: https://github.com/supabase/postgrest-js/pull/499
-                            .filter((r) => r.in_review)
+                            .filter((r: boolean) => r.in_review)
                             // @ts-expect-error: https://github.com/supabase/postgrest-js/pull/499
                             .map((resource: IResource) => {
                                 return (
@@ -72,7 +72,7 @@ export default function AdminTabs() {
                     <Tabs.Item title="Approved" icon={FaCheckCircle}>
                         {data.data
                             // @ts-expect-error: https://github.com/supabase/postgrest-js/pull/499
-                            .filter((r) => !r.in_review)
+                            .filter((r: boolean) => !r.in_review)
                             // @ts-expect-error: https://github.com/supabase/postgrest-js/pull/499
                             .map((resource: IResource) => {
                                 return (

@@ -3,7 +3,6 @@ import { useState } from 'react'
 type TValidatedInputProps = {
     validator: ((val: string) => boolean) | null
     onChange: (val: string) => void
-    onChange: (val: string) => void
     placeholder: string
     type?: string | undefined
     value?: string | undefined
@@ -11,7 +10,6 @@ type TValidatedInputProps = {
 
 export default function ValidatedInput({
     validator,
-    onChange,
     onChange,
     placeholder,
     type = 'text',
