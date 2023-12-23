@@ -27,8 +27,7 @@
         "react-query": "^3.39.3",
         "react-router-dom": "^6.21.0",
         "react-search-autocomplete": "^8.5.2",
-        "react-tagsinput": "^3.20.3",
-        "sort-by": "^1.2.0"
+        "react-tagsinput": "^3.20.3"
     },
     "devDependencies": {
         "@types/react": "^18.2.43",
