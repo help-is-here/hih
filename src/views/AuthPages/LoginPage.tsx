@@ -22,7 +22,7 @@ const LoginPage = () => {
     )
     const notSession = (
         <div className="w-96 rounded-lg bg-orange-50 p-8">
-            <Auth view="signIn" redirectTo="/" />
+            <Auth view="signIn" />
         </div>
     )
     return (

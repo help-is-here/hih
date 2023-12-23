@@ -1,9 +1,18 @@
 import client from '@/database/client'
 import { Tooltip } from 'flowbite-react'
 import { useEffect, useState } from 'react'
-import { FaHeart } from 'react-icons/fa'
+import { FaHeart, FaSun } from 'react-icons/fa'
 import { useLoaderData } from 'react-router-dom'
 import { IResource } from '@/types'
+import SessionWrapper from '../Auth/SessionWrapper'
+
+export interface IResource {
+    id: number
+    name: string
+    description: string
+    link: string
+    num_helped: number
+}
 
 export default function ResourceTable() {
     const { data = [] } = useLoaderData() as { data: IResource[] }
@@ -30,6 +39,17 @@ export default function ResourceTable() {
         }
     }, [tableData.length, data.length])
 
+    const favorite = async (row: Resource) => {
+        const new_helped = row.num_helped + 1
+        const idx = data.map((o) => o.id).indexOf(row.id)
+        const temp = [...data]
+        temp[idx].num_helped = new_helped
+        setTableData([...temp])
+        await client
+            .from('resources')
+            .update({ num_helped: new_helped })
+            .eq('id', row.id)
+    }
     return (
         <table className="w-full rounded-lg bg-white">
             <thead className="border-0 border-b-8 border-solid border-orange-50 ">
@@ -59,9 +79,16 @@ export default function ResourceTable() {
                                     </a>
                                 </td>
                                 <td className="p-4">{d.description}</td>
-                                <td className="p-4 text-xs">
+                                <td className="flex w-48 flex-wrap gap-1 p-4">
+                                    <TagSection resourceId={d.id} />
+                                </td>
+                                <td className="w-32 p-4 text-xs">
                                     <Tooltip
-                                        content={`This resource has helped ${d.num_helped} people`}
+                                        content={
+                                            d.num_helped
+                                                ? `This resource has helped ${d.num_helped} people`
+                                                : `New resource`
+                                        }
                                         animation="duration-1000"
                                         className="bg-gray-900 text-white dark:bg-gray-700"
                                         arrow={false}
@@ -70,8 +97,29 @@ export default function ResourceTable() {
                                             data-tooltip-target="tooltip-default"
                                             className="flex justify-end text-right text-xs font-bold"
                                         >
-                                            {d.num_helped}
-                                            <FaHeart className="ml-1 text-orange-500 " />
+                                            {' '}
+                                            <span>
+                                                {d.num_helped ? (
+                                                    `Helped ${d.num_helped}`
+                                                ) : (
+                                                    <div className="flex items-center">
+                                                        <FaSun className="ml-1 text-orange-500" />{' '}
+                                                        New!
+                                                    </div>
+                                                )}
+                                            </span>
+                                            <SessionWrapper
+                                                ifSession={
+                                                    <button
+                                                        onClick={async () =>
+                                                            await favorite(d)
+                                                        }
+                                                    >
+                                                        <FaHeart className="ml-1 text-orange-500 " />
+                                                    </button>
+                                                }
+                                                notSession={<></>}
+                                            />
                                         </span>
                                     </Tooltip>
                                 </td>

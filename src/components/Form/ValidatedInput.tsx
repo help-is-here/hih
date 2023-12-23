@@ -3,6 +3,7 @@ import { useState } from 'react'
 type TValidatedInputProps = {
     validator: ((val: string) => boolean) | null
     onChange: (val: string) => void
+    onChange: (val: string) => void
     placeholder: string
     type?: string | undefined
     value?: string | undefined
@@ -10,6 +11,7 @@ type TValidatedInputProps = {
 
 export default function ValidatedInput({
     validator,
+    onChange,
     onChange,
     placeholder,
     type = 'text',
@@ -44,6 +46,13 @@ export default function ValidatedInput({
                 }}
                 defaultValue={value}
             ></input>
+            <span
+                className={`ms-4 text-xs ${
+                    error === 'Looks good!' ? 'text-green-500' : 'text-red-500'
+                }`}
+            >
+                {validator ? error : ''}
+            </span>
             <span
                 className={`ms-4 text-xs ${
                     error === 'Looks good!' ? 'text-green-500' : 'text-red-500'
