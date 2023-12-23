@@ -4,7 +4,8 @@ type TValidatedInputProps = {
     validator: ((val: string) => boolean) | null
     onChange: (val: string) => void
     placeholder: string
-    type: string
+    type?: string | undefined
+    value?: string | undefined
 }
 
 export default function ValidatedInput({
@@ -12,6 +13,7 @@ export default function ValidatedInput({
     onChange,
     placeholder,
     type = 'text',
+    value = '',
 }: TValidatedInputProps) {
     const [error, setError] = useState<string>('')
 
@@ -40,6 +42,7 @@ export default function ValidatedInput({
                     setError(validate(e.target.value))
                     onChange(e.target.value)
                 }}
+                defaultValue={value}
             ></input>
             <span
                 className={`ms-4 text-xs ${

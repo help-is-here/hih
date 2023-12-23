@@ -10,6 +10,6 @@ export interface IResource {
     description: string
     link: string
     num_helped: number
-    tag_resource: ITag[]
+    tag_resource?: ITag[]
     in_review: boolean
 }

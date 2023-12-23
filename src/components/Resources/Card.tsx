@@ -12,9 +12,13 @@ export const Card = ({ resource }: TCard) => {
             <H2 title={resource.name} />
             <div className="p-1text-center">{resource.description}</div>
             <div className="mt-3 flex flex-row gap-1">
-                {resource.tag_resource.map((tag) => {
-                    return <Tag title={tag.name} key={tag.name} />
-                })}
+                {resource.tag_resource ? (
+                    resource.tag_resource.map((tag) => {
+                        return <Tag title={tag.name} key={tag.name} />
+                    })
+                ) : (
+                    <></>
+                )}
             </div>
         </div>
     )

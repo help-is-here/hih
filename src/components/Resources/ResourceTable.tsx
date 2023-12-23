@@ -1,4 +1,3 @@
-import TagSection from '@/components/TagSection.tsx'
 import client from '@/database/client'
 import { Tooltip } from 'flowbite-react'
 import { useEffect, useState } from 'react'
@@ -60,9 +59,6 @@ export default function ResourceTable() {
                                     </a>
                                 </td>
                                 <td className="p-4">{d.description}</td>
-                                <td className="flex w-48 flex-wrap gap-1 p-4">
-                                    <TagSection resourceId={d.id} />
-                                </td>
                                 <td className="p-4 text-xs">
                                     <Tooltip
                                         content={`This resource has helped ${d.num_helped} people`}

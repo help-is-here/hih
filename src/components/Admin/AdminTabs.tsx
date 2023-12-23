@@ -1,9 +1,12 @@
-import { useLoaderData } from 'react-router-dom'
 import { Tabs } from 'flowbite-react'
 import { FaCheckCircle, FaExclamationTriangle, FaTag } from 'react-icons/fa'
 import { IResource } from '@/types'
 import ApprovedCard from '../Resources/ApprovedCard'
 import UnaprovedCard from '../Resources/UnapprovedCard'
+import { useQuery } from 'react-query'
+import { defaultStaleTime, getResourcesWithTags } from '@/api/api'
+import LoadingPage from '../States/LoadingPage'
+import ErrorPage from '../States/ErrorPage'
 
 const tabsTheme = {
     base: 'flex flex-col gap-2',
@@ -30,41 +33,57 @@ const tabsTheme = {
     tabpanel: 'py-3',
 }
 export default function AdminTabs() {
-    const { data = [] } = useLoaderData() as { data: IResource[] }
+    const { isLoading, isError, data } = useQuery(
+        'resources',
+        getResourcesWithTags,
+        {
+            staleTime: defaultStaleTime,
+        }
+    )
 
+    if (isLoading) return <LoadingPage />
+    if (isError) return <ErrorPage />
     return (
         <div className="min-h-screen bg-orange-50 px-12">
-            <Tabs aria-label="Admin tabs" theme={tabsTheme}>
-                <Tabs.Item
-                    active
-                    title="Awaiting Approval"
-                    icon={FaExclamationTriangle}
-                >
-                    {data
-                        .filter((r) => r.in_review)
-                        .map((resource: IResource) => {
-                            return (
-                                <UnaprovedCard
-                                    resource={resource}
-                                    key={resource.id}
-                                />
-                            )
-                        })}
-                </Tabs.Item>
-                <Tabs.Item title="Approved" icon={FaCheckCircle}>
-                    {data
-                        .filter((r) => !r.in_review)
-                        .map((resource: IResource) => {
-                            return (
-                                <ApprovedCard
-                                    resource={resource}
-                                    key={resource.id}
-                                />
-                            )
-                        })}
-                </Tabs.Item>
-                <Tabs.Item title="Tag Categories" icon={FaTag}></Tabs.Item>
-            </Tabs>
+            {data && data.data ? (
+                <Tabs aria-label="Admin tabs" theme={tabsTheme}>
+                    <Tabs.Item
+                        active
+                        title="Awaiting Approval"
+                        icon={FaExclamationTriangle}
+                    >
+                        {data.data
+                            // @ts-ignore: https://github.com/supabase/postgrest-js/pull/499
+                            .filter((r) => r.in_review)
+                            // @ts-ignore: https://github.com/supabase/postgrest-js/pull/499
+                            .map((resource: IResource) => {
+                                return (
+                                    <UnaprovedCard
+                                        resource={resource}
+                                        key={resource.id}
+                                    />
+                                )
+                            })}
+                    </Tabs.Item>
+                    <Tabs.Item title="Approved" icon={FaCheckCircle}>
+                        {data.data
+                            // @ts-ignore: https://github.com/supabase/postgrest-js/pull/499
+                            .filter((r) => !r.in_review)
+                            // @ts-ignore: https://github.com/supabase/postgrest-js/pull/499
+                            .map((resource: IResource) => {
+                                return (
+                                    <ApprovedCard
+                                        resource={resource}
+                                        key={resource.id}
+                                    />
+                                )
+                            })}
+                    </Tabs.Item>
+                    <Tabs.Item title="Tag Categories" icon={FaTag}></Tabs.Item>
+                </Tabs>
+            ) : (
+                <LoadingPage />
+            )}
         </div>
     )
 }
