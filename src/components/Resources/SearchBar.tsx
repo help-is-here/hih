@@ -8,7 +8,6 @@ export const SearchBar = () => {
     const [searchQuery] = useState<string>('')
 
     // TODO: Define type
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [items] = useState<IResource[]>([])
     const resourcesQuery = client.from('resources').select()
 
