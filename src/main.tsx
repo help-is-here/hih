@@ -11,6 +11,7 @@ import { PanicPage } from '@/views/PanicPage/PanicPage.tsx'
 import client from './database/client.tsx'
 import AdminPage from './views/AdminPage/AdminPage.tsx'
 import { ResourcesPage } from './views/ResourcesPage/ResourcesPage.tsx'
+import ContactPage from './views/ContactPage/ContactPage.tsx'
 
 const router = createBrowserRouter([
     {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
                     'id, name, description, num_helped, link, in_review, tag_resource(...tags(name))'
                 )
         },
+    },
+    {
+        path: '/contact',
+        element: <ContactPage />,
     },
     {
         path: '/resources',
