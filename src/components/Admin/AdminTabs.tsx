@@ -41,8 +41,12 @@ export default function AdminTabs() {
         }
     )
 
-    if (isLoading) return <LoadingPage />
-    if (isError) return <ErrorPage />
+    if (isLoading) {
+        return <LoadingPage />
+    }
+    if (isError) {
+        return <ErrorPage />
+    }
     return (
         <div className="min-h-screen bg-orange-50 px-12">
             {data && data.data ? (
@@ -53,9 +57,9 @@ export default function AdminTabs() {
                         icon={FaExclamationTriangle}
                     >
                         {data.data
-                            // @ts-ignore: https://github.com/supabase/postgrest-js/pull/499
+                            // @ts-expect-error: https://github.com/supabase/postgrest-js/pull/499
                             .filter((r) => r.in_review)
-                            // @ts-ignore: https://github.com/supabase/postgrest-js/pull/499
+                            // @ts-expect-error: https://github.com/supabase/postgrest-js/pull/499
                             .map((resource: IResource) => {
                                 return (
                                     <UnaprovedCard
@@ -67,9 +71,9 @@ export default function AdminTabs() {
                     </Tabs.Item>
                     <Tabs.Item title="Approved" icon={FaCheckCircle}>
                         {data.data
-                            // @ts-ignore: https://github.com/supabase/postgrest-js/pull/499
+                            // @ts-expect-error: https://github.com/supabase/postgrest-js/pull/499
                             .filter((r) => !r.in_review)
-                            // @ts-ignore: https://github.com/supabase/postgrest-js/pull/499
+                            // @ts-expect-error: https://github.com/supabase/postgrest-js/pull/499
                             .map((resource: IResource) => {
                                 return (
                                     <ApprovedCard

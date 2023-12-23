@@ -17,8 +17,12 @@ export const ResourcesPage = () => {
         }
     )
 
-    if (isLoading) return <LoadingPage />
-    if (isError) return <ErrorPage />
+    if (isLoading) {
+        return <LoadingPage />
+    }
+    if (isError) {
+        return <ErrorPage />
+    }
 
     return (
         <div className="bg-orange-100">

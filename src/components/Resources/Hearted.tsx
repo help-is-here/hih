@@ -1,7 +1,7 @@
 import { FaHeart } from 'react-icons/fa'
 
 type THearted = {
-    num: Number
+    num: number
 }
 export default function Hearted({ num }: THearted) {
     return (
