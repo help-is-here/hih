@@ -11,6 +11,7 @@ import { ResourcesPage } from '@/views/ResourcesPage/ResourcesPage.tsx'
 import { XueResourcesPage } from '@/views/ResourcesPage/XueResourcesPage.tsx'
 import { PanicPage } from '@/views/PanicPage/PanicPage.tsx'
 import client from './database/client.tsx'
+import ContactPage from './views/ContactPage/ContactPage.tsx'
 
 const router = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
     {
         path: '/suggest',
         element: <SuggestionPage />,
+    },
+    {
+        path: '/contact',
+        element: <ContactPage />,
     },
     {
         path: '/resources',
