@@ -1,33 +1,25 @@
 import { Navigation } from '@/components/Navigation/Navigation.tsx'
 import { SidebarMobile } from '@/components/Resources/SidebarMobile.tsx'
 import { H1 } from '@/components/Text/Headings.tsx'
-import client from '@/database/client.tsx'
-import { QueryData } from '@supabase/supabase-js'
-import { useEffect, useState } from 'react'
 import { SidebarDesktop } from '@/components/Resources/SidebarDesktop.tsx'
 import { ResourceCard } from '@/components/Resources/ResourceCard'
+import { defaultStaleTime, getResourcesWithTags } from '@/api/api'
+import LoadingPage from '@/components/States/LoadingPage'
+import ErrorPage from '@/components/States/ErrorPage'
+import { useQuery } from 'react-query'
 
 export const ResourcesPage = () => {
-    // Getting the data
-    const resourcesQuery = client
-        .from('resources')
-        .select(
-            'id, name, description, num_helped, link, tag_resource(...tags(name))'
-        )
-    type TResourcesType = QueryData<typeof resourcesQuery>
-
-    const [data, setData] = useState<TResourcesType>([])
-    useEffect(() => {
-        const fetchData = async () => {
-            const { data, error } = await resourcesQuery
-            if (error) {
-                throw error
-            }
-            const resources: TResourcesType = data
-            setData(resources)
+    const { isLoading, isError, data } = useQuery(
+        'resources',
+        getResourcesWithTags,
+        {
+            staleTime: defaultStaleTime,
         }
-        fetchData()
-    }, [resourcesQuery])
+    )
+
+    if (isLoading) return <LoadingPage />
+    if (isError) return <ErrorPage />
+
     return (
         <div className="bg-orange-100">
             <Navigation />
@@ -38,9 +30,13 @@ export const ResourcesPage = () => {
                     <SidebarDesktop className="hidden md:block" />
                 </section>
                 <section className="p-3 md:columns-1 md:overflow-auto lg:columns-2 xl:columns-3">
-                    {data.map((d: any) => {
-                        return <ResourceCard resource={d} key={d.id} />
-                    })}
+                    {data && data.data ? (
+                        data.data.map((d: any) => {
+                            return <ResourceCard resource={d} key={d.id} />
+                        })
+                    ) : (
+                        <></>
+                    )}
                 </section>
             </div>
         </div>
