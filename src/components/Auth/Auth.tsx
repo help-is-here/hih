@@ -6,7 +6,6 @@ import ChangePassword from './ChangePassword'
 
 type TAuthProps = {
     view: string
-    redirectTo: string
 }
 
 export default function Auth({ view }: TAuthProps) {
