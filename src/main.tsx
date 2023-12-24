@@ -7,11 +7,12 @@ import NotFoundPage from '@/views/ErrorPage/NotFoundPage.tsx'
 import { SuggestionPage } from '@/views/SuggestionPage/SuggestionPage.tsx'
 import LoginPage from '@/views/AuthPages/LoginPage.tsx'
 import ChangePasswordPage from '@/views/AuthPages/ChangePasswordPage.tsx'
-import { ResourcesPage } from '@/views/ResourcesPage/ResourcesPage.tsx'
-import { XueResourcesPage } from '@/views/ResourcesPage/XueResourcesPage.tsx'
 import { PanicPage } from '@/views/PanicPage/PanicPage.tsx'
 import client from './database/client.tsx'
 import ContactPage from './views/ContactPage/ContactPage.tsx'
+import AdminPage from './views/AdminPage/AdminPage.tsx'
+import { ResourcesPage } from './views/ResourcesPage/ResourcesPage.tsx'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 const router = createBrowserRouter([
     {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
         element: <SuggestionPage />,
     },
     {
+        path: '/admin',
+        element: <AdminPage />,
+    },
+    {
         path: '/contact',
         element: <ContactPage />,
     },
@@ -41,7 +46,11 @@ const router = createBrowserRouter([
         path: '/resources',
         element: <ResourcesPage />,
         loader: async () => {
-            return await client.from('resources').select()
+            return await client
+                .from('resources')
+                .select(
+                    'id, name, description, num_helped, link, in_review, tag_resource(...tags(name))'
+                )
         },
     },
     {
@@ -61,14 +70,12 @@ const router = createBrowserRouter([
         path: '*',
         element: <NotFoundPage />,
     },
-    {
-        path: '/xue/resources',
-        element: <XueResourcesPage />,
-    },
 ])
-
+const queryClient = new QueryClient()
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <RouterProvider router={router} />
+        <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+        </QueryClientProvider>
     </React.StrictMode>
 )

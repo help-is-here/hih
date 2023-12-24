@@ -4,12 +4,14 @@ type TValidatedInputProps = {
     validator: ((val: string) => boolean) | null
     onChange: (val: string) => void
     placeholder: string
+    value?: string
 }
 
 export default function ValidatedInput({
     validator,
     onChange,
     placeholder,
+    value = '',
 }: TValidatedInputProps) {
     const [error, setError] = useState<string>('')
 
@@ -37,6 +39,7 @@ export default function ValidatedInput({
                     setError(validate(e.target.value))
                     onChange(e.target.value)
                 }}
+                defaultValue={value}
             ></textarea>
             <span
                 className={`ms-4 text-xs ${

@@ -27,7 +27,7 @@ export default function SignUp({ setState }: TSignUpProps) {
             email: email,
             password: password,
             options: {
-                emailRedirectTo: import.meta.env.DEPLOY_URL,
+                emailRedirectTo: String(import.meta.env.DEPLOY_URL),
             },
         })
         if (!error) {
