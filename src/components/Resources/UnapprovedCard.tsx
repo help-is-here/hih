@@ -1,5 +1,3 @@
-'use client'
-
 import { IResource } from '@/types'
 import Card from './Card'
 import { H2 } from '../Text/Headings'
@@ -7,11 +5,12 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import Hearted from './Hearted'
 import { Tag } from './Tag'
+import EditCard from './EditCard'
+import UpdateResourceButton from '../Form/UpdateResourceButton'
 
 type TUnapprovedCard = {
     resource: IResource
 }
-
 export default function UnaprovedCard({ resource }: TUnapprovedCard) {
     const [edit, setEdit] = useState(false)
 
@@ -21,7 +20,7 @@ export default function UnaprovedCard({ resource }: TUnapprovedCard) {
                 <div className="flex flex-col gap-4 md:flex-row">
                     <div className="w-full">
                         {edit ? (
-                            <>{/* TODO: Add edit component here */}</>
+                            <EditCard resource={resource} />
                         ) : (
                             <div className="flex">
                                 <div className="w-full">
@@ -66,9 +65,16 @@ export default function UnaprovedCard({ resource }: TUnapprovedCard) {
                                     </div>
                                 </div>
                                 <div className="flex justify-center gap-2 md:flex-col">
-                                    <button className="w-24 rounded bg-orange-500 px-4 py-2 text-white md:block md:w-48">
-                                        Approve
-                                    </button>
+                                    <div className="w-24 rounded bg-orange-500 px-4 py-2 text-white md:block md:w-48">
+                                        <UpdateResourceButton
+                                            resource={{
+                                                ...resource,
+                                                in_review: false,
+                                            }}
+                                        >
+                                            Approve
+                                        </UpdateResourceButton>
+                                    </div>
                                     <button
                                         onClick={() => setEdit(true)}
                                         className="w-24 rounded bg-orange-700 px-4 py-2 text-white md:block md:w-48"
