@@ -69,7 +69,7 @@ export default function ApprovedCard({ resource }: TApprovedCard) {
                                         <UpdateResourceButton
                                             resource={{
                                                 ...resource,
-                                                in_review: false,
+                                                in_review: true,
                                             }}
                                         >
                                             Revoke Approval

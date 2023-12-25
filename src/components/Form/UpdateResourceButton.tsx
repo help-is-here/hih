@@ -1,9 +1,8 @@
 import React from 'react'
 import { updateResource } from '../../api/api'
-import { useMutation, QueryClient } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import { IResource } from '@/types'
 
-const queryClient = new QueryClient()
 type TUpdateResourceButton = {
     children: React.ReactNode
     resource: IResource
@@ -14,6 +13,7 @@ export default function UpdateResourceButton({
     resource,
     disabled = false,
 }: TUpdateResourceButton) {
+    const queryClient = useQueryClient()
     const updateResourceMut = useMutation({
         mutationFn: updateResource,
         onSuccess: () => {
