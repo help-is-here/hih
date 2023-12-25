@@ -6,6 +6,7 @@ import { useState } from 'react'
 import Hearted from './Hearted'
 import { Tag } from './Tag'
 import UpdateResourceButton from '../Form/UpdateResourceButton'
+import EditCard from './EditCard'
 
 type TUnapprovedCard = {
     resource: IResource
@@ -19,7 +20,10 @@ export default function UnaprovedCard({ resource }: TUnapprovedCard) {
                 <div className="flex flex-col gap-4 md:flex-row">
                     <div className="w-full">
                         {edit ? (
-                            <EditCard resource={resource} />
+                            <EditCard
+                                closeEdit={() => setEdit(false)}
+                                resource={resource}
+                            />
                         ) : (
                             <div className="flex">
                                 <div className="w-full">

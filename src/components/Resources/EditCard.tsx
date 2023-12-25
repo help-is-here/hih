@@ -8,8 +8,9 @@ import UpdateResourceButton from '../Form/UpdateResourceButton'
 
 type TEditCard = {
     resource: IResource
+    closeEdit: () => void
 }
-export default function EditCard({ resource }: TEditCard) {
+export default function EditCard({ resource, closeEdit }: TEditCard) {
     const [valid, setValid] = useState(false)
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
@@ -74,7 +75,7 @@ export default function EditCard({ resource }: TEditCard) {
                         )
                     })}
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center gap-4">
                     <div className="block rounded bg-orange-700 px-4 py-2 text-white md:block md:w-48">
                         <UpdateResourceButton
                             disabled={valid}
@@ -89,6 +90,12 @@ export default function EditCard({ resource }: TEditCard) {
                             Save
                         </UpdateResourceButton>
                     </div>
+                    <button
+                        onClick={closeEdit}
+                        className="block rounded bg-orange-950 px-4 py-2 text-white md:block md:w-48"
+                    >
+                        Cancel
+                    </button>
                 </div>
             </div>
         </div>

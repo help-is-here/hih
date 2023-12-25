@@ -20,7 +20,10 @@ export default function ApprovedCard({ resource }: TApprovedCard) {
                 <div className="flex flex-col gap-4 md:flex-row">
                     <div className="w-full">
                         {edit ? (
-                            <EditCard resource={resource} />
+                            <EditCard
+                                closeEdit={() => setEdit(false)}
+                                resource={resource}
+                            />
                         ) : (
                             <div className="flex">
                                 <div className="w-full">
