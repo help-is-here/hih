@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import Hearted from './Hearted'
 import { Tag } from './Tag'
-import EditCard from './EditCard'
 import UpdateResourceButton from '../Form/UpdateResourceButton'
 
 type TUnapprovedCard = {

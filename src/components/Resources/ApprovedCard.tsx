@@ -74,7 +74,7 @@ export default function ApprovedCard({ resource }: TApprovedCard) {
                                             }}
                                         >
                                             Revoke Approval
-                                        </UpdateResourceButton>
+                                        </UpdateResourceButton>{' '}
                                     </div>
                                     <button
                                         onClick={() => setEdit(true)}

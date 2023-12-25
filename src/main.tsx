@@ -45,13 +45,6 @@ const router = createBrowserRouter([
     {
         path: '/resources',
         element: <ResourcesPage />,
-        loader: async () => {
-            return await client
-                .from('resources')
-                .select(
-                    'id, name, description, num_helped, link, in_review, tag_resource(...tags(name))'
-                )
-        },
     },
     {
         path: '/panic',
