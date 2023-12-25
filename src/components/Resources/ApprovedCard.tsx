@@ -5,6 +5,7 @@ import { H2 } from '../Text/Headings'
 import Hearted from './Hearted'
 import { Tag } from './Tag'
 import { Link } from 'react-router-dom'
+import UpdateResourceButton from '../Form/UpdateResourceButton'
 
 type TApprovedCard = {
     resource: IResource
@@ -64,9 +65,16 @@ export default function ApprovedCard({ resource }: TApprovedCard) {
                                 </div>
 
                                 <div className="flex justify-center gap-4 md:flex-col">
-                                    <button className="rounded bg-orange-500 px-4 py-2 text-white md:block md:w-48">
-                                        Revoke Approval
-                                    </button>
+                                    <div className="rounded bg-orange-500 px-4 py-2 text-white md:block md:w-48">
+                                        <UpdateResourceButton
+                                            resource={{
+                                                ...resource,
+                                                in_review: false,
+                                            }}
+                                        >
+                                            Revoke Approval
+                                        </UpdateResourceButton>{' '}
+                                    </div>
                                     <button
                                         onClick={() => setEdit(true)}
                                         className="rounded bg-orange-700 px-4 py-2 text-white md:block md:w-48"

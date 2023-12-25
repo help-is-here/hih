@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import Hearted from './Hearted'
 import { Tag } from './Tag'
+import UpdateResourceButton from '../Form/UpdateResourceButton'
 
 type TUnapprovedCard = {
     resource: IResource
@@ -66,9 +67,16 @@ export default function UnaprovedCard({ resource }: TUnapprovedCard) {
                                     </div>
                                 </div>
                                 <div className="flex justify-center gap-2 md:flex-col">
-                                    <button className="w-24 rounded bg-orange-500 px-4 py-2 text-white md:block md:w-48">
-                                        Approve
-                                    </button>
+                                    <div className="w-24 rounded bg-orange-500 px-4 py-2 text-white md:block md:w-48">
+                                        <UpdateResourceButton
+                                            resource={{
+                                                ...resource,
+                                                in_review: false,
+                                            }}
+                                        >
+                                            Approve
+                                        </UpdateResourceButton>
+                                    </div>
                                     <button
                                         onClick={() => setEdit(true)}
                                         className="w-24 rounded bg-orange-700 px-4 py-2 text-white md:block md:w-48"
