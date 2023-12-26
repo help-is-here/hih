@@ -1,10 +1,9 @@
-import { IResource, ITag } from '@/types'
+import { Action, IResource, ITag } from '@/types'
 import ValidatedInput from '../Form/ValidatedInput'
 import ValidatedTextarea from '../Form/ValidatedTextarea'
 import { useEffect, useState } from 'react'
-import { Tag } from './Tag'
-import { FaTimesCircle } from 'react-icons/fa'
 import UpdateResourceButton from '../Form/UpdateResourceButton'
+import TagsInput from 'react-tagsinput'
 
 type TEditCard = {
     resource: IResource
@@ -16,26 +15,68 @@ export default function EditCard({ resource, closeEdit }: TEditCard) {
     const [description, setDescription] = useState('')
     const [link, setLink] = useState('')
     const [tags, setTags] = useState<ITag[]>([])
+    const [updatedTags, setUpdatedTags] = useState<ITag[]>([])
+    const [updatedResource, setUpdatedResource] = useState<IResource>({
+        name: '',
+        description: '',
+        id: -1,
+        link: '',
+        tag_resource: [],
+        num_helped: 0,
+        in_review: true,
+    })
 
-    const removeTag = (tagId: number) => {
-        let updatedTags = [...tags]
-        updatedTags.splice(updatedTags.map((t) => t.id).indexOf(tagId), 1)
-        setTags([...updatedTags])
+    const updateTags = (newTags: string[]) => {
+        let newUpdates = []
+        for (const tagName of newTags) {
+            if (!tags.map((t) => t.name).includes(tagName)) {
+                newUpdates.push({
+                    name: tagName,
+                    action: Action.Add,
+                    id: -1,
+                    category: '',
+                })
+            }
+        }
+        for (const tag of tags) {
+            if (!newTags.includes(tag.name)) {
+                newUpdates.push({ ...tag, action: Action.Remove })
+            }
+        }
+        setUpdatedTags(newUpdates)
+    }
+
+    const saved = () => {
+        setUpdatedTags([])
+        closeEdit()
     }
 
     useEffect(() => {
         setValid(
-            !!name.length &&
-                !!description.length &&
-                !!link.length &&
-                !!tags.length
+            name.length > 0 &&
+                description.length > 0 &&
+                link.length > 0 &&
+                (tags.length > 0 || updatedTags.length > 0)
         )
+        setUpdatedResource({
+            name: name,
+            description: description,
+            id: resource.id,
+            link: link,
+            tag_resource: [],
+            num_helped: resource.num_helped,
+            in_review: resource.in_review,
+        })
+        console.log(updatedResource)
     }, [link, name, description, tags.length])
 
     useEffect(() => {
         if (resource.tag_resource) {
             setTags(resource.tag_resource)
         }
+        setName(resource.name)
+        setDescription(resource.description)
+        setLink(resource.link)
     }, [resource.tag_resource])
     return (
         <div>
@@ -44,52 +85,51 @@ export default function EditCard({ resource, closeEdit }: TEditCard) {
                     <ValidatedInput
                         value={resource.name}
                         placeholder="Name"
-                        onChange={setName}
+                        onChange={(val) => setName(val)}
                         validator={(name) => name.length > 0}
                     />
                     <ValidatedInput
                         value={resource.link}
                         placeholder="Link"
-                        onChange={setLink}
+                        onChange={(val) => setLink(val)}
                         validator={(link) => link.length > 0}
                     />
                     <ValidatedTextarea
                         value={resource.description}
                         placeholder="Description"
-                        onChange={setDescription}
+                        onChange={(val) => setDescription(val)}
                         validator={(description) => description.length > 0}
                     />
                 </div>
-                <div className="flex flex-row gap-1">
-                    {tags.map((tag) => {
-                        return (
-                            <div
-                                key={tag.name}
-                                className="align-center flex justify-between rounded-full bg-orange-300 px-2"
-                            >
-                                <Tag title={tag.name} />
-                                <button onClick={() => removeTag(tag.id)}>
-                                    <FaTimesCircle />
-                                </button>
-                            </div>
-                        )
-                    })}
-                </div>
+                <TagsInput
+                    value={[
+                        ...tags
+                            .map((t) => t.name)
+                            .filter(
+                                (name) =>
+                                    !updatedTags
+                                        .filter(
+                                            (t) => t.action === Action.Remove
+                                        )
+                                        .map((t) => t.name)
+                                        .includes(name)
+                            ),
+                        ...updatedTags
+                            .filter((t) => t.action === Action.Add)
+                            .map((t) => t.name),
+                    ]}
+                    onChange={updateTags}
+                />
+
                 <div className="flex items-center gap-4">
-                    <div className="block rounded bg-orange-700 px-4 py-2 text-white md:block md:w-48">
-                        <UpdateResourceButton
-                            disabled={valid}
-                            resource={{
-                                ...resource,
-                                name: name,
-                                description: description,
-                                link: link,
-                                tag_resource: tags,
-                            }}
-                        >
-                            Save
-                        </UpdateResourceButton>
-                    </div>
+                    <UpdateResourceButton
+                        className="block rounded bg-orange-700 px-4 py-2 text-white disabled:bg-gray-300 md:block md:w-48 "
+                        disabled={!valid}
+                        resource={updatedResource}
+                        onSucces={saved}
+                    >
+                        Save
+                    </UpdateResourceButton>
                     <button
                         onClick={closeEdit}
                         className="block rounded bg-orange-950 px-4 py-2 text-white md:block md:w-48"

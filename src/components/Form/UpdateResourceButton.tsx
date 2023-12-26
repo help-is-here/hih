@@ -6,12 +6,16 @@ import { IResource } from '@/types'
 type TUpdateResourceButton = {
     children: React.ReactNode
     resource: IResource
+    className?: string
     disabled?: boolean
+    onSucces?: () => void
 }
 export default function UpdateResourceButton({
     children,
     resource,
     disabled = false,
+    onSucces = () => {},
+    className = '',
 }: TUpdateResourceButton) {
     const queryClient = useQueryClient()
     const updateResourceMut = useMutation({
@@ -19,11 +23,12 @@ export default function UpdateResourceButton({
         onSuccess: () => {
             // Invalidate and refetch
             queryClient.invalidateQueries({ queryKey: ['resources'] })
+            onSucces()
         },
     })
     return (
         <button
-            className="w-full"
+            className={`w-full ${className}`}
             disabled={disabled}
             onClick={() =>
                 updateResourceMut.mutate({
