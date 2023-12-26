@@ -1,4 +1,4 @@
-import { Action, IResource, ITag } from '@/types'
+import { EAction, IResource, ITag } from '@/types'
 import ValidatedInput from '../Form/ValidatedInput'
 import ValidatedTextarea from '../Form/ValidatedTextarea'
 import { useEffect, useState } from 'react'
@@ -27,12 +27,12 @@ export default function EditCard({ resource, closeEdit }: TEditCard) {
     })
 
     const updateTags = (newTags: string[]) => {
-        let newUpdates = []
+        const newUpdates = []
         for (const tagName of newTags) {
             if (!tags.map((t) => t.name).includes(tagName)) {
                 newUpdates.push({
                     name: tagName,
-                    action: Action.Add,
+                    action: EAction.Add,
                     id: -1,
                     category: '',
                 })
@@ -40,7 +40,7 @@ export default function EditCard({ resource, closeEdit }: TEditCard) {
         }
         for (const tag of tags) {
             if (!newTags.includes(tag.name)) {
-                newUpdates.push({ ...tag, action: Action.Remove })
+                newUpdates.push({ ...tag, action: EAction.Remove })
             }
         }
         setUpdatedTags(newUpdates)
@@ -63,12 +63,11 @@ export default function EditCard({ resource, closeEdit }: TEditCard) {
             description: description,
             id: resource.id,
             link: link,
-            tag_resource: [],
+            tag_resource: updatedTags,
             num_helped: resource.num_helped,
             in_review: resource.in_review,
         })
-        console.log(updatedResource)
-    }, [link, name, description, tags.length])
+    }, [link, name, description, tags.length, resource, updatedTags])
 
     useEffect(() => {
         if (resource.tag_resource) {
@@ -77,7 +76,7 @@ export default function EditCard({ resource, closeEdit }: TEditCard) {
         setName(resource.name)
         setDescription(resource.description)
         setLink(resource.link)
-    }, [resource.tag_resource])
+    }, [resource])
     return (
         <div>
             <div className="flex flex-col gap-2">
@@ -109,13 +108,13 @@ export default function EditCard({ resource, closeEdit }: TEditCard) {
                                 (name) =>
                                     !updatedTags
                                         .filter(
-                                            (t) => t.action === Action.Remove
+                                            (t) => t.action === EAction.Remove
                                         )
                                         .map((t) => t.name)
                                         .includes(name)
                             ),
                         ...updatedTags
-                            .filter((t) => t.action === Action.Add)
+                            .filter((t) => t.action === EAction.Add)
                             .map((t) => t.name),
                     ]}
                     onChange={updateTags}

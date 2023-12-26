@@ -7,6 +7,7 @@ import Hearted from './Hearted'
 import { Tag } from './Tag'
 import UpdateResourceButton from '../Form/UpdateResourceButton'
 import EditCard from './EditCard'
+import DeleteResourceButton from '../Form/DeleteResourceButton'
 
 type TUnapprovedCard = {
     resource: IResource
@@ -84,9 +85,12 @@ export default function UnaprovedCard({ resource }: TUnapprovedCard) {
                                     >
                                         Edit
                                     </button>
-                                    <button className="w-24 rounded bg-orange-950 px-4 py-2 text-white md:block md:w-48">
+                                    <DeleteResourceButton
+                                        resource={resource}
+                                        className="w-24 rounded bg-orange-950 px-4 py-2 text-white md:block md:w-48"
+                                    >
                                         Delete
-                                    </button>
+                                    </DeleteResourceButton>
                                 </div>
                             </div>
                         )}

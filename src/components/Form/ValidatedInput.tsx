@@ -51,13 +51,6 @@ export default function ValidatedInput({
             >
                 {validator ? error : ''}
             </span>
-            <span
-                className={`ms-4 text-xs ${
-                    error === 'Looks good!' ? 'text-green-500' : 'text-red-500'
-                }`}
-            >
-                {validator ? error : ''}
-            </span>
         </>
     )
 }

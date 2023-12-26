@@ -1,4 +1,4 @@
-export enum Action {
+export enum EAction {
     Add = 'ADD',
     Remove = 'REMOVE',
     None = 'NONE',
@@ -7,7 +7,7 @@ export interface ITag {
     id: number
     name: string
     category: string
-    action?: Action
+    action?: EAction
 }
 
 export interface IResource {

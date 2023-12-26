@@ -1,5 +1,5 @@
 import client from '@/database/client'
-import { IResource, Action } from '@/types'
+import { IResource, EAction } from '@/types'
 
 // Constants
 export const defaultStaleTime = 1200000
@@ -39,7 +39,7 @@ const updateResource = async (resource: IResource) => {
     }
     for (const tag of resource.tag_resource) {
         let tagQuery
-        if (tag.action === Action.Add) {
+        if (tag.action === EAction.Add) {
             tagQuery = client
                 .from('tags')
                 .upsert(
@@ -59,7 +59,7 @@ const updateResource = async (resource: IResource) => {
                 resource_id: record.data[0].id,
             })
             await tagLinkQuery
-        } else if (Action.Remove) {
+        } else if (EAction.Remove) {
             tagQuery = client
                 .from('tag_resource')
                 .delete()
@@ -70,4 +70,7 @@ const updateResource = async (resource: IResource) => {
     }
 }
 
-export { getResources, getResourcesWithTags, updateResource }
+const deleteResource = async (resource: IResource) => {
+    await client.from('resources').delete().eq('id', resource.id)
+}
+export { getResources, getResourcesWithTags, updateResource, deleteResource }
