@@ -1,3 +1,8 @@
+export enum EPanic {
+    Precaution = 'PRECAUTION',
+    Prevention = 'PREVENTION',
+    Predicament = 'PREDICAMENT',
+}
 export interface ITag {
     id: number
     name: string

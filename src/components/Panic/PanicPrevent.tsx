@@ -8,8 +8,8 @@ export const PanicPrevent = () => {
             <img src={preventImage} alt="Prevention" className="w-1/2" />
             <H1 title="Prevention" />
             <span className="mb-6 text-center">
-                Here are a few resources for you if you're feeling safe but
-                still need to reach out to someone
+                Here are a few resources for you if you're feeling not-so-safe
+                and need to talk to someone immediately
             </span>
             <ResourceTable />
         </div>

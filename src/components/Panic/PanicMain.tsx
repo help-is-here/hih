@@ -13,7 +13,7 @@ export const PanicMain = () => {
         const { title, link, image } = props
         return (
             <Link to={link} className="flex-1">
-                <div className="m-8 flex h-full flex-col items-center justify-center rounded bg-orange-300 p-8 text-center text-xl font-semibold text-gray-800 hover:bg-orange-400">
+                <div className="m-8 flex h-fit flex-col items-center justify-center rounded bg-orange-300 p-8 text-center text-xl font-semibold text-gray-800 hover:bg-orange-400">
                     <img src={image} alt={title} />
                     {title}
                 </div>
