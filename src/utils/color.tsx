@@ -1,5 +1,7 @@
 export const calculateTextColor = (color: string) => {
-    if (color.length !== 7) return 'black'
+    if (color.length !== 7) {
+        return 'black'
+    }
     const brightness = Math.round(
         (parseInt('0x' + color.slice(1, 3)) * 299 +
             parseInt('0x' + color.slice(3, 5)) * 587 +

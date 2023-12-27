@@ -23,7 +23,7 @@ export default function TagUpdater({
         if (initTags.length) {
             setTags(initTags)
         }
-    }, initTags)
+    }, [initTags])
 
     const addTag = (tagName: string) => {
         const temp = [...tags]
@@ -62,7 +62,9 @@ export default function TagUpdater({
                 .includes(tagName)
         ) {
             const ogTag = originalTags.find((t) => t.name === tagName)
-            if (ogTag) temp.push(ogTag)
+            if (ogTag) {
+                temp.push(ogTag)
+            }
             setTags(temp)
         }
         setNewTag('')

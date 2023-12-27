@@ -34,7 +34,7 @@ export default function CategoryManager() {
                         <CategoryCard
                             key={category.name}
                             category={category}
-                            // @ts-ignore: join types not perpetuated correctly by supabase
+                            // @ts-expect-error: join types not perpetuated correctly by supabase
                             allTags={tags.data.data ? tags.data.data : []}
                         />
                     ))}
@@ -46,7 +46,7 @@ export default function CategoryManager() {
                                     color: '#000000',
                                     id: -1,
                                 }}
-                                // @ts-ignore: join types not perpetuated correctly by supabase
+                                // @ts-expect-error: join types not perpetuated correctly by supabase
                                 allTags={tags.data.data ? tags.data.data : []}
                                 onEditClose={() => setNewCategory(false)}
                             />
