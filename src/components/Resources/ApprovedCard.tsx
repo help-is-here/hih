@@ -55,6 +55,11 @@ export default function ApprovedCard({ resource }: TApprovedCard) {
                                                     (tag) => {
                                                         return (
                                                             <Tag
+                                                                color={
+                                                                    tag
+                                                                        .tag_category
+                                                                        ?.color
+                                                                }
                                                                 title={tag.name}
                                                                 key={tag.name}
                                                             />

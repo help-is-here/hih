@@ -3,10 +3,11 @@ export enum EAction {
     Remove = 'REMOVE',
     None = 'NONE',
 }
+
 export interface ITag {
     id: number
     name: string
-    category: string
+    tag_category?: ICategory
     action?: EAction
 }
 
@@ -18,4 +19,11 @@ export interface IResource {
     num_helped: number
     tag_resource?: ITag[]
     in_review: boolean
+}
+
+export interface ICategory {
+    id: number
+    name: string
+    color: string
+    tags?: ITag[]
 }

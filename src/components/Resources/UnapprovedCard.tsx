@@ -56,6 +56,11 @@ export default function UnaprovedCard({ resource }: TUnapprovedCard) {
                                                     (tag) => {
                                                         return (
                                                             <Tag
+                                                                color={
+                                                                    tag
+                                                                        .tag_category
+                                                                        ?.color
+                                                                }
                                                                 title={tag.name}
                                                                 key={tag.name}
                                                             />

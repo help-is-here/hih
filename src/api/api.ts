@@ -1,10 +1,15 @@
 import client from '@/database/client'
-import { IResource, EAction } from '@/types'
+import { IResource, EAction, ICategory, ITag } from '@/types'
 
 // Constants
 export const defaultStaleTime = 1200000
 
 // Queries
+const getTags = async () => {
+    return await client
+        .from('tags')
+        .select('id, name, tag_category(id, name, color)')
+}
 const getResources = async () => {
     return await client.from('resources').select()
 }
@@ -12,11 +17,31 @@ const getResourcesWithTags = async () => {
     return await client
         .from('resources')
         .select(
-            'id, name, description, num_helped, link, in_review, tag_resource(...tags(name, id))'
+            'id, name, description, num_helped, link, in_review, tag_resource(...tags(name, id, tag_categories(name, color)))'
         )
+}
+const getCategories = async () => {
+    return await client
+        .from('tag_categories')
+        .select('id, name, color, tags(name, id)')
 }
 
 // Mutations
+const insertTag = async (tag: ITag) => {
+    await client.from('tags').insert({
+        name: tag.name,
+        tag_category: tag.tag_category ? Number(tag.tag_category.id) : null,
+    })
+}
+const updateTag = async (tag: ITag) => {
+    await client
+        .from('tags')
+        .update({
+            name: tag.name,
+            tag_category: tag.tag_category ? Number(tag.tag_category.id) : null,
+        })
+        .eq('id', tag.id)
+}
 const updateResource = async (resource: IResource) => {
     const resourceQuery = client
         .from('resources')
@@ -31,46 +56,99 @@ const updateResource = async (resource: IResource) => {
         .select('id')
 
     const record = await resourceQuery
-    if (record.data === null) {
-        return
-    }
-    if (!resource.tag_resource) {
-        return
-    }
-    for (const tag of resource.tag_resource) {
-        let tagQuery
-        if (tag.action === EAction.Add) {
-            tagQuery = client
-                .from('tags')
-                .upsert(
-                    {
-                        name: tag.name,
-                    },
-                    { ignoreDuplicates: false, onConflict: 'name' }
-                )
-                .select('id')
-
-            const tagRecord = await tagQuery
-            if (tagRecord.data === null) {
-                continue
-            }
-            const tagLinkQuery = client.from('tag_resource').insert({
-                tag_id: tagRecord.data[0].id,
-                resource_id: record.data[0].id,
-            })
-            await tagLinkQuery
-        } else if (EAction.Remove) {
-            tagQuery = client
-                .from('tag_resource')
-                .delete()
-                .eq('tag_id', tag.id)
-                .eq('resource_id', record.data[0].id)
-            await tagQuery
+    const link: ITag[] = []
+    const unlink: ITag[] = []
+    resource.tag_resource?.forEach((t) => {
+        if (t.action === EAction.Add) {
+            link.push(t)
+        } else {
+            unlink.push(t)
         }
+    })
+    if (record.data && resource.tag_resource) {
+        await linkTags(record.data[0].id, link)
+        await unLinkTags(record.data[0].id, unlink)
     }
 }
 
+const updateCategory = async (category: ICategory) => {
+    let categoryQuery
+    if (category.id === -1) {
+        categoryQuery = client
+            .from('tag_categories')
+            .insert({
+                name: category.name,
+                color: category.color,
+            })
+            .select('id')
+    } else {
+        categoryQuery = client
+            .from('tag_categories')
+            .update({
+                name: category.name,
+                color: category.color,
+            })
+            .eq('id', category.id)
+            .select('id')
+    }
+    const record = await categoryQuery
+
+    if (record.data && category.tags) {
+        category.tags?.forEach((t) => {
+            if (t.action === EAction.Add) {
+                if (t.id !== -1) {
+                    updateTag({ ...t, tag_category: category })
+                } else {
+                    insertTag({ ...t, tag_category: category })
+                }
+            } else if (t.action === EAction.Remove) {
+                updateTag({ ...t, tag_category: undefined })
+            }
+        })
+    }
+}
+const linkTags = async (recordId: number, tags: ITag[]) => {
+    for (const tag of tags) {
+        const tagQuery = client
+            .from('tags')
+            .upsert(
+                {
+                    name: tag.name,
+                },
+                { ignoreDuplicates: false, onConflict: 'name' }
+            )
+            .select('id')
+
+        const tagRecord = await tagQuery
+        if (tagRecord.data === null) {
+            continue
+        }
+        const tagLinkQuery = client.from('tag_resource').insert({
+            tag_id: tagRecord.data[0].id,
+            resource_id: recordId,
+        })
+        await tagLinkQuery
+    }
+}
+const unLinkTags = async (recordId: number, tags: ITag[]) => {
+    for (const tag of tags) {
+        const tagQuery = client
+            .from('tag_resource')
+            .delete()
+            .eq('tag_id', tag.id)
+            .eq('resource_id', recordId)
+        await tagQuery
+    }
+}
 const deleteResource = async (resource: IResource) => {
     await client.from('resources').delete().eq('id', resource.id)
 }
-export { getResources, getResourcesWithTags, updateResource, deleteResource }
+export {
+    getResources,
+    getResourcesWithTags,
+    updateResource,
+    deleteResource,
+    getCategories,
+    updateCategory,
+    getTags,
+}
