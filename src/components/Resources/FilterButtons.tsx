@@ -1,19 +1,16 @@
-import { EFilters } from '@/types'
 import { useState } from 'react'
 import { FaHeart } from 'react-icons/fa'
 import { FaTag } from 'react-icons/fa'
 
 type TFilterButtons = {
-    onFilter: (filterType: EFilters, payload: boolean) => void
+    onHeartedFilter: (payload: boolean) => void
 }
-export const FilterButtons = ({ onFilter }: TFilterButtons) => {
+export const FilterButtons = ({ onHeartedFilter }: TFilterButtons) => {
     return (
         <div className="mt-2 flex flex-row gap-2">
             <HeartedButton
                 onFilter={(toggle) =>
-                    toggle
-                        ? onFilter(EFilters.Hearted, true)
-                        : onFilter(EFilters.Hearted, false)
+                    toggle ? onHeartedFilter(true) : onHeartedFilter(false)
                 }
             />
             <FilterTagsButton />

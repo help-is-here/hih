@@ -31,16 +31,30 @@ const getHeartedCount = async (resourceId: number) => {
         .select('*', { count: 'exact', head: true })
         .eq('resource_id', resourceId)
 }
-const getUserHearted = async () => {
+const getFilteredResources = async (hearted: boolean, tags: string[]) => {
+    console.log(tags)
+    console.log(hearted)
     const {
         data: { user },
     } = await client.auth.getUser()
-    return await client
-        .from('hearted_resources')
+    const heartedQuery = hearted
+        ? 'hearted_resources!inner(user_id)'
+        : 'hearted_resources(user_id)'
+    const tagsQuery = tags.length
+        ? 'tag_resource!inner(...tags!inner(name, id, tag_categories(name, color)))'
+        : ' tag_resource(...tags(name, id, tag_categories(name, color)))'
+    const query = client
+        .from('resources')
         .select(
-            'user_id, resource_id(id, name, description, num_helped, link, in_review, tag_resource(...tags(name, id, tag_categories(name, color))))'
+            `id, name, description, num_helped, link, in_review, ${heartedQuery}, ${tagsQuery})`
         )
-        .eq('user_id', user?.id)
+    if (hearted) {
+        query.filter('hearted_resources.user_id', 'eq', user?.id)
+    }
+    if (tags.length) {
+        query.filter('tag_resource.tags.name', 'in', `(${tags.join(',')})`)
+    }
+    return await query
 }
 
 // Mutations
@@ -178,5 +192,5 @@ export {
     getTags,
     getHeartedCount,
     addHeart,
-    getUserHearted,
+    getFilteredResources,
 }

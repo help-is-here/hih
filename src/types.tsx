@@ -4,11 +4,6 @@ export enum EAction {
     None = 'NONE',
 }
 
-export enum EFilters {
-    None = 'NONE',
-    Hearted = 'HEARTED',
-    Tag = 'TAG',
-}
 export interface ITag {
     id: number
     name: string
