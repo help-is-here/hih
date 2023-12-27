@@ -1,18 +1,18 @@
 import { useState } from 'react'
 
-type TValidatedInputProps = {
+type TValidatedTextarea = {
     validator: ((val: string) => boolean) | null
     onChange: (val: string) => void
     placeholder: string
     value?: string
 }
 
-export default function ValidatedInput({
+export default function ValidatedTextarea({
     validator,
     onChange,
     placeholder,
     value = '',
-}: TValidatedInputProps) {
+}: TValidatedTextarea) {
     const [error, setError] = useState<string>('')
 
     const validate = (val: string) => {

@@ -7,6 +7,7 @@ import { useQuery } from 'react-query'
 import { defaultStaleTime, getResourcesWithTags } from '@/api/api'
 import LoadingPage from '../States/LoadingPage'
 import ErrorPage from '../States/ErrorPage'
+import CategoryManager from './CategoryManager'
 
 const tabsTheme = {
     base: 'flex flex-col gap-2',
@@ -34,7 +35,7 @@ const tabsTheme = {
 }
 export default function AdminTabs() {
     const { isLoading, isError, data } = useQuery(
-        'resources',
+        ['resources'],
         getResourcesWithTags,
         {
             staleTime: defaultStaleTime,
@@ -83,7 +84,9 @@ export default function AdminTabs() {
                                 )
                             })}
                     </Tabs.Item>
-                    <Tabs.Item title="Tag Categories" icon={FaTag}></Tabs.Item>
+                    <Tabs.Item title="Tag Categories" icon={FaTag}>
+                        <CategoryManager />
+                    </Tabs.Item>
                 </Tabs>
             ) : (
                 <LoadingPage />

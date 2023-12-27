@@ -1,7 +1,12 @@
-export const Tag = (props: { title: string }) => {
-    const { title } = props
+import { calculateTextColor } from '@/utils/color'
+
+export const Tag = (props: { title: string; color?: string }) => {
+    const { title, color = '#fdba74' } = props
     return (
-        <div className="rounded-full bg-orange-300 p-1 px-2 text-sm">
+        <div
+            style={{ background: color, color: calculateTextColor(color) }}
+            className="rounded-full px-2 py-1 text-sm"
+        >
             {title}
         </div>
     )

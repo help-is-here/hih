@@ -18,7 +18,13 @@ export const ResourceCard = ({ resource }: TResourceCard) => {
                     <div className="mt-3 flex flex-row gap-1">
                         {resource.tag_resource ? (
                             resource.tag_resource.map((tag) => {
-                                return <Tag title={tag.name} key={tag.name} />
+                                return (
+                                    <Tag
+                                        title={tag.name}
+                                        key={tag.name}
+                                        color={tag.tag_category?.color}
+                                    />
+                                )
                             })
                         ) : (
                             <></>

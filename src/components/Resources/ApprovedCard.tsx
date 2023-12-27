@@ -5,6 +5,8 @@ import { H2 } from '../Text/Headings'
 import Hearted from './Hearted'
 import { Tag } from './Tag'
 import { Link } from 'react-router-dom'
+import EditCard from './EditCard'
+import UpdateResourceButton from '../Form/UpdateResourceButton'
 
 type TApprovedCard = {
     resource: IResource
@@ -18,7 +20,10 @@ export default function ApprovedCard({ resource }: TApprovedCard) {
                 <div className="flex flex-col gap-4 md:flex-row">
                     <div className="w-full">
                         {edit ? (
-                            <>{/* TODO: Add edit component here */}</>
+                            <EditCard
+                                closeEdit={() => setEdit(false)}
+                                resource={resource}
+                            />
                         ) : (
                             <div className="flex">
                                 <div className="w-full">
@@ -50,6 +55,11 @@ export default function ApprovedCard({ resource }: TApprovedCard) {
                                                     (tag) => {
                                                         return (
                                                             <Tag
+                                                                color={
+                                                                    tag
+                                                                        .tag_category
+                                                                        ?.color
+                                                                }
                                                                 title={tag.name}
                                                                 key={tag.name}
                                                             />
@@ -64,9 +74,16 @@ export default function ApprovedCard({ resource }: TApprovedCard) {
                                 </div>
 
                                 <div className="flex justify-center gap-4 md:flex-col">
-                                    <button className="rounded bg-orange-500 px-4 py-2 text-white md:block md:w-48">
-                                        Revoke Approval
-                                    </button>
+                                    <div className="rounded bg-orange-500 px-4 py-2 text-white md:block md:w-48">
+                                        <UpdateResourceButton
+                                            resource={{
+                                                ...resource,
+                                                in_review: true,
+                                            }}
+                                        >
+                                            Revoke Approval
+                                        </UpdateResourceButton>{' '}
+                                    </div>
                                     <button
                                         onClick={() => setEdit(true)}
                                         className="rounded bg-orange-700 px-4 py-2 text-white md:block md:w-48"
