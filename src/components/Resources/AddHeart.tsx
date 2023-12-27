@@ -14,6 +14,9 @@ export default function AddHeart({ resourceId }: TAddHeart) {
             queryClient.invalidateQueries({
                 queryKey: ['hearted' + resourceId],
             })
+            queryClient.invalidateQueries({
+                queryKey: ['userHearted'],
+            })
         },
     })
     return (

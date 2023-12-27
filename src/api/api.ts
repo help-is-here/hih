@@ -31,6 +31,17 @@ const getHeartedCount = async (resourceId: number) => {
         .select('*', { count: 'exact', head: true })
         .eq('resource_id', resourceId)
 }
+const getUserHearted = async () => {
+    const {
+        data: { user },
+    } = await client.auth.getUser()
+    return await client
+        .from('hearted_resources')
+        .select(
+            'user_id, resource_id(id, name, description, num_helped, link, in_review, tag_resource(...tags(name, id, tag_categories(name, color))))'
+        )
+        .eq('user_id', user?.id)
+}
 
 // Mutations
 const insertTag = async (tag: ITag) => {
@@ -167,4 +178,5 @@ export {
     getTags,
     getHeartedCount,
     addHeart,
+    getUserHearted,
 }
