@@ -25,6 +25,12 @@ const getCategories = async () => {
         .from('tag_categories')
         .select('id, name, color, tags(name, id)')
 }
+const getHeartedCount = async (resourceId: number) => {
+    return await client
+        .from('hearted_resources')
+        .select('*', { count: 'exact', head: true })
+        .eq('resource_id', resourceId)
+}
 
 // Mutations
 const insertTag = async (tag: ITag) => {
@@ -143,6 +149,14 @@ const unLinkTags = async (recordId: number, tags: ITag[]) => {
 const deleteResource = async (resource: IResource) => {
     await client.from('resources').delete().eq('id', resource.id)
 }
+const addHeart = async (resourceId: number) => {
+    const {
+        data: { user },
+    } = await client.auth.getUser()
+    await client
+        .from('hearted_resources')
+        .insert({ resource_id: resourceId, user_id: user?.id })
+}
 export {
     getResources,
     getResourcesWithTags,
@@ -151,4 +165,6 @@ export {
     getCategories,
     updateCategory,
     getTags,
+    getHeartedCount,
+    addHeart,
 }
