@@ -25,6 +25,14 @@ const getCategories = async () => {
         .from('tag_categories')
         .select('id, name, color, tags(name, id)')
 }
+const getPrecautionResources = async () => {
+    return await client
+        .from('tags')
+        .select(
+            'name, id, tag_resource(...resources(name, description, num_helped, link, in_review)))'
+        )
+        .eq('name', 'precaution')
+}
 
 // Mutations
 const insertTag = async (tag: ITag) => {
@@ -151,4 +159,5 @@ export {
     getCategories,
     updateCategory,
     getTags,
+    getPrecautionResources,
 }
