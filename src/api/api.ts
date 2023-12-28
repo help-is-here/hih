@@ -1,5 +1,5 @@
 import client from '@/database/client'
-import { IResource } from '@/types'
+import { IResource, EAction } from '@/types'
 
 // Constants
 export const defaultStaleTime = 1200000
@@ -18,7 +18,7 @@ const getResourcesWithTags = async () => {
 
 // Mutations
 const updateResource = async (resource: IResource) => {
-    return client
+    const resourceQuery = client
         .from('resources')
         .update({
             name: resource.name,
@@ -28,7 +28,49 @@ const updateResource = async (resource: IResource) => {
             in_review: resource.in_review,
         })
         .eq('id', resource.id)
-        .select()
+        .select('id')
+
+    const record = await resourceQuery
+    if (record.data === null) {
+        return
+    }
+    if (!resource.tag_resource) {
+        return
+    }
+    for (const tag of resource.tag_resource) {
+        let tagQuery
+        if (tag.action === EAction.Add) {
+            tagQuery = client
+                .from('tags')
+                .upsert(
+                    {
+                        name: tag.name,
+                    },
+                    { ignoreDuplicates: false, onConflict: 'name' }
+                )
+                .select('id')
+
+            const tagRecord = await tagQuery
+            if (tagRecord.data === null) {
+                continue
+            }
+            const tagLinkQuery = client.from('tag_resource').insert({
+                tag_id: tagRecord.data[0].id,
+                resource_id: record.data[0].id,
+            })
+            await tagLinkQuery
+        } else if (EAction.Remove) {
+            tagQuery = client
+                .from('tag_resource')
+                .delete()
+                .eq('tag_id', tag.id)
+                .eq('resource_id', record.data[0].id)
+            await tagQuery
+        }
+    }
 }
 
-export { getResources, getResourcesWithTags, updateResource }
+const deleteResource = async (resource: IResource) => {
+    await client.from('resources').delete().eq('id', resource.id)
+}
+export { getResources, getResourcesWithTags, updateResource, deleteResource }

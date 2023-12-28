@@ -5,6 +5,7 @@ import { H2 } from '../Text/Headings'
 import Hearted from './Hearted'
 import { Tag } from './Tag'
 import { Link } from 'react-router-dom'
+import EditCard from './EditCard'
 import UpdateResourceButton from '../Form/UpdateResourceButton'
 
 type TApprovedCard = {
@@ -19,7 +20,10 @@ export default function ApprovedCard({ resource }: TApprovedCard) {
                 <div className="flex flex-col gap-4 md:flex-row">
                     <div className="w-full">
                         {edit ? (
-                            <>{/* TODO: Add edit component here */}</>
+                            <EditCard
+                                closeEdit={() => setEdit(false)}
+                                resource={resource}
+                            />
                         ) : (
                             <div className="flex">
                                 <div className="w-full">

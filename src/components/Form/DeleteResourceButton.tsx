@@ -1,5 +1,5 @@
 import React from 'react'
-import { updateResource } from '../../api/api'
+import { deleteResource } from '../../api/api'
 import { useMutation, useQueryClient } from 'react-query'
 import { IResource } from '@/types'
 
@@ -10,7 +10,7 @@ type TUpdateResourceButton = {
     disabled?: boolean
     onSucces?: () => void
 }
-export default function UpdateResourceButton({
+export default function DeleteResourceButton({
     children,
     resource,
     disabled = false,
@@ -19,7 +19,7 @@ export default function UpdateResourceButton({
 }: TUpdateResourceButton) {
     const queryClient = useQueryClient()
     const updateResourceMut = useMutation({
-        mutationFn: updateResource,
+        mutationFn: deleteResource,
         onSuccess: () => {
             // Invalidate and refetch
             queryClient.invalidateQueries({ queryKey: ['resources'] })

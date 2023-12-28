@@ -1,7 +1,13 @@
+export enum EAction {
+    Add = 'ADD',
+    Remove = 'REMOVE',
+    None = 'NONE',
+}
 export interface ITag {
     id: number
     name: string
     category: string
+    action?: EAction
 }
 
 export interface IResource {
