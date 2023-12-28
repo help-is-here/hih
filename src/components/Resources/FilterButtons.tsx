@@ -24,24 +24,7 @@ type THeartedButton = {
 const HeartedButton = ({ onFilter }: THeartedButton) => {
     const [toggle, setToggle] = useState(false)
 
-type THeartedButton = {
-    onFilter: (toggle: boolean) => void
-}
-const HeartedButton = ({ onFilter }: THeartedButton) => {
-    const [toggle, setToggle] = useState(false)
-
     return (
-        <button
-            onClick={() => {
-                onFilter(!toggle)
-                setToggle(!toggle)
-            }}
-            className={`${
-                toggle
-                    ? 'bg-orange-600 text-white hover:bg-orange-500'
-                    : 'bg-orange-200'
-            } flex w-1/2 flex-row items-center rounded p-2 text-slate-900 hover:bg-orange-200 md:w-full`}
-        >
         <button
             onClick={() => {
                 onFilter(!toggle)

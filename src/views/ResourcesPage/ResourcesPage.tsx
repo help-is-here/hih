@@ -28,7 +28,7 @@ export const ResourcesPage = () => {
     if (isLoading) {
         return <LoadingPage />
     }
-    if (heartedQuery.isError || isError) {
+    if (isError) {
         return <ErrorPage />
     }
     return (
@@ -49,8 +49,8 @@ export const ResourcesPage = () => {
                     />
                 </section>
                 <section className="p-3 md:columns-1 md:overflow-auto lg:columns-2 xl:columns-3">
-                    {filtered ? (
-                        filtered.map((d: any) => {
+                    {data && data.data ? (
+                        data.data.map((d: any) => {
                             return <ResourceCard resource={d} key={d.id} />
                         })
                     ) : (
