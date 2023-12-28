@@ -38,7 +38,13 @@ export default function SignUp({ setState }: TSignUpProps) {
     }
 
     return (
-        <>
+        <form
+            name="signup"
+            method="POST"
+            data-netlify-recaptcha="true"
+            data-netlify="true"
+            onError={() => alert('Please verify captcha')}
+        >
             <div className="my-4">
                 <ValidatedInput
                     type="text"
@@ -60,7 +66,11 @@ export default function SignUp({ setState }: TSignUpProps) {
                 - uppercase letters <br />
                 - numbers <br />- symbols
             </div>
+
+            <div className="my-2" data-netlify-recaptcha="true"></div>
+
             <button
+                type="submit"
                 title={!formValid ? 'All fields must be valid' : ''}
                 className="my-4 block w-full rounded-full bg-orange-400 py-2 disabled:bg-orange-200 disabled:text-gray-600"
                 disabled={!formValid}
@@ -74,6 +84,6 @@ export default function SignUp({ setState }: TSignUpProps) {
             >
                 Already have an account? Sign in!
             </button>
-        </>
+        </form>
     )
 }
