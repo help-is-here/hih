@@ -31,7 +31,11 @@ const getHeartedCount = async (resourceId: number) => {
         .select('*', { count: 'exact', head: true })
         .eq('resource_id', resourceId)
 }
-const getFilteredResources = async (hearted: boolean, tags: string[]) => {
+const getFilteredResources = async (
+    hearted: boolean,
+    tags: string[],
+    approved: boolean = true
+) => {
     const {
         data: { user },
     } = await client.auth.getUser()
@@ -51,6 +55,9 @@ const getFilteredResources = async (hearted: boolean, tags: string[]) => {
     }
     if (tags.length) {
         query.filter('tag_resource.tags.name', 'in', `(${tags.join(',')})`)
+    }
+    if (approved) {
+        query.filter('in_review', 'eq', false)
     }
     return await query
 }
