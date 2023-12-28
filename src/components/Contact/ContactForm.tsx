@@ -81,22 +81,27 @@ export default function ContactForm() {
             >
                 <div className="mb-8 text-center text-xl">Contact us!</div>
                 <ValidatedInput
+                    name="email"
                     placeholder="me@example.com"
                     validator={validateEmail}
                     onChange={setEmail}
                     type="text"
                 />
                 <ValidatedInput
+                    name="subject"
                     placeholder="Subject"
                     validator={null}
                     onChange={setSubject}
                     type="text"
                 />
                 <ValidatedTextarea
+                    name="message"
                     placeholder="Message"
                     validator={null}
                     onChange={setMessage}
                 />
+                <div className="my-2" data-netlify-recaptcha="true"></div>
+
                 <SubmitButton onClick={createIssue} disabled={formValid}>
                     Send us an email
                 </SubmitButton>

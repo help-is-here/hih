@@ -5,6 +5,7 @@ type TValidatedTextarea = {
     onChange: (val: string) => void
     placeholder: string
     value?: string
+    name?: string
 }
 
 export default function ValidatedTextarea({
@@ -12,6 +13,7 @@ export default function ValidatedTextarea({
     onChange,
     placeholder,
     value = '',
+    name = '',
 }: TValidatedTextarea) {
     const [error, setError] = useState<string>('')
 
@@ -28,6 +30,7 @@ export default function ValidatedTextarea({
     return (
         <>
             <textarea
+                name={name}
                 className={`block w-full rounded-xl border border-solid px-4 py-2 ${
                     error === 'Looks good!'
                         ? 'border-green-500'

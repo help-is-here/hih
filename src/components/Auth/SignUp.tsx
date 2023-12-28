@@ -43,6 +43,11 @@ export default function SignUp({ setState }: TSignUpProps) {
             method="POST"
             data-netlify-recaptcha="true"
             data-netlify="true"
+            onSubmit={() =>
+                alert(
+                    'Thanks for signing up! Check your email for verification.'
+                )
+            }
             onError={() => alert('Please verify captcha')}
         >
             <div className="my-4">

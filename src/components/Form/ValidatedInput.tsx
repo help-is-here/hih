@@ -6,6 +6,7 @@ type TValidatedInputProps = {
     placeholder: string
     type?: string | undefined
     value?: string | undefined
+    name?: string
 }
 
 export default function ValidatedInput({
@@ -14,6 +15,7 @@ export default function ValidatedInput({
     placeholder,
     type = 'text',
     value = '',
+    name = '',
 }: TValidatedInputProps) {
     const [error, setError] = useState<string>('')
 
@@ -30,6 +32,7 @@ export default function ValidatedInput({
     return (
         <>
             <input
+                name={name}
                 type={type}
                 className={`block w-full rounded-full border border-solid px-4 py-2 ${
                     error === 'Looks good!'
