@@ -32,8 +32,6 @@ const getHeartedCount = async (resourceId: number) => {
         .eq('resource_id', resourceId)
 }
 const getFilteredResources = async (hearted: boolean, tags: string[]) => {
-    console.log(tags)
-    console.log(hearted)
     const {
         data: { user },
     } = await client.auth.getUser()

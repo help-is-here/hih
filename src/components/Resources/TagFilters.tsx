@@ -20,7 +20,6 @@ export default function TagFilters({ onFilter }: TTagFilters) {
     const removeFilter = (tagName: string) => {
         const temp = [...filters]
         temp.splice(temp.indexOf(tagName), 1)
-        console.log(temp)
         updateFilters(temp)
         onFilter(temp)
     }
