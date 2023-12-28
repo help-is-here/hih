@@ -4,11 +4,14 @@ export enum EAction {
     None = 'NONE',
 }
 
+export enum EFilters {
+    None = 'NONE',
+    Hearted = 'HEARTED',
+}
+
 export interface ITag {
     id: number
     name: string
-    tag_category?: ICategory
-    action?: EAction
     tag_category?: ICategory
     action?: EAction
 }
