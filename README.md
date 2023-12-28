@@ -1,7 +1,6 @@
 # Help is Here
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/9d9a9c17-2437-4e77-95c5-420d502f5347/deploy-status)](https://placeholder-helpishere.netlify.app/)
-
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4fd29bf8-9a76-4725-8b2c-b7f4efb247f1/deploy-status)](https://app.netlify.com/sites/help-is-here/deploys)
 Welcome to Help is Here! (We say hih pronounced "hi") Thanks for being one of our awesome contributors.
 
 ## OS
