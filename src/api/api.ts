@@ -1,10 +1,17 @@
 import client from '@/database/client'
 import { IResource, EAction, ICategory, ITag } from '@/types'
+import { IResource, EAction, ICategory, ITag } from '@/types'
 
 // Constants
 export const defaultStaleTime = 1200000
+export const defaultStaleTime = 1200000
 
 // Queries
+const getTags = async () => {
+    return await client
+        .from('tags')
+        .select('id, name, tag_category(id, name, color)')
+}
 const getTags = async () => {
     return await client
         .from('tags')
@@ -17,6 +24,7 @@ const getResourcesWithTags = async () => {
     return await client
         .from('resources')
         .select(
+            'id, name, description, num_helped, link, in_review, tag_resource(...tags(name, id, tag_categories(name, color)))'
             'id, name, description, num_helped, link, in_review, tag_resource(...tags(name, id, tag_categories(name, color)))'
         )
 }
@@ -70,6 +78,12 @@ const updateTag = async (tag: ITag) => {
             tag_category: tag.tag_category ? Number(tag.tag_category.id) : null,
         })
         .eq('id', tag.id)
+        .from('tags')
+        .update({
+            name: tag.name,
+            tag_category: tag.tag_category ? Number(tag.tag_category.id) : null,
+        })
+        .eq('id', tag.id)
 }
 const updateResource = async (resource: IResource) => {
     const resourceQuery = client
@@ -78,6 +92,8 @@ const updateResource = async (resource: IResource) => {
             name: resource.name,
             description: resource.description,
             link: resource.link,
+            num_helped: resource.num_helped,
+            in_review: resource.in_review,
             num_helped: resource.num_helped,
             in_review: resource.in_review,
         })
@@ -181,6 +197,8 @@ const addHeart = async (resourceId: number) => {
         .insert({ resource_id: resourceId, user_id: user?.id })
 }
 export {
+    addHeart,
+    getTags,
     getResources,
     getResourcesWithTags,
     updateResource,
