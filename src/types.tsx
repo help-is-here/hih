@@ -9,6 +9,8 @@ export interface ITag {
     name: string
     tag_category?: ICategory
     action?: EAction
+    tag_category?: ICategory
+    action?: EAction
 }
 
 export interface IResource {
@@ -19,6 +21,13 @@ export interface IResource {
     num_helped: number
     tag_resource?: ITag[]
     in_review: boolean
+}
+
+export interface ICategory {
+    id: number
+    name: string
+    color: string
+    tags?: ITag[]
 }
 
 export interface ICategory {

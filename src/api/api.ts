@@ -1,10 +1,17 @@
 import client from '@/database/client'
 import { IResource, EAction, ICategory, ITag } from '@/types'
+import { IResource, EAction, ICategory, ITag } from '@/types'
 
 // Constants
 export const defaultStaleTime = 1200000
+export const defaultStaleTime = 1200000
 
 // Queries
+const getTags = async () => {
+    return await client
+        .from('tags')
+        .select('id, name, tag_category(id, name, color)')
+}
 const getTags = async () => {
     return await client
         .from('tags')
@@ -18,7 +25,30 @@ const getResourcesWithTags = async () => {
         .from('resources')
         .select(
             'id, name, description, num_helped, link, in_review, tag_resource(...tags(name, id, tag_categories(name, color)))'
+            'id, name, description, num_helped, link, in_review, tag_resource(...tags(name, id, tag_categories(name, color)))'
         )
+}
+const getCategories = async () => {
+    return await client
+        .from('tag_categories')
+        .select('id, name, color, tags(name, id)')
+}
+const getHeartedCount = async (resourceId: number) => {
+    return await client
+        .from('hearted_resources')
+        .select('*', { count: 'exact', head: true })
+        .eq('resource_id', resourceId)
+}
+const getUserHearted = async () => {
+    const {
+        data: { user },
+    } = await client.auth.getUser()
+    return await client
+        .from('hearted_resources')
+        .select(
+            'user_id, resource_id(id, name, description, num_helped, link, in_review, tag_resource(...tags(name, id, tag_categories(name, color))))'
+        )
+        .eq('user_id', user?.id)
 }
 const getCategories = async () => {
     return await client
@@ -34,7 +64,20 @@ const insertTag = async (tag: ITag) => {
     })
 }
 const updateTag = async (tag: ITag) => {
+const insertTag = async (tag: ITag) => {
+    await client.from('tags').insert({
+        name: tag.name,
+        tag_category: tag.tag_category ? Number(tag.tag_category.id) : null,
+    })
+}
+const updateTag = async (tag: ITag) => {
     await client
+        .from('tags')
+        .update({
+            name: tag.name,
+            tag_category: tag.tag_category ? Number(tag.tag_category.id) : null,
+        })
+        .eq('id', tag.id)
         .from('tags')
         .update({
             name: tag.name,
@@ -49,6 +92,8 @@ const updateResource = async (resource: IResource) => {
             name: resource.name,
             description: resource.description,
             link: resource.link,
+            num_helped: resource.num_helped,
+            in_review: resource.in_review,
             num_helped: resource.num_helped,
             in_review: resource.in_review,
         })
