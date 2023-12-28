@@ -23,7 +23,7 @@ export const ResourcesPage = () => {
 
     useEffect(() => {
         refetch()
-    }, [enableHeartQuery, tagsFilters.length])
+    }, [enableHeartQuery, tagsFilters.length, refetch])
 
     if (isLoading) {
         return <LoadingPage />
@@ -48,7 +48,7 @@ export const ResourcesPage = () => {
                         }
                     />
                 </section>
-                <section className="p-3 md:columns-1 md:overflow-auto lg:columns-2 xl:columns-3">
+                <section className="px-3 pb-3 md:columns-1 md:overflow-auto lg:columns-2 xl:columns-3">
                     {data && data.data ? (
                         data.data.map((d: any) => {
                             return <ResourceCard resource={d} key={d.id} />
