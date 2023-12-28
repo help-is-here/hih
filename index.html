@@ -7,14 +7,16 @@
         <title>Help is Here</title>
     </head>
     <body>
-        <form name="contact" netlify hidden>
+        <form name="contact" netlify hidden data-netlify-recaptcha="true">
             <input type="email" name="email" />
             <input name="subject" />
+            <div data-netlify-recaptcha="true"></div>
             <textarea name="message"></textarea>
         </form>
-        <form name="signup" netlify hidden>
+        <form name="signup" netlify hidden data-netlify-recaptcha="true">
             <input type="email" name="email" />
             <input type="password" name="password" />
+            <div data-netlify-recaptcha="true"></div>
         </form>
         <div id="root"></div>
         <script type="module" src="/src/main.tsx"></script>

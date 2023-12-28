@@ -41,8 +41,6 @@ export default function SignUp({ setState }: TSignUpProps) {
         <form
             name="signup"
             method="POST"
-            data-netlify-recaptcha="true"
-            data-netlify="true"
             onSubmit={() =>
                 alert(
                     'Thanks for signing up! Check your email for verification.'
@@ -71,9 +69,6 @@ export default function SignUp({ setState }: TSignUpProps) {
                 - uppercase letters <br />
                 - numbers <br />- symbols
             </div>
-
-            <div className="my-2" data-netlify-recaptcha="true"></div>
-
             <button
                 type="submit"
                 title={!formValid ? 'All fields must be valid' : ''}
