@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { validateEmail, validatePassword } from '../Form/Validators'
 import client from '@/database/client'
 import ValidatedInput from '../Form/ValidatedInput'
+import { Alert } from 'flowbite-react'
+import { FaCheck, FaExclamationCircle } from 'react-icons/fa'
 
 type TSignUpProps = {
     setState: (state: string) => void
@@ -12,6 +14,8 @@ export default function SignUp({ setState }: TSignUpProps) {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [formValid, setValid] = useState<boolean>(false)
+    const [successAlert, setSuccessAlert] = useState<boolean>(false)
+    const [errorAlert, setErrorAlert] = useState<boolean>(false)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -33,23 +37,34 @@ export default function SignUp({ setState }: TSignUpProps) {
         if (!error) {
             navigate('/')
         } else {
-            alert('Oops, an error occured')
+            setErrorAlert(true)
         }
     }
 
     return (
         <form
             name="signup"
-            method="POST"
             data-netlify-recaptcha="true"
             data-netlify="true"
-            onSubmit={() =>
-                alert(
-                    'Thanks for signing up! Check your email for verification.'
-                )
-            }
-            onError={() => alert('Please verify captcha')}
+            onSubmit={() => setSuccessAlert(true)}
+            onError={() => setErrorAlert(true)}
         >
+            <Alert
+                className={`${successAlert ? 'block' : 'hidden'} mb-4  `}
+                color="success"
+                icon={FaCheck}
+                onDismiss={() => setSuccessAlert(false)}
+            >
+                An email with a password reset link has been sent.
+            </Alert>
+            <Alert
+                className={`${errorAlert ? 'block' : 'hidden'} mb-4  `}
+                color="failure"
+                icon={FaExclamationCircle}
+                onDismiss={() => setErrorAlert(false)}
+            >
+                We're sorry, an error occurred. Try again later or contact us.
+            </Alert>
             <div className="my-4">
                 <ValidatedInput
                     type="text"
@@ -79,7 +94,10 @@ export default function SignUp({ setState }: TSignUpProps) {
                 title={!formValid ? 'All fields must be valid' : ''}
                 className="my-4 block w-full rounded-full bg-orange-400 py-2 disabled:bg-orange-200 disabled:text-gray-600"
                 disabled={!formValid}
-                onClick={signUpNewUser}
+                onClick={(e) => {
+                    e.preventDefault()
+                    signUpNewUser()
+                }}
             >
                 Sign up
             </button>
