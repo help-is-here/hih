@@ -40,7 +40,7 @@ export default function ApprovedCard({ resource }: TApprovedCard) {
 
                                     <div className="flex justify-start">
                                         <strong>Liked: </strong>&nbsp;
-                                        <Hearted num={resource.num_helped} />
+                                        <Hearted resourceId={resource.id} />
                                     </div>
                                     <div className="w-full">
                                         <div className="p-1text-center">
