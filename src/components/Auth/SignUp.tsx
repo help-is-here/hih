@@ -69,6 +69,9 @@ export default function SignUp({ setState }: TSignUpProps) {
                 - uppercase letters <br />
                 - numbers <br />- symbols
             </div>
+
+            <div className="my-2" data-netlify-recaptcha="true"></div>
+
             <button
                 type="submit"
                 title={!formValid ? 'All fields must be valid' : ''}

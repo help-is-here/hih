@@ -99,6 +99,8 @@ export default function ContactForm() {
                     validator={null}
                     onChange={setMessage}
                 />
+                <div className="my-2" data-netlify-recaptcha="true"></div>
+
                 <SubmitButton onClick={createIssue} disabled={formValid}>
                     Send us an email
                 </SubmitButton>
