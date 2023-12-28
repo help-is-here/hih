@@ -71,6 +71,8 @@ export default function ContactForm() {
             <form
                 name="contact"
                 method="POST"
+                data-netlify-recaptcha="true"
+                data-netlify="true"
                 onSubmit={() =>
                     alert("Thanks for the email! We'll be in touch shortly.")
                 }
