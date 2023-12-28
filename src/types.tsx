@@ -4,11 +4,6 @@ export enum EAction {
     None = 'NONE',
 }
 
-export enum EFilters {
-    None = 'NONE',
-    Hearted = 'HEARTED',
-}
-
 export interface ITag {
     id: number
     name: string
@@ -24,13 +19,6 @@ export interface IResource {
     num_helped: number
     tag_resource?: ITag[]
     in_review: boolean
-}
-
-export interface ICategory {
-    id: number
-    name: string
-    color: string
-    tags?: ITag[]
 }
 
 export interface ICategory {

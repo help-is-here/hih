@@ -8,7 +8,7 @@ export const SidebarMobile = (props: { className: string }) => {
             className={`w-full rounded bg-gray-200 p-4 drop-shadow-2xl ${className}`}
         >
             <Search />
-            <FilterButtons onFilter={() => {}} />
+            <FilterButtons onHeartedFilter={() => {}} />
         </div>
     )
 }
