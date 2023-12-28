@@ -3,6 +3,7 @@ import { IResource, EAction, ICategory, ITag } from '@/types'
 
 // Constants
 export const defaultStaleTime = 1200000
+export const defaultStaleTime = 1200000
 
 // Queries
 const getTags = async () => {
@@ -66,6 +67,8 @@ const updateResource = async (resource: IResource) => {
             name: resource.name,
             description: resource.description,
             link: resource.link,
+            num_helped: resource.num_helped,
+            in_review: resource.in_review,
             num_helped: resource.num_helped,
             in_review: resource.in_review,
         })

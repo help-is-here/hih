@@ -25,6 +25,10 @@ export default function UnaprovedCard({ resource }: TUnapprovedCard) {
                                 closeEdit={() => setEdit(false)}
                                 resource={resource}
                             />
+                            <EditCard
+                                closeEdit={() => setEdit(false)}
+                                resource={resource}
+                            />
                         ) : (
                             <div className="flex">
                                 <div className="w-full">
@@ -90,6 +94,10 @@ export default function UnaprovedCard({ resource }: TUnapprovedCard) {
                                     >
                                         Edit
                                     </button>
+                                    <DeleteResourceButton
+                                        resource={resource}
+                                        className="w-24 rounded bg-orange-950 px-4 py-2 text-white md:block md:w-48"
+                                    >
                                     <DeleteResourceButton
                                         resource={resource}
                                         className="w-24 rounded bg-orange-950 px-4 py-2 text-white md:block md:w-48"
