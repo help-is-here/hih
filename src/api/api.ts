@@ -2,7 +2,7 @@ import client from '@/database/client'
 import { IResource } from '@/types'
 
 // Constants
-export const defaultStaleTime = 12000
+export const defaultStaleTime = 1200000
 
 // Queries
 const getResources = async () => {
@@ -12,25 +12,11 @@ const getResourcesWithTags = async () => {
     return await client
         .from('resources')
         .select(
-            'id, name, description, num_helped, link, in_review, tag_resource(...tags(name))'
+            'id, name, description, num_helped, link, in_review, tag_resource(...tags(name, id))'
         )
 }
 
 // Mutations
-const updateStatus = async (resource: IResource) => {
-    return client
-        .from('resources')
-        .update({ in_review: resource.in_review })
-        .eq('id', resource.id)
-}
-
-const updateLikes = async (resource: IResource) => {
-    await client
-        .from('resources')
-        .update({ num_helped: resource.num_helped })
-        .eq('id', resource.id)
-}
-
 const updateResource = async (resource: IResource) => {
     return client
         .from('resources')
@@ -38,14 +24,11 @@ const updateResource = async (resource: IResource) => {
             name: resource.name,
             description: resource.description,
             link: resource.link,
+            num_helped: resource.num_helped,
+            in_review: resource.in_review,
         })
         .eq('id', resource.id)
+        .select()
 }
 
-export {
-    getResources,
-    getResourcesWithTags,
-    updateStatus,
-    updateResource,
-    updateLikes,
-}
+export { getResources, getResourcesWithTags, updateResource }

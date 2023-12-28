@@ -34,7 +34,7 @@ const tabsTheme = {
 }
 export default function AdminTabs() {
     const { isLoading, isError, data } = useQuery(
-        'resources',
+        ['resources'],
         getResourcesWithTags,
         {
             staleTime: defaultStaleTime,
