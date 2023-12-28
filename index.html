@@ -7,6 +7,15 @@
         <title>Help is Here</title>
     </head>
     <body>
+        <form name="contact" netlify hidden>
+            <input type="email" name="email" />
+            <input name="subject" />
+            <textarea name="message"></textarea>
+        </form>
+        <form name="signup" netlify hidden>
+            <input type="email" name="email" />
+            <input type="password" name="password" />
+        </form>
         <div id="root"></div>
         <script type="module" src="/src/main.tsx"></script>
     </body>

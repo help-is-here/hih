@@ -71,14 +71,13 @@ export default function ContactForm() {
             <form
                 name="contact"
                 method="POST"
-                data-netlify-recaptcha="true"
-                data-netlify="true"
                 onSubmit={() =>
                     alert("Thanks for the email! We'll be in touch shortly.")
                 }
                 onError={() => alert('Please verify captcha')}
                 className="mt-24 flex h-fit w-96 max-w-md flex-col gap-2 rounded-lg bg-orange-50 p-12"
             >
+                <input type="hidden" name="form-name" value="contact" />
                 <div className="mb-8 text-center text-xl">Contact us!</div>
                 <ValidatedInput
                     name="email"
