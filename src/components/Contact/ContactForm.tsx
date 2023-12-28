@@ -79,6 +79,7 @@ export default function ContactForm() {
                 onError={() => alert('Please verify captcha')}
                 className="mt-24 flex h-fit w-96 max-w-md flex-col gap-2 rounded-lg bg-orange-50 p-12"
             >
+                <input type="hidden" name="form-name" value="contact" />
                 <div className="mb-8 text-center text-xl">Contact us!</div>
                 <ValidatedInput
                     name="email"
