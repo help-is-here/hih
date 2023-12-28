@@ -16,7 +16,7 @@ export const SidebarDesktop = (props: {
                     onHeartedFilter(filterPayload)
                 }
             />
-            <div className="mt-3 font-bold text-slate-900">Filter Tags</div>
+            <div className="my-3 font-bold text-slate-900">Filter Tags</div>
             <TagFilters onFilter={(filters) => onTagsFilter(filters)} />
         </div>
     )
