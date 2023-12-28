@@ -5,6 +5,8 @@ import { validateEmail } from '../Form/Validators'
 import client from '@/database/client'
 import { FcGoogle } from 'react-icons/fc'
 import ValidatedInput from '../Form/ValidatedInput'
+import { Alert } from 'flowbite-react'
+import { FaExclamationCircle } from 'react-icons/fa'
 
 type TSignInProps = {
     setState: (state: string) => void
@@ -13,6 +15,8 @@ export default function SignIn({ setState }: TSignInProps) {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [formValid, setValid] = useState<boolean>(false)
+    const [alert, setAlert] = useState<boolean>(false)
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -30,7 +34,7 @@ export default function SignIn({ setState }: TSignInProps) {
         if (!error) {
             navigate('/')
         } else {
-            alert("We're so sorry, an error occured.")
+            setAlert(true)
         }
     }
 
@@ -41,12 +45,20 @@ export default function SignIn({ setState }: TSignInProps) {
         if (!error) {
             navigate('/')
         } else {
-            alert("We're so sorry, an error occured.")
+            setAlert(true)
         }
     }
 
     return (
         <>
+            <Alert
+                className={`${alert ? 'block' : 'hidden'} mb-4  `}
+                color="failure"
+                icon={FaExclamationCircle}
+                onDismiss={() => setAlert(false)}
+            >
+                We're sorry, an error occurred. Try again later or contact us.
+            </Alert>
             <button
                 onClick={signInWithGoogle}
                 className="mb-4 flex w-full items-center justify-center gap-2 rounded-full bg-white px-4 py-2"

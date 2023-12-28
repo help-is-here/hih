@@ -4,10 +4,14 @@ import { useNavigate } from 'react-router-dom'
 import { validatePassword } from '../Form/Validators'
 import client from '@/database/client'
 import ValidatedInput from '../Form/ValidatedInput'
+import { Alert } from 'flowbite-react'
+import { FaExclamationCircle } from 'react-icons/fa'
 
 export default function ChangePassword() {
     const [password, setPassword] = useState<string>('')
     const [formValid, setValid] = useState<boolean>(false)
+    const [alert, setAlert] = useState<boolean>(false)
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -25,12 +29,20 @@ export default function ChangePassword() {
         if (!error) {
             navigate('/')
         } else {
-            alert("We're so sorry, an error occured.")
+            setAlert(true)
         }
     }
 
     return (
         <>
+            <Alert
+                className={`${alert ? 'block' : 'hidden'} mb-4  `}
+                color="failure"
+                icon={FaExclamationCircle}
+                onDismiss={() => setAlert(false)}
+            >
+                We're sorry, an error occurred. Try again later or contact us.
+            </Alert>
             <ValidatedInput
                 type="password"
                 validator={validatePassword}

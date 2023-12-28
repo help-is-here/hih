@@ -1,6 +1,7 @@
 import { EAction, ITag } from '@/types'
+import { Alert } from 'flowbite-react'
 import { useEffect, useState } from 'react'
-import { FaTimes } from 'react-icons/fa'
+import { FaExclamationCircle, FaTimes } from 'react-icons/fa'
 
 type TTagUpdater = {
     initTags: ITag[]
@@ -18,6 +19,7 @@ export default function TagUpdater({
     const [tags, setTags] = useState<ITag[]>([])
     const [newTag, setNewTag] = useState('')
     const [valid, setValid] = useState(true)
+    const [alert, setAlert] = useState(true)
 
     useEffect(() => {
         if (initTags.length) {
@@ -29,7 +31,7 @@ export default function TagUpdater({
         const temp = [...tags]
         setValid(true)
         if (notAllowed.map((t) => t.name).includes(tagName)) {
-            alert('That tag is already assigned a category.')
+            setAlert(true)
         }
         // If the original tags included this tag, add it back in to reduce load on db
         else if (originalTags.map((t) => t.name).includes(tagName)) {
@@ -79,6 +81,14 @@ export default function TagUpdater({
 
     return (
         <div className="flex flex-wrap gap-1">
+            <Alert
+                className={`${alert ? 'block' : 'hidden'} mb-4  `}
+                color="failure"
+                icon={FaExclamationCircle}
+                onDismiss={() => setAlert(false)}
+            >
+                That tag is already assigned to another category.
+            </Alert>
             {tags.length === 0 ? (
                 <span>Add a tag...</span>
             ) : (

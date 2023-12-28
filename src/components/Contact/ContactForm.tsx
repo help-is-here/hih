@@ -6,12 +6,16 @@ import { useEffect, useState } from 'react'
 import ValidatedTextarea from '@/components/Form/ValidatedTextarea'
 import SubmitButton from '../Form/SubmitButton'
 import { Octokit } from 'octokit'
+import { Alert } from 'flowbite-react'
+import { FaCheck, FaExclamationCircle } from 'react-icons/fa'
 
 export default function ContactForm() {
     const [email, setEmail] = useState('')
     const [subject, setSubject] = useState('')
     const [message, setMessage] = useState('')
     const [formValid, setValid] = useState(false)
+    const [successAlert, setSuccessAlert] = useState<boolean>(false)
+    const [errorAlert, setErrorAlert] = useState<boolean>(false)
 
     useEffect(() => {
         if (
@@ -70,15 +74,30 @@ export default function ContactForm() {
         <div className="flex h-screen w-screen justify-center bg-orange-950">
             <form
                 name="contact"
-                method="POST"
                 data-netlify-recaptcha="true"
                 data-netlify="true"
-                onSubmit={() =>
-                    alert("Thanks for the email! We'll be in touch shortly.")
-                }
-                onError={() => alert('Please verify captcha')}
+                onSubmit={() => setSuccessAlert(true)}
+                onError={() => setErrorAlert(true)}
                 className="mt-24 flex h-fit w-96 max-w-md flex-col gap-2 rounded-lg bg-orange-50 p-12"
             >
+                <Alert
+                    className={`${successAlert ? 'block' : 'hidden'} mb-4  `}
+                    color="success"
+                    icon={FaCheck}
+                    onDismiss={() => setSuccessAlert(false)}
+                >
+                    Thanks for contacting us! We'll be in touch shortly.
+                </Alert>
+                <Alert
+                    className={`${errorAlert ? 'block' : 'hidden'} mb-4  `}
+                    color="failure"
+                    icon={FaExclamationCircle}
+                    onDismiss={() => setErrorAlert(false)}
+                >
+                    We're sorry, an error occurred. Try again later or contact
+                    us.
+                </Alert>
+
                 <input type="hidden" name="form-name" value="contact" />
                 <div className="mb-8 text-center text-xl">Contact us!</div>
                 <ValidatedInput
@@ -103,7 +122,13 @@ export default function ContactForm() {
                 />
                 <div className="my-2" data-netlify-recaptcha="true"></div>
 
-                <SubmitButton onClick={createIssue} disabled={formValid}>
+                <SubmitButton
+                    onClick={(e) => {
+                        e.preventDefault()
+                        createIssue()
+                    }}
+                    disabled={formValid}
+                >
                     Send us an email
                 </SubmitButton>
             </form>
