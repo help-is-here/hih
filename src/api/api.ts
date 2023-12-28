@@ -157,6 +157,7 @@ const unLinkTags = async (recordId: number, tags: ITag[]) => {
         await tagQuery
     }
 }
+
 const deleteResource = async (resource: IResource) => {
     await client.from('resources').delete().eq('id', resource.id)
 }
@@ -168,15 +169,16 @@ const addHeart = async (resourceId: number) => {
         .from('hearted_resources')
         .insert({ resource_id: resourceId, user_id: user?.id })
 }
+
 export {
+    addHeart,
+    getTags,
     getResources,
     getResourcesWithTags,
     updateResource,
     deleteResource,
-    getCategories,
     updateCategory,
-    getTags,
+    getCategories,
     getHeartedCount,
-    addHeart,
     getUserHearted,
 }

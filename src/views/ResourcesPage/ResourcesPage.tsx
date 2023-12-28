@@ -45,7 +45,7 @@ export const ResourcesPage = () => {
             // @ts-expect-error: Same ol thing with nested join types
             setFiltered(data.data)
         }
-    }, [enableHeartQuery, heartedQuery.data, data])
+    }, [enableHeartQuery, heartedQuery, data])
 
     if (heartedQuery.isLoading || isLoading) {
         return <LoadingPage />
