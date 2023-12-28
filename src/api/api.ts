@@ -3,7 +3,6 @@ import { IResource, EAction } from '@/types'
 
 // Constants
 export const defaultStaleTime = 1200000
-export const defaultStaleTime = 1200000
 
 // Queries
 const getResources = async () => {
@@ -27,14 +26,8 @@ const updateResource = async (resource: IResource) => {
             link: resource.link,
             num_helped: resource.num_helped,
             in_review: resource.in_review,
-            num_helped: resource.num_helped,
-            in_review: resource.in_review,
         })
         .eq('id', resource.id)
-        .select()
-}
-
-export { getResources, getResourcesWithTags, updateResource }
         .select('id')
 
     const record = await resourceQuery

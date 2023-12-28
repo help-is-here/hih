@@ -7,7 +7,6 @@ import { Tag } from './Tag'
 import { Link } from 'react-router-dom'
 import EditCard from './EditCard'
 import UpdateResourceButton from '../Form/UpdateResourceButton'
-import UpdateResourceButton from '../Form/UpdateResourceButton'
 
 type TApprovedCard = {
     resource: IResource
@@ -70,16 +69,6 @@ export default function ApprovedCard({ resource }: TApprovedCard) {
                                 </div>
 
                                 <div className="flex justify-center gap-4 md:flex-col">
-                                    <div className="rounded bg-orange-500 px-4 py-2 text-white md:block md:w-48">
-                                        <UpdateResourceButton
-                                            resource={{
-                                                ...resource,
-                                                in_review: true,
-                                            }}
-                                        >
-                                            Revoke Approval
-                                        </UpdateResourceButton>{' '}
-                                    </div>
                                     <div className="rounded bg-orange-500 px-4 py-2 text-white md:block md:w-48">
                                         <UpdateResourceButton
                                             resource={{
