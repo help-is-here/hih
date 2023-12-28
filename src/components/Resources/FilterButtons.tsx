@@ -1,18 +1,44 @@
+import { EFilters } from '@/types'
+import { useState } from 'react'
 import { FaHeart } from 'react-icons/fa'
 import { FaTag } from 'react-icons/fa'
 
-export const FilterButtons = () => {
+type TFilterButtons = {
+    onFilter: (filterType: EFilters, payload: boolean) => void
+}
+export const FilterButtons = ({ onFilter }: TFilterButtons) => {
     return (
         <div className="mt-2 flex flex-row gap-2">
-            <HeartedButton />
+            <HeartedButton
+                onFilter={(toggle) =>
+                    toggle
+                        ? onFilter(EFilters.Hearted, true)
+                        : onFilter(EFilters.Hearted, false)
+                }
+            />
             <FilterTagsButton />
         </div>
     )
 }
 
-const HeartedButton = () => {
+type THeartedButton = {
+    onFilter: (toggle: boolean) => void
+}
+const HeartedButton = ({ onFilter }: THeartedButton) => {
+    const [toggle, setToggle] = useState(false)
+
     return (
-        <button className="flex w-1/2 flex-row items-center rounded bg-orange-100 p-2 text-slate-900 hover:bg-orange-200 md:w-full">
+        <button
+            onClick={() => {
+                onFilter(!toggle)
+                setToggle(!toggle)
+            }}
+            className={`${
+                toggle
+                    ? 'bg-orange-600 text-white hover:bg-orange-500'
+                    : 'bg-orange-200'
+            } flex w-1/2 flex-row items-center rounded p-2 text-slate-900 hover:bg-orange-200 md:w-full`}
+        >
             <div className="px-2">
                 <FaHeart />
             </div>

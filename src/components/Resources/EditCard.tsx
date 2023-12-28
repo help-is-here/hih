@@ -34,7 +34,7 @@ export default function EditCard({ resource, closeEdit }: TEditCard) {
                     name: tagName,
                     action: EAction.Add,
                     id: -1,
-                    category: '',
+                    tag_categories: '',
                 })
             }
         }
@@ -77,6 +77,7 @@ export default function EditCard({ resource, closeEdit }: TEditCard) {
         setDescription(resource.description)
         setLink(resource.link)
     }, [resource])
+
     return (
         <div>
             <div className="flex flex-col gap-2">
