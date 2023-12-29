@@ -19,8 +19,6 @@ export default function DepressionAssessment({
     const [q5, setQ5] = useState(0)
     const [q6, setQ6] = useState(0)
     const [q7, setQ7] = useState(0)
-    const [q8, setQ8] = useState(0)
-    const [q9, setQ9] = useState(0)
 
     const options: IOption[] = [
         {
@@ -46,7 +44,7 @@ export default function DepressionAssessment({
     ]
 
     useEffect(() => {
-        const score = q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9
+        const score = q1 + q2 + q3 + q4 + q5 + q6 + q7
         if (score <= 4) {
             setResult(EAssessments.Prevention)
         } else if (score <= 14) {
@@ -54,7 +52,7 @@ export default function DepressionAssessment({
         } else {
             setResult(EAssessments.Predicament)
         }
-    }, [q1, q2, q3, q4, q5, q6, q7, q8, q9])
+    }, [q1, q2, q3, q4, q5, q6, q7])
 
     return (
         <div className="min-h-96">
@@ -79,9 +77,9 @@ export default function DepressionAssessment({
                             target="_blank"
                             className="ps-2 underline"
                             rel="noopener noreferer"
-                            href="https://med.stanford.edu/fastlab/research/imapp/msrs/_jcr_content/main/accordion/accordion_content3/download_256324296/file.res/PHQ9%20id%20date%2008.03.pdf"
+                            href="https://adaa.org/sites/default/files/GAD-7_Anxiety-updated_0.pdf"
                         >
-                            PHQ-9 from Stanford
+                            GAD-7 from ADAA
                         </a>
                     </div>
                 </AssessmentCard>
@@ -89,61 +87,44 @@ export default function DepressionAssessment({
                     options={options}
                     value={q1}
                     onSet={(val) => setQ1(Number(val))}
-                    title="Little interest or pleasure in doing things"
+                    title="Feeling nervous, anxious, or on edge"
                 />
                 <MultiOptionCard
                     options={options}
                     value={q2}
                     onSet={(val) => setQ2(Number(val))}
-                    title="Feeling down, depressed, or hopeless"
+                    title="Not being able to stop or control worrying"
                 />
                 <MultiOptionCard
                     options={options}
                     value={q3}
                     onSet={(val) => setQ3(Number(val))}
-                    title="Trouble falling or staying asleep, or sleeping too much"
+                    title="Worrying too much about different things"
                 />
                 <MultiOptionCard
                     options={options}
                     value={q4}
                     onSet={(val) => setQ4(Number(val))}
-                    title="Feeling tired or having little energy"
+                    title="Trouble relaxing"
                 />
                 <MultiOptionCard
                     options={options}
                     value={q5}
                     onSet={(val) => setQ5(Number(val))}
-                    title="Poor appetite or overeating"
+                    title="Being so restless that it is hard to sit still"
                 />
                 <MultiOptionCard
                     options={options}
                     value={q6}
                     onSet={(val) => setQ6(Number(val))}
-                    title="Feeling bad about yourself or that you are a failure or
-                    have let yourself or your family down"
+                    title="Becoming easily annoyed or irritable"
                 />
                 <MultiOptionCard
                     options={options}
                     value={q7}
                     onSet={(val) => setQ7(Number(val))}
-                    title="Trouble concentrating on things, such as reading the
-                    newspaper or watching television"
-                />
-                <MultiOptionCard
-                    options={options}
-                    value={q8}
-                    onSet={(val) => setQ8(Number(val))}
-                    title="Moving or speaking so slowly that other people could
-                    have noticed. Or the opposite being so figety or
-                    restless that you have been moving around a lot more
-                    than usual"
-                />
-                <MultiOptionCard
-                    options={options}
-                    value={q9}
-                    onSet={(val) => setQ9(Number(val))}
-                    title="Thoughts that you would be better off dead, or of
-                    hurting yourself"
+                    title="Feeling afraid, as if something awful
+                    might happen"
                 />
                 <AssessmentCard>
                     <div className="flex h-full flex-col items-center justify-center gap-4">
@@ -152,7 +133,7 @@ export default function DepressionAssessment({
                         </div>
                         <div className="rounded-full bg-orange-200 px-4 py-2 text-xl text-black">
                             Score:
-                            {String(q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9)}
+                            {String(q1 + q2 + q3 + q4 + q5 + q6 + q7)}
                         </div>
                         <button
                             onClick={() => onResult(result)}

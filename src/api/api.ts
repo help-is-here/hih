@@ -5,33 +5,33 @@ import { IResource, EAction, ICategory, ITag } from '@/types'
 export const defaultStaleTime = 1200000
 
 // Queries
-const getTags = async () => {
+export const getTags = async () => {
     return await client
         .from('tags')
         .select('id, name, tag_category(id, name, color)')
 }
-const getResources = async () => {
+export const getResources = async () => {
     return await client.from('resources').select()
 }
-const getResourcesWithTags = async () => {
+export const getResourcesWithTags = async () => {
     return await client
         .from('resources')
         .select(
             'id, name, description, num_helped, link, in_review, tag_resource(...tags(name, id, tag_categories(name, color)))'
         )
 }
-const getCategories = async () => {
+export const getCategories = async () => {
     return await client
         .from('tag_categories')
         .select('id, name, color, tags(name, id)')
 }
-const getHeartedCount = async (resourceId: number) => {
+export const getHeartedCount = async (resourceId: number) => {
     return await client
         .from('hearted_resources')
         .select('*', { count: 'exact', head: true })
         .eq('resource_id', resourceId)
 }
-const getFilteredResources = async (
+export const getFilteredResources = async (
     hearted: boolean,
     tags: string[],
     approved: boolean = true
@@ -62,14 +62,20 @@ const getFilteredResources = async (
     return await query
 }
 
+export const popularTags = async () => {
+    return await client
+        .from('popular_tags')
+        .select('count, tags(name, id, tag_category(id, name, color))')
+}
+
 // Mutations
-const insertTag = async (tag: ITag) => {
+export const insertTag = async (tag: ITag) => {
     await client.from('tags').insert({
         name: tag.name,
         tag_category: tag.tag_category ? Number(tag.tag_category.id) : null,
     })
 }
-const updateTag = async (tag: ITag) => {
+export const updateTag = async (tag: ITag) => {
     await client
         .from('tags')
         .update({
@@ -78,7 +84,7 @@ const updateTag = async (tag: ITag) => {
         })
         .eq('id', tag.id)
 }
-const updateResource = async (resource: IResource) => {
+export const updateResource = async (resource: IResource) => {
     const resourceQuery = client
         .from('resources')
         .update({
@@ -107,7 +113,7 @@ const updateResource = async (resource: IResource) => {
     }
 }
 
-const updateCategory = async (category: ICategory) => {
+export const updateCategory = async (category: ICategory) => {
     let categoryQuery
     if (category.id === -1) {
         categoryQuery = client
@@ -143,7 +149,7 @@ const updateCategory = async (category: ICategory) => {
         })
     }
 }
-const linkTags = async (recordId: number, tags: ITag[]) => {
+export const linkTags = async (recordId: number, tags: ITag[]) => {
     for (const tag of tags) {
         const tagQuery = client
             .from('tags')
@@ -166,7 +172,7 @@ const linkTags = async (recordId: number, tags: ITag[]) => {
         await tagLinkQuery
     }
 }
-const unLinkTags = async (recordId: number, tags: ITag[]) => {
+export const unLinkTags = async (recordId: number, tags: ITag[]) => {
     for (const tag of tags) {
         const tagQuery = client
             .from('tag_resource')
@@ -176,26 +182,14 @@ const unLinkTags = async (recordId: number, tags: ITag[]) => {
         await tagQuery
     }
 }
-const deleteResource = async (resource: IResource) => {
+export const deleteResource = async (resource: IResource) => {
     await client.from('resources').delete().eq('id', resource.id)
 }
-const addHeart = async (resourceId: number) => {
+export const addHeart = async (resourceId: number) => {
     const {
         data: { user },
     } = await client.auth.getUser()
     await client
         .from('hearted_resources')
         .insert({ resource_id: resourceId, user_id: user?.id })
-}
-export {
-    getResources,
-    getResourcesWithTags,
-    updateResource,
-    deleteResource,
-    getCategories,
-    updateCategory,
-    getTags,
-    getHeartedCount,
-    addHeart,
-    getFilteredResources,
 }
