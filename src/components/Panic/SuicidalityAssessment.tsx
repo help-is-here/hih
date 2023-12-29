@@ -29,7 +29,7 @@ export default function SuicidalityAssessment({
     }, [betterOff, having, thoughts, tried])
 
     return (
-        <div className="min-h-96">
+        <div className="min-h-96 flex items-center">
             <Carousel slide={false}>
                 <AssessmentCard>
                     <p>
@@ -37,7 +37,8 @@ export default function SuicidalityAssessment({
                         Here database.
                     </p>
                     <p className="my-2 font-bold">
-                        This is not clinical advice.
+                        This is not clinical advice. Consider consulting a
+                        medical professional with your concerns.
                     </p>{' '}
                     <p>
                         Please use this questionaire to find resources that can
@@ -88,6 +89,9 @@ export default function SuicidalityAssessment({
                     <div className="flex h-full flex-col items-center justify-center gap-4">
                         <div className="text-center md:text-2xl">
                             ~ Your result ~
+                        </div>
+                        <div className="rounded-full bg-orange-200 px-4 py-2 text-xl text-black">
+                            {result}
                         </div>
                         <button
                             onClick={() => onResult(result)}
