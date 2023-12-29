@@ -2,7 +2,7 @@ import { Footer } from '@/components/Footer/Footer.tsx'
 import { Navigation } from '@/components/Navigation/Navigation.tsx'
 import { PanicMain } from '@/components/Panic/PanicMain.tsx'
 import { PanicPredicament } from '@/components/Panic/PanicPredicament.tsx'
-import { PanicPrepare } from '@/components/Panic/PanicPrepare.tsx'
+import { PanicPrecaution } from '@/components/Panic/PanicPrecaution'
 import { PanicPrevent } from '@/components/Panic/PanicPrevent.tsx'
 import { useMemo } from 'react'
 import { useParams } from 'react-router-dom'
@@ -14,8 +14,8 @@ export const PanicPage = () => {
         switch (level) {
             case 'prevent':
                 return <PanicPrevent />
-            case 'prepare':
-                return <PanicPrepare />
+            case 'precaution':
+                return <PanicPrecaution />
             case 'predicament':
                 return <PanicPredicament />
             default:

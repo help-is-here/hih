@@ -1,4 +1,4 @@
-import preventImage from '@/assets/panic - prevent.svg'
+import prepareImage from '@/assets/panic - prepare.svg'
 import { H1, H2 } from '@/components/Text/Headings.tsx'
 import PromptGenerator from './PromptGenerator'
 import { FaTable } from 'react-icons/fa'
@@ -9,10 +9,10 @@ import { ResourceCard } from '../Resources/ResourceCard'
 import MasonryLayout from '../Resources/MasonryLayout'
 import { Link } from 'react-router-dom'
 
-export const PanicPrevent = () => {
+export const PanicPrecaution = () => {
     const { isLoading, isError, data } = useQuery(
         'filteredResourcesPrecaution',
-        () => getFilteredResources(false, ['prevention']),
+        () => getFilteredResources(false, ['precaution']),
         {
             staleTime: defaultStaleTime,
         }
@@ -26,15 +26,15 @@ export const PanicPrevent = () => {
     }
     return (
         <div>
-            <H1 title="Prevention" />
+            <H1 title="Precaution" />
 
             <div className="mb-6 w-full text-center text-sm">
-                Here are a few resources for you if you're feeling safe but
-                still need to reach out to someone
+                Here are a few resources for you if you're feeling not-so-safe
+                and need to talk to someone immediately
             </div>
             <div className="flex flex-col p-8 lg:flex-row">
                 <div className="w-full">
-                    <img src={preventImage} alt="Prevention" />
+                    <img src={prepareImage} alt="Prevention" />
                 </div>
                 <div className="w-full">
                     <PromptGenerator />
@@ -74,8 +74,8 @@ export const PanicPrevent = () => {
                     See all resources
                 </Link>
                 <Link
-                    className="rounded-full bg-orange-300 px-8 py-4 text-center text-2xl hover:bg-orange-400 md:px-12 md:py-8 md:text-4xl "
-                    to="/panic/precaution"
+                    className="rounded-full  bg-orange-300 px-8 py-4 text-center text-2xl hover:bg-orange-400 md:px-12 md:py-8 md:text-4xl "
+                    to="/panic/predicament"
                 >
                     I need a higher level of care
                 </Link>
