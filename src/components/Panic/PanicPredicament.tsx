@@ -10,6 +10,7 @@ import MasonryLayout from '../Resources/MasonryLayout'
 import { Link } from 'react-router-dom'
 import DecideModal from './DecideModal'
 import { useState } from 'react'
+import { predicament } from '@/data/prompts'
 
 export const PanicPredicament = () => {
     const [openModal, setOpenModal] = useState(false)
@@ -54,7 +55,7 @@ export const PanicPredicament = () => {
                             911
                         </a>
                     </div>
-                    <PromptGenerator />
+                    <PromptGenerator prompts={predicament} />
                 </div>
             </div>
 

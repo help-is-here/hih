@@ -8,6 +8,7 @@ import { defaultStaleTime, getFilteredResources } from '@/api/api'
 import { ResourceCard } from '../Resources/ResourceCard'
 import MasonryLayout from '../Resources/MasonryLayout'
 import { Link } from 'react-router-dom'
+import { precaution } from '@/data/prompts'
 
 export const PanicPrecaution = () => {
     const { isLoading, isError, data } = useQuery(
@@ -37,7 +38,7 @@ export const PanicPrecaution = () => {
                     <img src={prepareImage} alt="Prevention" />
                 </div>
                 <div className="w-full">
-                    <PromptGenerator />
+                    <PromptGenerator prompts={precaution} />
                     <div className="mt-4">
                         <MasonryLayout>
                             {data && data.data ? (
