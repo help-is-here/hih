@@ -8,7 +8,6 @@ import { SuggestionPage } from '@/views/SuggestionPage/SuggestionPage.tsx'
 import LoginPage from '@/views/AuthPages/LoginPage.tsx'
 import ChangePasswordPage from '@/views/AuthPages/ChangePasswordPage.tsx'
 import { PanicPage } from '@/views/PanicPage/PanicPage.tsx'
-import client from './database/client.tsx'
 import ContactPage from './views/ContactPage/ContactPage.tsx'
 import AdminPage from './views/AdminPage/AdminPage.tsx'
 import { ResourcesPage } from './views/ResourcesPage/ResourcesPage.tsx'
@@ -55,9 +54,6 @@ const router = createBrowserRouter([
         // level: prevent | prepare | predicament
         path: '/panic/:level',
         element: <PanicPage />,
-        loader: async () => {
-            return await client.from('resources').select()
-        },
     },
     {
         path: '*',

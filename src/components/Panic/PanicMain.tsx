@@ -31,7 +31,7 @@ export const PanicMain = () => {
                 ></PathSelect>
                 <PathSelect
                     title="I'm not feeling as safe, I need to talk to someone now"
-                    link="/panic/prepare"
+                    link="/panic/precaution"
                     image={prepareImage}
                 ></PathSelect>
                 <PathSelect

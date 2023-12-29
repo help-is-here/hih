@@ -3,7 +3,11 @@ export enum EAction {
     Remove = 'REMOVE',
     None = 'NONE',
 }
-
+export enum EAssessments {
+    Precaution = 'precaution',
+    Prevention = 'prevent',
+    Predicament = 'predicament',
+}
 export interface ITag {
     id: number
     name: string

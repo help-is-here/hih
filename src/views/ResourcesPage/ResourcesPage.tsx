@@ -9,6 +9,7 @@ import ErrorPage from '@/components/States/ErrorPage'
 import { useQuery } from 'react-query'
 import { useEffect, useState } from 'react'
 import { Footer } from '@/components/Footer/Footer'
+import MasonryLayout from '@/components/Resources/MasonryLayout'
 
 export const ResourcesPage = () => {
     const [enableHeartQuery, setEnableHeartQuery] = useState(false)
@@ -48,7 +49,7 @@ export const ResourcesPage = () => {
                         }
                     />
                 </section>
-                <section className="px-3 pb-3 md:columns-1 md:overflow-auto lg:columns-2 xl:columns-3">
+                <MasonryLayout>
                     {data && data.data ? (
                         data.data.map((d: any) => {
                             return <ResourceCard resource={d} key={d.id} />
@@ -56,7 +57,7 @@ export const ResourcesPage = () => {
                     ) : (
                         <></>
                     )}
-                </section>
+                </MasonryLayout>
             </div>
             <div className="bg-white">
                 <Footer />
