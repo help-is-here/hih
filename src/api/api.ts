@@ -10,6 +10,14 @@ export const getTags = async () => {
         .from('tags')
         .select('id, name, tag_category(id, name, color)')
 }
+export const getResourceTags = async (resourceId: number) => {
+    return await client
+        .from('tags')
+        .select(
+            'id, name, tag_category(id, name, color), tag_resource!inner(tag_id, resource_id)'
+        )
+        .eq('tag_resource.resource_id', resourceId)
+}
 export const getResources = async () => {
     return await client.from('resources').select()
 }
