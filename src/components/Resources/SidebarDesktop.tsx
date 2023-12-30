@@ -9,14 +9,14 @@ export const SidebarDesktop = (props: {
     const { className, onHeartedFilter, onTagsFilter } = props
     return (
         <div
-            className={`w-[300px] bg-gray-100 p-3 ${className} h-full rounded`}
+            className={`w-[300px] bg-orange-950 p-3 ${className} h-full rounded`}
         >
             <FilterButtons
                 onHeartedFilter={(filterPayload) =>
                     onHeartedFilter(filterPayload)
                 }
             />
-            <div className="my-3 font-bold text-slate-900">Filter Tags</div>
+            <div className="my-3 font-bold text-white">Filter Tags</div>
             <TagFilters onFilter={(filters) => onTagsFilter(filters)} />
         </div>
     )
