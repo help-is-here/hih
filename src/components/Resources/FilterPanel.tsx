@@ -1,22 +1,19 @@
 import { FilterButtons } from '@/components/Resources/FilterButtons.tsx'
 import TagFilters from './TagFilters'
 
-export const SidebarDesktop = (props: {
-    className: string
+export const FilterPanel = (props: {
     onHeartedFilter: (payload: boolean) => void
     onTagsFilter: (payload: string[]) => void
 }) => {
-    const { className, onHeartedFilter, onTagsFilter } = props
+    const { onHeartedFilter, onTagsFilter } = props
     return (
-        <div
-            className={`w-[300px] bg-gray-100 p-3 ${className} h-full rounded`}
-        >
+        <div className="mx-8 h-full rounded bg-orange-950 p-3 md:w-[300px]">
             <FilterButtons
                 onHeartedFilter={(filterPayload) =>
                     onHeartedFilter(filterPayload)
                 }
             />
-            <div className="my-3 font-bold text-slate-900">Filter Tags</div>
+            <div className="my-3 font-bold text-white">Filter Tags</div>
             <TagFilters onFilter={(filters) => onTagsFilter(filters)} />
         </div>
     )
