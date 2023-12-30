@@ -12,6 +12,7 @@ import ContactPage from './views/ContactPage/ContactPage.tsx'
 import AdminPage from './views/AdminPage/AdminPage.tsx'
 import { ResourcesPage } from './views/ResourcesPage/ResourcesPage.tsx'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { AuthProvider } from './context/AuthContext.tsx'
 
 const router = createBrowserRouter([
     {
@@ -60,11 +61,15 @@ const router = createBrowserRouter([
         element: <NotFoundPage />,
     },
 ])
+
 const queryClient = new QueryClient()
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router} />
-        </QueryClientProvider>
+        <AuthProvider>
+            <QueryClientProvider client={queryClient}>
+                <RouterProvider router={router} />
+            </QueryClientProvider>
+        </AuthProvider>
     </React.StrictMode>
 )
