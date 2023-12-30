@@ -68,6 +68,13 @@ export const popularTags = async () => {
         .select('count, tags(name, id, tag_category(id, name, color))')
 }
 
+export const textSearchResources = async (text: string) => {
+    return await client
+        .from('resources')
+        .select()
+        .textSearch('fts', text.trim().split(' ').join(' & '))
+}
+
 // Mutations
 export const insertTag = async (tag: ITag) => {
     await client.from('tags').insert({
@@ -108,7 +115,7 @@ export const updateResource = async (resource: IResource) => {
         }
     })
     if (record.data && resource.tag_resource) {
-        await linkTags(record.data[0].id, link)
+        await linkAndCreateTags(record.data[0].id, link)
         await unLinkTags(record.data[0].id, unlink)
     }
 }
@@ -149,7 +156,7 @@ export const updateCategory = async (category: ICategory) => {
         })
     }
 }
-export const linkTags = async (recordId: number, tags: ITag[]) => {
+export const linkAndCreateTags = async (recordId: number, tags: ITag[]) => {
     for (const tag of tags) {
         const tagQuery = client
             .from('tags')
@@ -166,6 +173,24 @@ export const linkTags = async (recordId: number, tags: ITag[]) => {
             continue
         }
         const tagLinkQuery = client.from('tag_resource').insert({
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            tag_id: tagRecord.data[0].id,
+            resource_id: recordId,
+        })
+        await tagLinkQuery
+    }
+}
+export const linkTags = async (recordId: number, tags: ITag[]) => {
+    for (const tag of tags) {
+        const tagRecord = await client
+            .from('tags')
+            .select('id')
+            .eq('name', tag.name)
+        if (!tagRecord.data) {
+            continue
+        }
+        const tagLinkQuery = client.from('tag_resource').insert({
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             tag_id: tagRecord.data[0].id,
             resource_id: recordId,
         })
@@ -192,4 +217,31 @@ export const addHeart = async (resourceId: number) => {
     await client
         .from('hearted_resources')
         .insert({ resource_id: resourceId, user_id: user?.id })
+}
+
+export const insertResource = async (resource: IResource) => {
+    const resourceQuery = client
+        .from('resources')
+        .insert({
+            name: resource.name,
+            description: resource.description,
+            link: resource.link,
+            in_review: resource.in_review,
+        })
+        .select('id')
+
+    const record = await resourceQuery
+    const link: ITag[] = []
+    const unlink: ITag[] = []
+    resource.tag_resource?.forEach((t) => {
+        if (t.action === EAction.Add) {
+            link.push(t)
+        } else {
+            unlink.push(t)
+        }
+    })
+    if (record.data && resource.tag_resource) {
+        await linkTags(record.data[0].id, link)
+        await unLinkTags(record.data[0].id, unlink)
+    }
 }
