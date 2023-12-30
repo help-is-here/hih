@@ -4,7 +4,7 @@ import Card from './Card'
 import { Tag } from './Tag'
 import { H2 } from '../Text/Headings'
 import SessionWrapper from '../Auth/SessionWrapper'
-import AddHeart from './AddHeart'
+import UpdateHeart from './UpdateHeart'
 
 type TResourceCard = {
     resource: IResource
@@ -15,7 +15,7 @@ export const ResourceCard = ({ resource }: TResourceCard) => {
             <div>
                 <div className="mb-4 flex w-full justify-between">
                     <SessionWrapper
-                        ifSession={<AddHeart resourceId={resource.id} />}
+                        ifSession={<UpdateHeart resourceId={resource.id} />}
                         notSession={<div></div>}
                     />
                     <Hearted resourceId={resource.id} />
