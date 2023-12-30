@@ -99,6 +99,18 @@ export const getIsHearted = async (resourceId: number) => {
 }
 
 // Mutations
+export const saveTags = async (tags: ITag[]) => {
+    for (const tag of tags) {
+        if (tag.action === EAction.Add) {
+            await client.from('tags').insert({ name: tag.name })
+        } else if (tag.action === EAction.Remove) {
+            await client.from('tags').delete().eq('id', tag.id)
+        }
+    }
+}
+export const deleteTag = async (tag: ITag) => {
+    await client.from('tags').delete().eq('id', tag.id)
+}
 export const insertTag = async (tag: ITag) => {
     await client.from('tags').insert({
         name: tag.name,
