@@ -8,18 +8,20 @@ type TTagUpdater = {
     onSet: (newTags: ITag[]) => void
     categoryId?: number
     notAllowed?: ITag[]
+    allowed?: ITag[]
 }
 export default function TagUpdater({
     initTags,
     onSet,
     categoryId,
     notAllowed = [],
+    allowed = [],
 }: TTagUpdater) {
     const originalTags = initTags
     const [tags, setTags] = useState<ITag[]>([])
     const [newTag, setNewTag] = useState('')
     const [valid, setValid] = useState(true)
-    const [alert, setAlert] = useState(true)
+    const [alert, setAlert] = useState(false)
 
     useEffect(() => {
         if (initTags.length) {
@@ -30,7 +32,12 @@ export default function TagUpdater({
     const addTag = (tagName: string) => {
         const temp = [...tags]
         setValid(true)
-        if (notAllowed.map((t) => t.name).includes(tagName)) {
+        if (
+            notAllowed.map((t) => t.name).includes(tagName) ||
+            (allowed &&
+                allowed.length &&
+                !allowed.map((t) => t.name).includes(tagName))
+        ) {
             setAlert(true)
         }
         // If the original tags included this tag, add it back in to reduce load on db
@@ -87,7 +94,7 @@ export default function TagUpdater({
                 icon={FaExclamationCircle}
                 onDismiss={() => setAlert(false)}
             >
-                That tag is already assigned to another category.
+                That tag is not allowed.
             </Alert>
             {tags.length === 0 ? (
                 <span>Add a tag...</span>
