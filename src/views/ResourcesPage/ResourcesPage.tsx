@@ -1,4 +1,3 @@
-import { Navigation } from '@/components/Navigation/Navigation.tsx'
 import { SidebarMobile } from '@/components/Resources/SidebarMobile.tsx'
 import { H1 } from '@/components/Text/Headings.tsx'
 import { SidebarDesktop } from '@/components/Resources/SidebarDesktop.tsx'
@@ -8,8 +7,8 @@ import LoadingPage from '@/components/States/LoadingPage'
 import ErrorPage from '@/components/States/ErrorPage'
 import { useQuery } from 'react-query'
 import { useEffect, useState } from 'react'
-import { Footer } from '@/components/Footer/Footer'
 import MasonryLayout from '@/components/Resources/MasonryLayout'
+import PageLayout from '@/components/Layouts/PageLayout'
 
 export const ResourcesPage = () => {
     const [enableHeartQuery, setEnableHeartQuery] = useState(false)
@@ -33,8 +32,7 @@ export const ResourcesPage = () => {
         return <ErrorPage />
     }
     return (
-        <div className="bg-orange-100">
-            <Navigation />
+        <PageLayout>
             <H1 title="Resources" />
             <div className="flex flex-col md:container md:mx-auto md:flex-row md:px-4">
                 <section>
@@ -59,9 +57,6 @@ export const ResourcesPage = () => {
                     )}
                 </MasonryLayout>
             </div>
-            <div className="bg-white">
-                <Footer />
-            </div>
-        </div>
+        </PageLayout>
     )
 }

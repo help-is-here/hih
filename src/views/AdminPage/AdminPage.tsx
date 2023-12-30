@@ -1,13 +1,12 @@
 import AdminTabs from '@/components/Admin/AdminTabs'
-import { Footer } from '@/components/Footer/Footer'
-import { Navigation } from '@/components/Navigation/Navigation'
+import PageLayout from '@/components/Layouts/PageLayout'
 
 export default function AdminPage() {
     return (
         <>
-            <Navigation />
-            <AdminTabs />
-            <Footer />
+            <PageLayout>
+                <AdminTabs />
+            </PageLayout>
         </>
     )
 }

@@ -1,7 +1,7 @@
 import Auth from '@/components/Auth/Auth'
 import SessionWrapper from '@/components/Auth/SessionWrapper'
 import LoginButton from '@/components/Auth/LoginButton'
-import AuthPageLayout from '@/components/Auth/AuthPageLayout'
+import AuthPageLayout from '@/components/Layouts/AuthPageLayout'
 
 const LoginPage = () => {
     const ifSession = (

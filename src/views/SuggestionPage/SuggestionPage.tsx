@@ -1,13 +1,12 @@
-import { Footer } from '@/components/Footer/Footer'
-import { Navigation } from '@/components/Navigation/Navigation.tsx'
 import SuggestionsLayout from '@/components/Suggestion/SuggestionsLayout'
+import PageLayout from '@/components/Layouts/PageLayout'
 
 export const SuggestionPage = () => {
     return (
         <>
-            <Navigation />
-            <SuggestionsLayout />
-            <Footer />
+            <PageLayout>
+                <SuggestionsLayout />
+            </PageLayout>
         </>
     )
 }

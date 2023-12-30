@@ -11,6 +11,9 @@ export default {
             backgroundImage: {
                 'main-hero': "url('/src/assets/hero - before dawn.svg')",
             },
+            spacing: {
+                page: '80rem',
+            },
         },
     },
     plugins: [

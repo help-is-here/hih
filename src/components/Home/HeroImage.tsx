@@ -11,7 +11,7 @@ export const HeroImage = () => {
                     Get Started
                 </button>
                 <button className="rounded-full bg-gray-200 px-6 py-2 text-gray-900 hover:bg-gray-300 md:px-8">
-                    I'm Panicking!
+                    Help me!
                 </button>
             </div>
             <img src={mainImage} alt="Main Image" className="md:w-1/2" />

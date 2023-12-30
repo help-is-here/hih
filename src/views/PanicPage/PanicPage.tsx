@@ -1,5 +1,4 @@
-import { Footer } from '@/components/Footer/Footer.tsx'
-import { Navigation } from '@/components/Navigation/Navigation.tsx'
+import PageLayout from '@/components/Layouts/PageLayout'
 import { PanicMain } from '@/components/Panic/PanicMain.tsx'
 import { PanicPredicament } from '@/components/Panic/PanicPredicament.tsx'
 import { PanicPrecaution } from '@/components/Panic/PanicPrecaution'
@@ -22,11 +21,5 @@ export const PanicPage = () => {
                 return <PanicMain />
         }
     }, [level])
-    return (
-        <div className="relative min-h-screen w-screen bg-orange-50">
-            <Navigation />
-            {activePage}
-            <Footer />
-        </div>
-    )
+    return <PageLayout>{activePage}</PageLayout>
 }
