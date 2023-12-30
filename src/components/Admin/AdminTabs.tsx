@@ -8,6 +8,7 @@ import { defaultStaleTime, getResourcesWithTags } from '@/api/api'
 import LoadingPage from '../States/LoadingPage'
 import ErrorPage from '../States/ErrorPage'
 import CategoryManager from './CategoryManager'
+import TagManager from './TagManager'
 
 const tabsTheme = {
     base: 'flex flex-col gap-2',
@@ -85,6 +86,7 @@ export default function AdminTabs() {
                             })}
                     </Tabs.Item>
                     <Tabs.Item title="Tag Categories" icon={FaTag}>
+                        <TagManager />
                         <CategoryManager />
                     </Tabs.Item>
                 </Tabs>
