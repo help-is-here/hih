@@ -12,12 +12,18 @@ import ContactPage from './views/ContactPage/ContactPage.tsx'
 import AdminPage from './views/AdminPage/AdminPage.tsx'
 import { ResourcesPage } from './views/ResourcesPage/ResourcesPage.tsx'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import PrivacyPage from './views/PrivacyPage/PrivacyPage.tsx'
 import { AuthProvider } from './context/AuthContext.tsx'
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <App />,
+        errorElement: <NotFoundPage />,
+    },
+    {
+        path: '/privacy-policy',
+        element: <PrivacyPage />,
         errorElement: <NotFoundPage />,
     },
     {

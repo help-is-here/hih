@@ -143,6 +143,10 @@ export const updateResource = async (resource: IResource) => {
     }
 }
 
+export const deleteCategory = async (category: ICategory) => {
+    await client.from('tag_categories').delete().eq('id', category.id)
+}
+
 export const updateCategory = async (category: ICategory) => {
     let categoryQuery
     if (category.id === -1) {
@@ -166,17 +170,17 @@ export const updateCategory = async (category: ICategory) => {
     const record = await categoryQuery
 
     if (record.data && category.tags) {
-        category.tags?.forEach((t) => {
+        for (const t of category.tags) {
             if (t.action === EAction.Add) {
                 if (t.id !== -1) {
-                    updateTag({ ...t, tag_category: category })
+                    await updateTag({ ...t, tag_category: category })
                 } else {
-                    insertTag({ ...t, tag_category: category })
+                    await insertTag({ ...t, tag_category: category })
                 }
             } else if (t.action === EAction.Remove) {
-                updateTag({ ...t, tag_category: undefined })
+                await updateTag({ ...t, tag_category: undefined })
             }
-        })
+        }
     }
 }
 export const linkAndCreateTags = async (recordId: number, tags: ITag[]) => {

@@ -2,7 +2,8 @@ import { ICategory, ITag } from '@/types'
 import { useMutation, useQueryClient } from 'react-query'
 import { useEffect, useState } from 'react'
 import TagUpdater from '../Form/TagUpdater'
-import { updateCategory } from '@/api/api'
+import { deleteCategory, updateCategory } from '@/api/api'
+import { FaTrash } from 'react-icons/fa'
 
 type TCategoryCard = {
     category: ICategory
@@ -26,6 +27,14 @@ export default function CategoryCard({
             onEditClose()
         },
     })
+    const deleteMut = useMutation({
+        mutationFn: deleteCategory,
+        onSuccess: () => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries({ queryKey: ['categories'] })
+            onEditClose()
+        },
+    })
     useEffect(() => {
         setTitle(category.name)
         setColor(category.color)
@@ -39,6 +48,26 @@ export default function CategoryCard({
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                 />
+                <button
+                    title={
+                        category.tags !== undefined && category.tags?.length > 0
+                            ? 'All tags must be unlinked to delete.'
+                            : 'Delete category'
+                    }
+                    disabled={
+                        category.tags !== undefined && category.tags?.length > 0
+                    }
+                    onClick={() => deleteMut.mutate(category)}
+                >
+                    <FaTrash
+                        className={`${
+                            category.tags !== undefined &&
+                            category.tags?.length > 0
+                                ? 'text-gray-300'
+                                : 'text-black'
+                        }`}
+                    />
+                </button>
             </div>
             <div className="my-4 flex items-center gap-4">
                 <strong>Color: </strong>

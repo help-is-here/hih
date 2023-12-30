@@ -4,13 +4,15 @@ import { ResourceCard } from '@/components/Resources/ResourceCard'
 import { defaultStaleTime, getFilteredResources } from '@/api/api'
 import LoadingPage from '@/components/States/LoadingPage'
 import ErrorPage from '@/components/States/ErrorPage'
-import { useQuery } from 'react-query'
 import { useEffect, useState } from 'react'
 import MasonryLayout from '@/components/Resources/MasonryLayout'
 import PageLayout from '@/components/Layouts/PageLayout'
 import { Search } from '@/components/Resources/Search'
+import { useSearchParams } from 'react-router-dom'
+import { useQuery } from 'react-query'
 
 export const ResourcesPage = () => {
+    const [filterParams] = useSearchParams()
     const [enableHeartQuery, setEnableHeartQuery] = useState(false)
     const [tagsFilters, setTagsFilters] = useState<string[]>([])
     const [search, setSearch] = useState('')
@@ -22,6 +24,13 @@ export const ResourcesPage = () => {
             staleTime: defaultStaleTime,
         }
     )
+
+    useEffect(() => {
+        const tag = filterParams.get('tag')
+        if (tag) {
+            setTagsFilters([tag])
+        }
+    }, [filterParams])
 
     useEffect(() => {
         const getData = setTimeout(() => {

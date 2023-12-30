@@ -1,9 +1,9 @@
-import { EAction, IResource, ITag } from '@/types'
+import { IResource, ITag } from '@/types'
 import ValidatedInput from '../Form/ValidatedInput'
 import ValidatedTextarea from '../Form/ValidatedTextarea'
 import { useEffect, useState } from 'react'
 import UpdateResourceButton from '../Form/UpdateResourceButton'
-import TagsInput from 'react-tagsinput'
+import TagUpdater from '../Form/TagUpdater'
 
 type TEditCard = {
     resource: IResource
@@ -25,26 +25,6 @@ export default function EditCard({ resource, closeEdit }: TEditCard) {
         num_helped: 0,
         in_review: true,
     })
-
-    const updateTags = (newTags: string[]) => {
-        const newUpdates = []
-        for (const tagName of newTags) {
-            if (!tags.map((t) => t.name).includes(tagName)) {
-                newUpdates.push({
-                    name: tagName,
-                    action: EAction.Add,
-                    id: -1,
-                    tag_categories: '',
-                })
-            }
-        }
-        for (const tag of tags) {
-            if (!newTags.includes(tag.name)) {
-                newUpdates.push({ ...tag, action: EAction.Remove })
-            }
-        }
-        setUpdatedTags(newUpdates)
-    }
 
     const saved = () => {
         setUpdatedTags([])
@@ -101,26 +81,7 @@ export default function EditCard({ resource, closeEdit }: TEditCard) {
                         validator={(description) => description.length > 0}
                     />
                 </div>
-                <TagsInput
-                    value={[
-                        ...tags
-                            .map((t) => t.name)
-                            .filter(
-                                (name) =>
-                                    !updatedTags
-                                        .filter(
-                                            (t) => t.action === EAction.Remove
-                                        )
-                                        .map((t) => t.name)
-                                        .includes(name)
-                            ),
-                        ...updatedTags
-                            .filter((t) => t.action === EAction.Add)
-                            .map((t) => t.name),
-                    ]}
-                    onChange={updateTags}
-                />
-
+                <TagUpdater initTags={tags} onSet={setUpdatedTags} />
                 <div className="flex items-center gap-4">
                     <UpdateResourceButton
                         className="block rounded bg-orange-700 px-4 py-2 text-white disabled:bg-gray-300 md:block md:w-48 "
