@@ -26,7 +26,7 @@ export default function UnaprovedCard({ resource }: TUnapprovedCard) {
                                 resource={resource}
                             />
                         ) : (
-                            <div className="flex">
+                            <div className="flex flex-col md:flex-row">
                                 <div className="w-full">
                                     <H2 title={resource.name} />
                                     <div>
@@ -73,7 +73,7 @@ export default function UnaprovedCard({ resource }: TUnapprovedCard) {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="flex justify-center gap-2 md:flex-col">
+                                <div className="mt-4 flex justify-center gap-2 md:mt-0 md:flex-col">
                                     <div className="w-24 rounded bg-orange-500 px-4 py-2 text-white md:block md:w-48">
                                         <UpdateResourceButton
                                             resource={{
