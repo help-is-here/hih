@@ -143,6 +143,10 @@ export const updateResource = async (resource: IResource) => {
     }
 }
 
+export const deleteCategory = async (category: ICategory) => {
+    await client.from('tag_categories').delete().eq('id', category.id)
+}
+
 export const updateCategory = async (category: ICategory) => {
     let categoryQuery
     if (category.id === -1) {
