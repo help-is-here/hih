@@ -7,22 +7,22 @@ export const IconNav = () => {
     const details = [
         {
             title: 'Depression',
-            link: '/tag/depression',
+            link: '/resources?tag=depression',
             image: depressionIcon,
         },
         {
             title: 'Anxiety',
-            link: '/tag/anxiety',
+            link: '/resources?tag=anxiety',
             image: anxietyIcon,
         },
         {
             title: 'Support',
-            link: '/tag/support',
+            link: '/resources?tag=support',
             image: supportIcon,
         },
         {
-            title: 'Substance Abuse',
-            link: '/tag/substance+abuse',
+            title: 'Helplines',
+            link: '/resources?tag=helpline',
             image: substanceIcon,
         },
     ]
