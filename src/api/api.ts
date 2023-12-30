@@ -75,6 +75,17 @@ export const textSearchResources = async (text: string) => {
         .textSearch('fts', text.trim().split(' ').join(' & '))
 }
 
+export const getIsHearted = async (resourceId: number) => {
+    const {
+        data: { user },
+    } = await client.auth.getUser()
+    return await client
+        .from('hearted_resources')
+        .select('*', { count: 'exact', head: true })
+        .eq('resource_id', resourceId)
+        .eq('user_id', user?.id)
+}
+
 // Mutations
 export const insertTag = async (tag: ITag) => {
     await client.from('tags').insert({
@@ -210,13 +221,24 @@ export const unLinkTags = async (recordId: number, tags: ITag[]) => {
 export const deleteResource = async (resource: IResource) => {
     await client.from('resources').delete().eq('id', resource.id)
 }
-export const addHeart = async (resourceId: number) => {
+export const updateHeart = async (
+    resourceId: number,
+    alreadyHearted: boolean
+) => {
     const {
         data: { user },
     } = await client.auth.getUser()
-    await client
-        .from('hearted_resources')
-        .insert({ resource_id: resourceId, user_id: user?.id })
+    if (!alreadyHearted) {
+        await client
+            .from('hearted_resources')
+            .insert({ resource_id: resourceId, user_id: user?.id })
+    } else {
+        await client
+            .from('hearted_resources')
+            .delete()
+            .eq('resource_id', resourceId)
+            .eq('user_id', user?.id)
+    }
 }
 
 export const insertResource = async (resource: IResource) => {
