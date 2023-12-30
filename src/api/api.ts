@@ -42,7 +42,8 @@ export const getHeartedCount = async (resourceId: number) => {
 export const getFilteredResources = async (
     hearted: boolean,
     tags: string[],
-    approved: boolean = true
+    approved: boolean = true,
+    search: string = ''
 ) => {
     const {
         data: { user },
@@ -66,6 +67,9 @@ export const getFilteredResources = async (
     }
     if (approved) {
         query.filter('in_review', 'eq', false)
+    }
+    if (search.trim().length > 1) {
+        query.textSearch('fts', search.trim().split(' ').join(' & '))
     }
     return await query
 }
