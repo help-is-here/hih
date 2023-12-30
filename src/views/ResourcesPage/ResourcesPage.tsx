@@ -1,6 +1,5 @@
-import { SidebarMobile } from '@/components/Resources/SidebarMobile.tsx'
 import { H1 } from '@/components/Text/Headings.tsx'
-import { SidebarDesktop } from '@/components/Resources/SidebarDesktop.tsx'
+import { FilterPanel } from '@/components/Resources/FilterPanel'
 import { ResourceCard } from '@/components/Resources/ResourceCard'
 import { defaultStaleTime, getFilteredResources } from '@/api/api'
 import LoadingPage from '@/components/States/LoadingPage'
@@ -36,9 +35,7 @@ export const ResourcesPage = () => {
             <H1 title="Resources" />
             <div className="flex flex-col md:container md:mx-auto md:flex-row md:px-4">
                 <section>
-                    <SidebarMobile className="block md:hidden" />
-                    <SidebarDesktop
-                        className="hidden md:block"
+                    <FilterPanel
                         onHeartedFilter={(filter: boolean) =>
                             setEnableHeartQuery(filter)
                         }
