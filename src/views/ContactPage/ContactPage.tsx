@@ -1,13 +1,12 @@
 import ContactForm from '@/components/Contact/ContactForm'
-import { Navigation } from '@/components/Navigation/Navigation'
-import { Footer } from 'flowbite-react'
+import AuthPageLayout from '@/components/Layouts/AuthPageLayout'
 
 export default function ContactPage() {
     return (
         <>
-            <Navigation />
-            <ContactForm />
-            <Footer />
+            <AuthPageLayout>
+                <ContactForm />
+            </AuthPageLayout>
         </>
     )
 }

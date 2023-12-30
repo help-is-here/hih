@@ -32,7 +32,7 @@ export const IconNav = () => {
                 I need help with ...
             </h4>
             <br />
-            <div className="h-100px flex flex-col items-center justify-center md:flex-row">
+            <div className="h-100px flex flex-col items-center justify-between md:flex-row">
                 {details.map((item) => {
                     return (
                         <IconNavElement
