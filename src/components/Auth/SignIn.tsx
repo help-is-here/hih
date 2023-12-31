@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { validateEmail } from '../Form/Validators'
 import client from '@/database/client'
@@ -7,11 +7,13 @@ import { FcGoogle } from 'react-icons/fc'
 import ValidatedInput from '../Form/ValidatedInput'
 import { Alert } from 'flowbite-react'
 import { FaExclamationCircle } from 'react-icons/fa'
+import { AuthContext, TAuthContext } from '@/context/AuthContext'
 
 type TSignInProps = {
     setState: (state: string) => void
 }
 export default function SignIn({ setState }: TSignInProps) {
+    const { updateAuthenticated } = useContext<TAuthContext>(AuthContext)
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [formValid, setValid] = useState<boolean>(false)
@@ -32,6 +34,7 @@ export default function SignIn({ setState }: TSignInProps) {
             password: password,
         })
         if (!error) {
+            updateAuthenticated(true)
             navigate('/')
         } else {
             setAlert(true)
@@ -43,6 +46,7 @@ export default function SignIn({ setState }: TSignInProps) {
             provider: 'google',
         })
         if (!error) {
+            updateAuthenticated(true)
             navigate('/')
         } else {
             setAlert(true)

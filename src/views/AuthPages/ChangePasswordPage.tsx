@@ -1,9 +1,12 @@
 import Auth from '@/components/Auth/Auth'
-import SessionWrapper from '@/components/Auth/SessionWrapper'
 import LoginButton from '@/components/Auth/LoginButton'
 import AuthPageLayout from '@/components/Layouts/AuthPageLayout'
+import { AuthContext, TAuthContext } from '@/context/AuthContext.tsx'
+import { useContext } from 'react'
 
 const LoginPage = () => {
+    const { authenticated } = useContext<TAuthContext>(AuthContext)
+
     const ifSession = (
         <div className="w-96 rounded-lg bg-orange-50 p-8">
             <Auth view="changePassword" />
@@ -20,7 +23,7 @@ const LoginPage = () => {
 
     return (
         <AuthPageLayout>
-            <SessionWrapper ifSession={ifSession} notSession={notSession} />
+            {authenticated ? ifSession : notSession}
         </AuthPageLayout>
     )
 }

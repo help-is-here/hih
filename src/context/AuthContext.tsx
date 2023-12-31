@@ -1,52 +1,57 @@
-import client from '@/database/client'
-import { Session } from '@supabase/supabase-js'
-import { createContext, useEffect, useState } from 'react'
-import { isExpired, decodeToken, reEvaluateToken } from 'react-jwt'
+import { defaultStaleTime, getUserAdmin } from '@/api/api'
+import { useLocalStorage } from '@/hooks/useLocalStorage'
+import React, { useEffect, useState } from 'react'
+import { createContext } from 'react'
+import { useQuery } from 'react-query'
 
-interface IAuthContext {
-    userSession: Session | null
-    refreshToken: string
-    doLogout: () => void
+export type TAuthContext = {
+    authenticated: boolean
+    updateAuthenticated: (val: boolean) => void
+    admin: boolean
+    updateAdmin: (val: boolean) => void
 }
+export const AuthContext = createContext<TAuthContext>({} as TAuthContext)
 
-export const AuthContext = createContext<IAuthContext | undefined>(undefined)
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+    const [admin, setAdmin] = useState(false)
+    const [authenticated, setAuthenticated] = useState(false)
+    const { getItem, setItem } = useLocalStorage()
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-    const [userSession, setUserSession] = useState<Session | null>(null)
+    const updateAdmin = (adminVal: boolean) => {
+        setItem('admin', JSON.stringify(adminVal))
+        setAdmin(adminVal)
+    }
+    const updateAuthenticated = (auth: boolean) => {
+        refetch()
+        setItem('authenticated', JSON.stringify(auth))
+        setAdmin(auth)
+    }
+    useEffect(() => {
+        const storageAdmin = getItem('admin')
+        setAdmin(storageAdmin ? JSON.parse(storageAdmin) : '')
+        const storageAuth = getItem('authenticated')
+        setAuthenticated(storageAuth ? JSON.parse(storageAuth) : '')
+    }, [getItem])
+
+    const { data, refetch } = useQuery(['admin'], getUserAdmin, {
+        enabled: false,
+        staleTime: defaultStaleTime,
+    })
 
     useEffect(() => {
-        client.auth.getSession().then(({ data }) => {
-            if (data?.session && !isExpired(data.session.access_token)) {
-                setUserSession(data.session)
-            } else {
-                setUserSession(null)
-            }
-        })
-
-        const {
-            data: { subscription },
-        } = client.auth.onAuthStateChange((_event, session) => {
-            setUserSession(session)
-            console.log('session event: ', session)
-        })
-
-        return () => subscription.unsubscribe()
-    }, [])
-
-      const reValidateUser = () => {
-          const newToken = 'A new JWT'
-          reEvaluateToken(newToken) // decodedToken and isExpired will be updated
-      }
-
-    const doLogout = async () => {
-        try {
-            await client.auth.signOut()
-        } catch (error) {
-            console.error('Unable to log out user.', error)
+        if (data && data.count && data.count > 0) {
+            setItem('admin', JSON.stringify(true))
+            setAdmin(true)
+        } else if (data && data.count && data.count === 0) {
+            setItem('admin', JSON.stringify(false))
+            setAdmin(false)
         }
-    }
+    }, [data, data?.count, setItem])
+
     return (
-        <AuthContext.Provider value={{ userSession, doLogout, refreshToken }}>
+        <AuthContext.Provider
+            value={{ authenticated, updateAuthenticated, admin, updateAdmin }}
+        >
             {children}
         </AuthContext.Provider>
     )
