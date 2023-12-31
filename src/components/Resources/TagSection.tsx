@@ -27,13 +27,7 @@ export default function TagSection({ resourceId }: TTagSection) {
             {data && data.data ? (
                 // @ts-expect-error: supabase joining problems
                 data.data.map((tag: ITag) => {
-                    return (
-                        <Tag
-                            title={tag.name}
-                            key={tag.name}
-                            color={tag.tag_category?.color}
-                        />
-                    )
+                    return <Tag tag={tag} key={tag.name} />
                 })
             ) : (
                 <>No tags found</>
