@@ -106,6 +106,7 @@ export default function ContactForm() {
                     validator={validateEmail}
                     onChange={setEmail}
                     type="text"
+                    value={email}
                 />
                 <ValidatedInput
                     name="subject"
@@ -113,12 +114,14 @@ export default function ContactForm() {
                     validator={null}
                     onChange={setSubject}
                     type="text"
+                    value={subject}
                 />
                 <ValidatedTextarea
                     name="message"
                     placeholder="Message"
                     validator={null}
                     onChange={setMessage}
+                    value={message}
                 />
                 <div className="my-2" data-netlify-recaptcha="true"></div>
 

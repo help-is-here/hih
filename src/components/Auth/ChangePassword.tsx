@@ -48,6 +48,7 @@ export default function ChangePassword() {
                 validator={validatePassword}
                 onChange={setPassword}
                 placeholder="my-special-password"
+                value={password}
             />
             <div className="text-sm">
                 Password must be 8 characters long and have at least one of each

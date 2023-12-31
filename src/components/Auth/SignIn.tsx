@@ -77,6 +77,7 @@ export default function SignIn({ setState }: TSignInProps) {
                     validator={validateEmail}
                     onChange={setEmail}
                     placeholder="email@example.com"
+                    value={email}
                 />
             </div>
             <ValidatedInput
@@ -84,6 +85,7 @@ export default function SignIn({ setState }: TSignInProps) {
                 validator={null}
                 onChange={setPassword}
                 placeholder="my-special-password"
+                value={password}
             />
             <button
                 title={!formValid ? 'All fields must be valid' : ''}
