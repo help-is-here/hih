@@ -190,20 +190,25 @@ export const updateCategory = async (category: ICategory) => {
             .select('id')
     }
     const record = await categoryQuery
-
     if (record.data && category.tags) {
+        const newCat = { ...category, id: record.data[0].id }
         for (const t of category.tags) {
             if (t.action === EAction.Add) {
-                if (t.id !== -1) {
-                    await updateTag({ ...t, tag_category: category })
-                } else {
-                    await insertTag({ ...t, tag_category: category })
-                }
+                await upsertTag({ ...t, tag_category: newCat })
             } else if (t.action === EAction.Remove) {
                 await updateTag({ ...t, tag_category: undefined })
             }
         }
     }
+}
+export const upsertTag = async (tag: ITag) => {
+    await client.from('tags').upsert(
+        {
+            name: tag.name,
+            tag_category: tag.tag_category?.id,
+        },
+        { ignoreDuplicates: false, onConflict: 'name' }
+    )
 }
 export const linkAndCreateTags = async (recordId: number, tags: ITag[]) => {
     for (const tag of tags) {
