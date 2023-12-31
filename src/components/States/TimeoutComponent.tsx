@@ -11,7 +11,6 @@ export default function TimeoutComponent({
 }) {
     const [toggle, setToggle] = useState(true)
     useEffect(() => {
-        console.log(show)
         setToggle(show)
         if (show) {
             setTimeout(() => setToggle(false), timeout)
