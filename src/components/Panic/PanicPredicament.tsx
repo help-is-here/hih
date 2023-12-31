@@ -55,6 +55,12 @@ export const PanicPredicament = () => {
                             911
                         </a>
                     </div>
+                    <a
+                        className="mb-4 block w-full text-center underline"
+                        href="https://en.wikipedia.org/wiki/List_of_emergency_telephone_numbers"
+                    >
+                        Other Emergency Numbers
+                    </a>
                     <PromptGenerator prompts={predicament} />
                 </div>
             </div>
@@ -77,17 +83,10 @@ export const PanicPredicament = () => {
             <H2 title="Other helpful resources" />
             <MasonryLayout>
                 {data && data.data ? (
-                    data.data
-                        .sort(
-                            (a, b) =>
-                                // @ts-expect-error: nested join typing problems
-                                Number(b.num_helped) - Number(a.num_helped)
-                        )
-                        .slice(3, data.data.length)
-                        .map((d) => (
-                            // @ts-expect-error: nested join typing problems
-                            <ResourceCard key={d.name} resource={d} />
-                        ))
+                    data.data.map((d) => (
+                        // @ts-expect-error: nested join typing problems
+                        <ResourceCard key={d.name} resource={d} />
+                    ))
                 ) : (
                     <div>No resources available</div>
                 )}
