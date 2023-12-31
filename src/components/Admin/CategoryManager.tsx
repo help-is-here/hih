@@ -45,6 +45,7 @@ export default function CategoryManager() {
                                     name: '',
                                     color: '#000000',
                                     id: -1,
+                                    tags: [],
                                 }}
                                 // @ts-expect-error: join types not perpetuated correctly by supabase
                                 allTags={tags.data.data ? tags.data.data : []}

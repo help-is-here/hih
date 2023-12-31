@@ -24,6 +24,7 @@ export default function CategoryCard({
         onSuccess: () => {
             // Invalidate and refetch
             queryClient.invalidateQueries({ queryKey: ['categories'] })
+            queryClient.invalidateQueries({ queryKey: ['allTags'] })
             onEditClose()
         },
     })
@@ -82,20 +83,20 @@ export default function CategoryCard({
                 notAllowed={allTags.filter(
                     (t) => t.tag_category && t.tag_category.id !== category.id
                 )}
-                categoryId={category.id}
+                category={category}
                 initTags={category.tags ? category.tags : []}
                 onSet={(newTags) => setUpdatedTags(newTags)}
             />
             <div className="flex gap-2">
                 <button
-                    onClick={() =>
+                    onClick={() => {
                         saveCategoryMut.mutate({
                             ...category,
                             name: title,
                             tags: updatedTags,
                             color: color,
                         })
-                    }
+                    }}
                     style={{ background: color }}
                     className="mt-2 w-full rounded-lg px-4 py-2 text-white"
                 >
