@@ -13,6 +13,8 @@ import AdminPage from './views/AdminPage/AdminPage.tsx'
 import { ResourcesPage } from './views/ResourcesPage/ResourcesPage.tsx'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import PrivacyPage from './views/PrivacyPage/PrivacyPage.tsx'
+import { AuthProvider } from './context/AuthContext.tsx'
+import ProtectedRoute from './components/Navigation/ProtectedRoute.tsx'
 
 const router = createBrowserRouter([
     {
@@ -36,14 +38,6 @@ const router = createBrowserRouter([
         errorElement: <NotFoundPage />,
     },
     {
-        path: '/suggest',
-        element: <SuggestionPage />,
-    },
-    {
-        path: '/admin',
-        element: <AdminPage />,
-    },
-    {
         path: '/contact',
         element: <ContactPage />,
     },
@@ -65,12 +59,30 @@ const router = createBrowserRouter([
         path: '*',
         element: <NotFoundPage />,
     },
+    {
+        path: '/secure',
+        element: <ProtectedRoute />,
+        children: [
+            {
+                path: '/secure/suggest',
+                element: <SuggestionPage />,
+            },
+            {
+                path: '/secure/admin',
+                element: <AdminPage />,
+            },
+        ],
+    },
 ])
+
 const queryClient = new QueryClient()
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router} />
+            <AuthProvider>
+                <RouterProvider router={router} />
+            </AuthProvider>
         </QueryClientProvider>
     </React.StrictMode>
 )

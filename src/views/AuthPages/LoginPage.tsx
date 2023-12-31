@@ -1,8 +1,11 @@
 import Auth from '@/components/Auth/Auth'
-import SessionWrapper from '@/components/Auth/SessionWrapper'
 import AuthPageLayout from '@/components/Layouts/AuthPageLayout'
+import { AuthContext, TAuthContext } from '@/context/AuthContext.tsx'
+import { useContext } from 'react'
 
 const LoginPage = () => {
+    const { authenticated } = useContext<TAuthContext>(AuthContext)
+
     const ifSession = (
         <div className="text-xl text-white">
             Welcome to our site! You are logged in.
@@ -27,7 +30,7 @@ const LoginPage = () => {
     )
     return (
         <AuthPageLayout>
-            <SessionWrapper ifSession={ifSession} notSession={notSession} />
+            {authenticated ? ifSession : notSession}
         </AuthPageLayout>
     )
 }

@@ -5,6 +5,16 @@ import { IResource, EAction, ICategory, ITag } from '@/types'
 export const defaultStaleTime = 1200000
 
 // Queries
+export const getUserAdmin = async () => {
+    const {
+        data: { user },
+    } = await client.auth.getUser()
+    return await client
+        .from('admins')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user?.id)
+}
+
 export const getTags = async () => {
     return await client
         .from('tags')

@@ -2,11 +2,12 @@ import { NavLink } from './NavLink.tsx'
 import { FaBars, FaWindowClose } from 'react-icons/fa'
 import logo from '../../assets/logo.png'
 import LoginButton from '../Auth/LoginButton.tsx'
-import SessionWrapper from '../Auth/SessionWrapper.tsx'
 import ProfileMenu from './ProfileMenu.tsx'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { AuthContext, TAuthContext } from '@/context/AuthContext.tsx'
 
 export const Navigation = () => {
+    const { authenticated, admin } = useContext<TAuthContext>(AuthContext)
     const [isOpen, setIsOpen] = useState<boolean>(false)
 
     // Disable scroll when mobile menu open
@@ -29,14 +30,22 @@ export const Navigation = () => {
                     <NavLink title="Home" link="/" />
                     <NavLink title="Resources" link="/resources" />
                     <NavLink title="Panic Page" link="/panic" />
-                    <NavLink title="Suggest a Resource" link="/suggest" />
-                    <NavLink title="Admin" link="/admin" />
+                    {authenticated ? (
+                        <NavLink
+                            title="Suggest a Resource"
+                            link="/secure/suggest"
+                        />
+                    ) : (
+                        <></>
+                    )}
+                    {admin ? (
+                        <NavLink title="Admin" link="/secure/admin" />
+                    ) : (
+                        <></>
+                    )}
                 </div>
                 <div className="hidden md:block">
-                    <SessionWrapper
-                        ifSession={<ProfileMenu />}
-                        notSession={<LoginButton />}
-                    />
+                    {authenticated ? <ProfileMenu /> : <LoginButton />}
                 </div>
                 <div
                     className="flex items-center justify-self-end md:hidden"
@@ -56,12 +65,16 @@ export const Navigation = () => {
                     <NavLink title="Home" link="/" />
                     <NavLink title="Resources" link="/resources" />
                     <NavLink title="Panic Page" link="/panic" />
-                    <NavLink title="Suggest a Resource" link="/suggest" />
-                    <NavLink title="Admin" link="/admin" />
-                    <SessionWrapper
-                        ifSession={<ProfileMenu />}
-                        notSession={<LoginButton />}
-                    />
+                    {authenticated ? (
+                        <NavLink
+                            title="Suggest a Resource"
+                            link="/secure/suggest"
+                        />
+                    ) : (
+                        <></>
+                    )}
+                    {admin ? <NavLink title="Admin" link="/admin" /> : <></>}
+                    {authenticated ? <ProfileMenu /> : <LoginButton />}
                 </div>
             ) : null}
         </>

@@ -1,16 +1,18 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { validateEmail, validatePassword } from '../Form/Validators'
 import client from '@/database/client'
 import ValidatedInput from '../Form/ValidatedInput'
 import { Alert } from 'flowbite-react'
 import { FaCheck, FaExclamationCircle } from 'react-icons/fa'
+import { AuthContext, TAuthContext } from '@/context/AuthContext'
 
 type TSignUpProps = {
     setState: (state: string) => void
 }
 export default function SignUp({ setState }: TSignUpProps) {
+    const { updateAuthenticated } = useContext<TAuthContext>(AuthContext)
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [formValid, setValid] = useState<boolean>(false)
@@ -35,6 +37,7 @@ export default function SignUp({ setState }: TSignUpProps) {
             },
         })
         if (!error) {
+            updateAuthenticated(true)
             navigate('/')
         } else {
             setErrorAlert(true)
