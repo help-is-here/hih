@@ -30,7 +30,7 @@ export default function PromptGenerator({ prompts }: TPromptGenerator) {
             <div className="flex w-full flex-wrap justify-center gap-4 sm:gap-0">
                 <textarea
                     value={val}
-                    className="w-full rounded-full border border-2 border-e-0 border-gray-700 px-4 py-2 sm:w-72 sm:rounded-none sm:rounded-s-full lg:w-48 xl:w-72"
+                    className="w-full rounded-full border border-2 border-gray-700 px-4 py-2 sm:w-72 sm:rounded-none sm:rounded-s-full md:border-e-0 lg:w-48 xl:w-72"
                 />
                 <button
                     onClick={randomPrompt}

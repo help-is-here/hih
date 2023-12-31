@@ -95,6 +95,7 @@ export const textSearchResources = async (text: string) => {
         .from('resources')
         .select()
         .textSearch('fts', text.trim().split(' ').join(' & '))
+        .eq('in_review', false)
 }
 
 export const getIsHearted = async (resourceId: number) => {

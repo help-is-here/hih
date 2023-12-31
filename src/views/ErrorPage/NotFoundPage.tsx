@@ -1,6 +1,5 @@
 import { useRouteError } from 'react-router-dom'
 import PageLayout from '@/components/Layouts/PageLayout'
-import { H1 } from '@/components/Text/Headings'
 type TError = {
     statusText: string
     message: string
@@ -14,10 +13,10 @@ export default function NotFoundPage() {
         <PageLayout>
             <div
                 id="error-page"
-                className="flex h-screen items-center justify-center text-center"
+                className="flex h-screen flex-wrap items-center justify-center p-8 text-center"
             >
-                <H1 title="Oops!" />
-                <div className="mx-8 h-32 border-e-4 border-gray-600"></div>
+                <h1 className="text-4xl md:text-8xl">Oops!</h1>
+                <div className="mx-4 h-32 border-b-2 border-gray-600 sm:mx-8 sm:block sm:border-e-2"></div>
                 <p>Sorry, an unexpected error has occurred.</p>
                 {error && (
                     <p>
