@@ -1,17 +1,24 @@
-import { useState } from 'react'
+import { AuthContext } from '@/context/AuthContext'
+import { useContext, useState } from 'react'
 import { FaHeart } from 'react-icons/fa'
 
 type TFilterButtons = {
     onHeartedFilter: (payload: boolean) => void
 }
 export const FilterButtons = ({ onHeartedFilter }: TFilterButtons) => {
+    const { authenticated } = useContext(AuthContext)
+
     return (
         <div className="mt-2 flex w-full flex-row gap-2">
-            <HeartedButton
-                onFilter={(toggle) =>
-                    toggle ? onHeartedFilter(true) : onHeartedFilter(false)
-                }
-            />
+            {authenticated ? (
+                <HeartedButton
+                    onFilter={(toggle) =>
+                        toggle ? onHeartedFilter(true) : onHeartedFilter(false)
+                    }
+                />
+            ) : (
+                <></>
+            )}
         </div>
     )
 }

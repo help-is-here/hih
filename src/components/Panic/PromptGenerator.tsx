@@ -23,7 +23,7 @@ export default function PromptGenerator({ prompts }: TPromptGenerator) {
             >
                 Text copied!
             </Alert>
-            <div>
+            <div className="text-center lg:text-start">
                 Want to reach out to loved ones but not sure how to start? Use
                 our prompt generator.
             </div>
