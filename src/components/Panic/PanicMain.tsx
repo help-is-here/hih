@@ -13,7 +13,7 @@ export const PanicMain = () => {
         const { title, link, image } = props
         return (
             <Link to={link} className="flex-1">
-                <div className="m-8 flex h-full flex-col items-center justify-center rounded bg-orange-300 p-8 text-center text-xl font-semibold text-gray-800 hover:bg-orange-400">
+                <div className="flex h-full flex-col items-center justify-center rounded bg-orange-300 p-8 text-center text-xl font-semibold text-gray-800 hover:bg-orange-400">
                     <img src={image} alt={title} />
                     {title}
                 </div>
@@ -23,7 +23,7 @@ export const PanicMain = () => {
     return (
         <div className="p-8">
             <H1 title="How Are You Feeling?" />
-            <div className="flex flex-row">
+            <div className="flex flex-row flex-wrap gap-2 md:gap-4">
                 <PathSelect
                     title="I'm feeling safe but need to reach out"
                     link="/panic/prevent"

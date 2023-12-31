@@ -1,6 +1,7 @@
 import { ITag } from '@/types'
 import { useEffect, useState } from 'react'
 import { calculateTextColor } from '@/utils/color'
+import { FaCheck } from 'react-icons/fa'
 
 type TToggleTag = {
     tagData: ITag
@@ -29,7 +30,10 @@ export default function ToggleTag({ tagData, onToggle }: TToggleTag) {
                 toggle ? 'bottom-1 left-1 shadow-md' : 'shadow-none'
             }`}
         >
-            <div>{tagData.name}</div>
+            <div className="flex items-center justify-between">
+                {toggle ? <FaCheck /> : <></>}
+                {tagData.name}
+            </div>
         </button>
     )
 }
