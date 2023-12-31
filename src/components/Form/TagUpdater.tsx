@@ -3,6 +3,7 @@ import { Alert } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import { FaExclamationCircle } from 'react-icons/fa'
 import RemovableTag from './RemovableTag'
+import TagTypeahead from './TagTypeahead'
 
 type TTagUpdater = {
     initTags: ITag[]
@@ -109,12 +110,21 @@ export default function TagUpdater({
                             )
                         })
                 )}
-                <input
-                    className={`w-24 rounded-full border border-solid border-gray-600 px-2 py-1`}
-                    onKeyUp={(e) => (e.key === 'Enter' ? addTag(newTag) : null)}
-                    value={newTag}
-                    onChange={(e) => setNewTag(e.target.value)}
-                />
+                {allowed !== undefined && allowed.length > 0 ? (
+                    <TagTypeahead
+                        allResults={allowed}
+                        onAdd={(t) => addTag(t.name)}
+                    />
+                ) : (
+                    <input
+                        className={`w-24 rounded-full border border-solid border-gray-600 px-2 py-1`}
+                        onKeyUp={(e) =>
+                            e.key === 'Enter' ? addTag(newTag) : null
+                        }
+                        value={newTag}
+                        onChange={(e) => setNewTag(e.target.value)}
+                    />
+                )}
             </div>
         </div>
     )

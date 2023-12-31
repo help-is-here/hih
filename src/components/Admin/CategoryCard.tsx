@@ -38,8 +38,7 @@ export default function CategoryCard({ category, allTags }: TCategoryCard) {
                         {category.tags?.map((t) => {
                             return (
                                 <Tag
-                                    title={t.name}
-                                    color={category.color}
+                                    tag={{ ...t, tag_category: category }}
                                     key={t.name}
                                 />
                             )

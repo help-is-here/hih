@@ -23,15 +23,14 @@ export default function PopularTopics() {
                         // @ts-expect-error: supabase join problems
                         <Link to={`/resources?tag=${t.tags.name}`}>
                             <Tag
-                                // @ts-expect-error: supabase join problems
-                                title={t.tags.name}
-                                color={
-                                    // @ts-expect-error: supabase join problems
-                                    t.tags.tag_category
-                                        ? // @ts-expect-error: supabase join problems
-                                          t.tags.tag_category.color
-                                        : '#ffffff'
-                                }
+                                tag={{
+                                    ...t.tags,
+                                    id: -1,
+                                    // @ts-expect-error: supabase join problem
+                                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                                    name: t.tags.name,
+                                    tag_category: undefined,
+                                }}
                                 count={t.count}
                             />
                         </Link>
