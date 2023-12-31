@@ -42,7 +42,7 @@ export default function ValidatedTextarea({
                     setError(validate(e.target.value))
                     onChange(e.target.value)
                 }}
-                defaultValue={value}
+                value={value}
             ></textarea>
             <span
                 className={`ms-4 text-xs ${

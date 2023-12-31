@@ -24,9 +24,7 @@ export default function TagUpdater({
     const [alert, setAlert] = useState(false)
 
     useEffect(() => {
-        if (initTags.length) {
-            setTags(initTags)
-        }
+        setTags(initTags)
     }, [initTags])
 
     const addTag = (tagName: string) => {
