@@ -2,8 +2,9 @@ import { IResource, ITag } from '@/types'
 import ValidatedInput from '../Form/ValidatedInput'
 import ValidatedTextarea from '../Form/ValidatedTextarea'
 import { useEffect, useState } from 'react'
-import UpdateResourceButton from '../Form/UpdateResourceButton'
 import TagUpdater from '../Form/TagUpdater'
+import { useMutation, useQueryClient } from 'react-query'
+import { updateResource } from '@/api/api'
 
 type TEditCard = {
     resource: IResource
@@ -16,14 +17,15 @@ export default function EditCard({ resource, closeEdit }: TEditCard) {
     const [link, setLink] = useState('')
     const [tags, setTags] = useState<ITag[]>([])
     const [updatedTags, setUpdatedTags] = useState<ITag[]>([])
-    const [updatedResource, setUpdatedResource] = useState<IResource>({
-        name: '',
-        description: '',
-        id: -1,
-        link: '',
-        tag_resource: [],
-        num_helped: 0,
-        in_review: true,
+
+    const queryClient = useQueryClient()
+    const updateResourceMut = useMutation({
+        mutationFn: updateResource,
+        onSuccess: () => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries({ queryKey: ['resources'] })
+            saved()
+        },
     })
 
     const saved = () => {
@@ -38,15 +40,6 @@ export default function EditCard({ resource, closeEdit }: TEditCard) {
                 link.length > 0 &&
                 (tags.length > 0 || updatedTags.length > 0)
         )
-        setUpdatedResource({
-            name: name,
-            description: description,
-            id: resource.id,
-            link: link,
-            tag_resource: updatedTags,
-            num_helped: resource.num_helped,
-            in_review: resource.in_review,
-        })
     }, [link, name, description, tags.length, resource, updatedTags])
 
     useEffect(() => {
@@ -83,14 +76,23 @@ export default function EditCard({ resource, closeEdit }: TEditCard) {
                 </div>
                 <TagUpdater initTags={tags} onSet={setUpdatedTags} />
                 <div className="flex items-center gap-4">
-                    <UpdateResourceButton
+                    <button
                         className="block rounded bg-orange-700 px-4 py-2 text-white disabled:bg-gray-300 md:block md:w-48 "
                         disabled={!valid}
-                        resource={updatedResource}
-                        onSucces={saved}
+                        onClick={() => {
+                            updateResourceMut.mutate({
+                                id: resource.id,
+                                num_helped: 0,
+                                in_review: resource.in_review,
+                                name: name,
+                                description: description,
+                                link: link,
+                                tag_resource: updatedTags,
+                            })
+                        }}
                     >
                         Save
-                    </UpdateResourceButton>
+                    </button>
                     <button
                         onClick={closeEdit}
                         className="block rounded bg-orange-950 px-4 py-2 text-white md:block md:w-48"

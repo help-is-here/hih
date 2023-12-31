@@ -155,7 +155,7 @@ export const updateResource = async (resource: IResource) => {
     resource.tag_resource?.forEach((t) => {
         if (t.action === EAction.Add) {
             link.push(t)
-        } else {
+        } else if (t.action === EAction.Remove) {
             unlink.push(t)
         }
     })
