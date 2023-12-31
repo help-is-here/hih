@@ -74,6 +74,7 @@ export default function SignUp({ setState }: TSignUpProps) {
                     validator={validateEmail}
                     onChange={setEmail}
                     placeholder="email@example.com"
+                    value={email}
                 />
             </div>
             <ValidatedInput
@@ -81,6 +82,7 @@ export default function SignUp({ setState }: TSignUpProps) {
                 validator={validatePassword}
                 onChange={setPassword}
                 placeholder="my-special-password"
+                value={password}
             />
             <div className="text-sm">
                 Password must be 8 characters long and have at least one of each

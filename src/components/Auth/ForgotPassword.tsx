@@ -57,6 +57,7 @@ export default function ForgotPassword({ setState }: TForgotPasswrodProps) {
                 validator={validateEmail}
                 onChange={setEmail}
                 placeholder="email@example.com"
+                value={email}
             />
             <button
                 title={!formValid ? 'Email required' : ''}
