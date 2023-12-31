@@ -45,7 +45,7 @@ export default function ValidatedInput({
                     setError(validate(e.target.value))
                     onChange(e.target.value)
                 }}
-                defaultValue={value}
+                value={value}
             ></input>
             <span
                 className={`ms-4 text-xs ${

@@ -24,6 +24,10 @@ export const ResourceForm = ({ onUpdate }: TResourceForm) => {
         onSuccess: () => {
             // Invalidate and refetch
             queryClient.invalidateQueries({ queryKey: ['resources'] })
+            setTitle('')
+            setUrl('')
+            setTags([])
+            setDescription('')
             setAlert(true)
         },
     })
@@ -57,7 +61,7 @@ export const ResourceForm = ({ onUpdate }: TResourceForm) => {
                 icon={FaCheck}
                 onDismiss={() => setAlert(false)}
             >
-                An email with a password reset link has been sent.
+                Thank you! Your submission has been recorded.
             </Alert>
             <div>
                 <h1 className="mb-4 text-3xl text-white">Suggest a resource</h1>
@@ -88,7 +92,7 @@ export const ResourceForm = ({ onUpdate }: TResourceForm) => {
                     <TagUpdater
                         // @ts-expect-error: supabase join problems
                         allowed={data && data.data ? data.data : []}
-                        initTags={[]}
+                        initTags={tags}
                         onSet={(val) => setTags(val)}
                     />
                 </div>
