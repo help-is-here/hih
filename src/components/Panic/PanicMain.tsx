@@ -3,8 +3,12 @@ import { Link } from 'react-router-dom'
 import preventImage from '../../assets/panic - prevent.svg'
 import prepareImage from '../../assets/panic - prepare.svg'
 import predicamentImage from '../../assets/panic - predicament.svg'
+import { useState } from 'react'
+import DecideModal from './DecideModal'
 
 export const PanicMain = () => {
+    const [show, setShow] = useState(false)
+
     const PathSelect = (props: {
         title: string
         link: string
@@ -21,7 +25,7 @@ export const PanicMain = () => {
         )
     }
     return (
-        <div className="p-8">
+        <div className="flex flex-col gap-4 p-8">
             <H1 title="How Are You Feeling?" />
             <div className="flex flex-row flex-wrap gap-2 md:gap-4">
                 <PathSelect
@@ -40,6 +44,13 @@ export const PanicMain = () => {
                     image={predicamentImage}
                 ></PathSelect>
             </div>
+            <button
+                onClick={() => setShow(true)}
+                className="rounded-full bg-orange-500 px-8 py-4 text-center text-2xl text-white md:px-12 md:py-8 md:text-4xl "
+            >
+                Help me decide
+            </button>
+            <DecideModal openModal={show} onClose={() => setShow(false)} />
         </div>
     )
 }
